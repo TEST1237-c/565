@@ -796,5 +796,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/421020\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnpx",
         "mode": "solo"
+    },
+    {
+        "title": "EarthX",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1260270\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnpy",
+        "mode": "solo"
     }
 ]
