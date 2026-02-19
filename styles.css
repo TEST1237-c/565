@@ -1,0 +1,915 @@
+/* ============================================
+   NOVAPLAY - NEON GLASS REDESIGN
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+
+/* ============================================
+   CSS VARIABLES & DESIGN TOKENS
+   ============================================ */
+:root {
+    /* Accent Colors */
+    --accent-violet: #7C3AED;
+    --accent-light: #9F7AEA;
+    --accent-dark: #5B21B6;
+
+    /* Dark Palette */
+    --bg-dark: #0a0a0f;
+    --bg-darker: #050508;
+    --bg-card: rgba(20, 20, 35, 0.4);
+    --bg-glass: rgba(255, 255, 255, 0.05);
+
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+
+    /* Borders */
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --border-accent: rgba(124, 58, 237, 0.3);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+}
+
+/* ============================================
+   GLOBAL RESET & BASE STYLES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-darker);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ============================================
+   ANIMATED BACKGROUND - STYLISH & SIMPLE
+   ============================================ */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(76, 29, 149, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(109, 40, 217, 0.08) 0%, transparent 40%);
+    animation: meshRotate 40s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(80px);
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(circle at center, black, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+@keyframes meshRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   GLASS UTILITIES
+   ============================================ */
+.glass {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(124, 58, 237, 0.4);
+    box-shadow:
+        0 12px 48px 0 rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1px rgba(124, 58, 237, 0.2);
+}
+
+
+
+/* ============================================
+   HOME PAGE STYLES
+   ============================================ */
+.page-accueil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.center-container {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: var(--spacing-lg);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.big-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-light) 50%, #fff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    margin-bottom: var(--spacing-md);
+    filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.4));
+    position: relative;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+
+.subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+}
+
+nav {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+nav a {
+    position: relative;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 16px 40px;
+    border-radius: var(--radius-full);
+    background: rgba(124, 58, 237, 0.1);
+    border: 2px solid var(--accent-violet);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+nav a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+nav a:hover::before {
+    left: 100%;
+}
+
+nav a:hover {
+    background: rgba(124, 58, 237, 0.2);
+    border-color: var(--accent-light);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
+    transform: translateY(-3px);
+}
+
+/* ============================================
+   DISCORD NOTIFICATION
+   ============================================ */
+.discord-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.discord-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.discord-notification-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 16px 20px;
+    background: rgba(88, 101, 242, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(88, 101, 242, 0.3);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 32px rgba(88, 101, 242, 0.3);
+}
+
+.discord-notification-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.discord-notification-link {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 8px 20px;
+    background: rgba(88, 101, 242, 0.8);
+    border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.discord-notification-link:hover {
+    background: rgba(88, 101, 242, 1);
+    box-shadow: 0 0 20px rgba(88, 101, 242, 0.6);
+}
+
+.discord-notification-close {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 8px;
+    transition: opacity 0.3s ease;
+}
+
+.discord-notification-close:hover {
+    opacity: 0.7;
+}
+
+/* ============================================
+   GAMES PAGE STYLES
+   ============================================ */
+.page-jeux {
+    min-height: 100vh;
+    position: relative;
+}
+
+.container-jeux {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.container-jeux .big-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    animation: fadeSlideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Discord inline link under title */
+.discord-inline-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-full);
+    background: rgba(88, 101, 242, 0.1);
+    border: 1px solid rgba(88, 101, 242, 0.25);
+    transition: all 0.3s ease;
+    margin-bottom: var(--spacing-sm);
+    animation: fadeSlideDown 0.8s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.discord-inline-link img {
+    border-radius: 0;
+    transition: transform 0.3s ease;
+}
+
+.discord-inline-link:hover img {
+    transform: rotate(-8deg) scale(1.1);
+}
+
+.discord-inline-link:hover {
+    background: rgba(88, 101, 242, 0.2);
+    border-color: rgba(88, 101, 242, 0.5);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   SEARCH BAR
+   ============================================ */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
+    animation: fadeSlideDown 0.8s 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ============================================
+   CATEGORY FILTERS
+   ============================================ */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: var(--spacing-md);
+    animation: fadeSlideDown 0.8s 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.filter-btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-full);
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-btn.active {
+    color: var(--text-primary);
+    background: rgba(124, 58, 237, 0.2);
+    border-color: var(--accent-violet);
+}
+
+.search-bar {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    padding: 16px 24px 16px 50px;
+    width: 100%;
+    max-width: 500px;
+    outline: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-image: url('data:image/svg+xml;utf8,<svg fill="rgba(255,255,255,0.5)" height="18" viewBox="0 0 20 20" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l4.38 4.37a1 1 0 0 1-1.41 1.42l-4.38-4.38zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: 20px center;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar:focus {
+    border-color: var(--accent-violet);
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+}
+
+.search-bar::placeholder {
+    color: var(--text-muted);
+}
+
+/* ============================================
+   GAMES GRID
+   ============================================ */
+.games-loading {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Staggered entrance for game cards */
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.jeu-thumb-link {
+    position: relative;
+    display: block;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: rgba(20, 20, 35, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+    cursor: pointer;
+    text-decoration: none;
+    aspect-ratio: 16 / 9;
+}
+
+.jeu-thumb-link.animating {
+    animation: cardFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.jeu-thumb-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+
+.jeu-thumb-link:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--accent-violet);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 4px 20px rgba(124, 58, 237, 0.2);
+}
+
+.jeu-thumb-link:hover::before {
+    opacity: 1;
+}
+
+.jeu-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+.jeu-thumb-link:hover .jeu-thumb-img {
+    transform: scale(1.1);
+    filter: brightness(0.7);
+}
+
+.jeu-title-hover {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    text-align: center;
+    padding: var(--spacing-md);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 2;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(124, 58, 237, 0.4);
+}
+
+.jeu-thumb-link:hover .jeu-title-hover {
+    opacity: 1;
+}
+
+/* ============================================
+   GAME MODE BADGES
+   ============================================ */
+.badge-mode-wrapper {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 3;
+    display: flex;
+    gap: 8px;
+}
+
+.badge-mode {
+    width: 36px;
+    height: 20px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+    transition: transform 0.3s ease;
+}
+
+.badge-mode.solo {
+    width: 26px;
+    height: 14px;
+}
+
+.jeu-thumb-link:hover .badge-mode {
+    transform: scale(1.2);
+}
+
+/* ============================================
+   COMING SOON MESSAGE
+   ============================================ */
+.coming-soon-message {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    padding: var(--spacing-lg);
+    background: rgba(20, 20, 35, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-xl) auto;
+    max-width: 600px;
+    animation: fadeSlideDown 0.8s 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ============================================
+   MODAL STYLES
+   ============================================ */
+.modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    position: relative;
+    background: rgba(20, 20, 35, 0.95);
+    backdrop-filter: blur(40px);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+    color: #ffffff;
+}
+
+.modal ul,
+.modal ol {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+}
+
+.modal code {
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--accent-light);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.modal-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.download-btn {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
+    border: 2px solid var(--accent-violet);
+    border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+}
+
+.download-btn:hover {
+    background: linear-gradient(135deg, var(--accent-light), var(--accent-violet));
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5);
+    transform: translateY(-2px);
+}
+
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 8px;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+}
+
+.close-btn:hover {
+    opacity: 0.7;
+}
+
+/* ============================================
+   DISCORD BUBBLE
+   ============================================ */
+.discord-bubble {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.discord-bubble-label {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: rgba(88, 101, 242, 0.8);
+    padding: 8px 20px;
+    border-radius: var(--radius-md);
+    border: 2px solid rgba(88, 101, 242, 0.6);
+    box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+    position: relative;
+}
+
+.discord-bubble-label::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 40px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgba(88, 101, 242, 0.8);
+}
+
+.discord-bubble-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #5865F2, #4752C4);
+    border: 2px solid rgba(88, 101, 242, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgba(88, 101, 242, 0.4);
+    text-decoration: none;
+}
+
+.discord-bubble-btn:hover {
+    transform: scale(1.1) translateY(-4px);
+    box-shadow: 0 12px 32px rgba(88, 101, 242, 0.6);
+}
+
+.discord-bubble-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+/* ============================================
+   PAGINATION
+   ============================================ */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    animation: fadeSlideDown 0.8s 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.pagination-btn {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.pagination-btn.active {
+    color: var(--text-primary);
+    background: rgba(124, 58, 237, 0.3);
+    border-color: var(--accent-violet);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: var(--spacing-md);
+    }
+
+    .big-title {
+        font-size: clamp(2rem, 6vw, 4rem);
+    }
+
+    .discord-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .discord-notification-content {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .discord-bubble {
+        bottom: 16px;
+        left: 16px;
+    }
+
+    .discord-bubble-btn {
+        width: 56px;
+        height: 56px;
+    }
+
+    .discord-bubble-img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav a {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+
+    .search-bar {
+        padding: 12px 20px 12px 45px;
+    }
+}

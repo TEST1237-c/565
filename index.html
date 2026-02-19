@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPlay - Cracked Games</title>
+    <meta name="description" content="NovaPlay - Your premium gaming platform. Browse and download cracked games.">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="page-jeux">
+    <!-- Main Container -->
+    <div class="container-jeux">
+        <div class="big-title" style="text-align:center; width:100%;">NovaPlay</div>
+
+        <!-- Discord Link -->
+        <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="discord-inline-link">
+            <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="24" height="24" />
+            Join the Discord
+        </a>
+
+        <!-- Search Bar -->
+        <div class="search-bar-container">
+            <input type="text" class="search-bar" id="gameSearch" placeholder="Search games...">
+        </div>
+
+        <!-- Category Filters -->
+        <div class="filter-container" id="filterContainer">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="solo">Solo</button>
+            <button class="filter-btn" data-filter="multiplayer">Multiplayer</button>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="games-grid" id="gamesGrid">
+            <!-- Games are generated automatically by game.js -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container" id="paginationContainer"></div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
