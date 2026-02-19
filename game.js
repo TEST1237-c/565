@@ -7,31 +7,6 @@ let allGames = [];
 let filteredGames = [];
 let currentFilter = 'all';
 
-const GAMES_FALLBACK = [
-    { title: "Forza Horizon 4", image: "https://gaming-cdn.com/images/products/2682/orig/forza-horizon-4-pc-xbox-one-xbox-series-x-s-microsoft-store-cover.jpg?v=1752055441", link: "https://www.clictune.com/mnbG", mode: "multiplayer" },
-    { title: "Crime Scene Cleaner", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1040200/f4aec86ea2e78eadc845af2416321792fc1e18a4/capsule_616x353_alt_assets_1.jpg", link: "https://www.clictune.com/mnbH", mode: "solo" },
-    { title: "PowerWash Simulator 2", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2968420/374fc7a0419c7361cda3ae7fa6fe4e383f206e5d/capsule_616x353.jpg", link: "https://www.clictune.com/mnbI", mode: "multiplayer" },
-    { title: "Watch Dogs", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/243470/capsule_616x353.jpg", link: "https://www.clictune.com/mnbJ", mode: "solo" },
-    { title: "Watch Dogs 2", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/447040/capsule_616x353.jpg", link: "#", mode: "solo", hasModal: true, modalId: "watchdogs2", modalTitle: "How to install Watch Dogs 2?", modalContent: "<ul><li>If you have issues with <strong>Easy Anti-Cheat</strong>, follow these steps:</li></ul><ol><li>Create a shortcut for Watch Dogs 2.</li><li>Right-click the shortcut and go to <strong>Properties</strong>.</li><li>In the <strong>Target</strong> field, add <code>-eac_launcher</code> (without quotes) at the end.</li></ol><div class=\"modal-btns\"><a href=\"https://www.clictune.com/mnbK\" class=\"download-btn\" target=\"_blank\" rel=\"noopener\">Download your game</a></div>" },
-    { title: "Dying Light", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/239140/75644e31be5e0e57ac44a3e13468555fb21eb4ea/capsule_616x353.jpg", link: "https://www.clictune.com/mnbL", mode: "multiplayer" },
-    { title: "Dying Light 2 Stay Human", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/534380/bb99b9529e0585181f0c09fa6b9eff324dba0675/capsule_616x353.jpg", link: "https://www.clictune.com/mnbM", mode: "multiplayer" },
-    { title: "Dying Light The Beast", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3008130/56babf2f7988a87d73e86dd434bf2a2ee2b8c624/capsule_616x353_alt_assets_0.jpg", link: "#", mode: "multiplayer", hasModal: true, modalId: "dyinglightthebeast", modalTitle: "How to install Dying Light The Beast?", modalContent: "<ul><li>Launch your game via the exe in ph_ft\\work\\bin\\x64\\</li></ul><div class=\"modal-btns\"><a href=\"https://www.clictune.com/mnbN\" class=\"download-btn\" target=\"_blank\" rel=\"noopener\">Download your game</a></div>" },
-    { title: "Among Us", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/945360/capsule_616x353.jpg", link: "https://www.clictune.com/mnbO", mode: "multiplayer" },
-    { title: "Crime Simulator", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2737070/b127c3a7a40ba1f9b4e82caa875b5185a3ee32e8/capsule_616x353.jpg", link: "https://www.clictune.com/mncu", mode: "multiplayer" },
-    { title: "Detroit Become Human", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1222140/capsule_616x353.jpg", link: "https://www.clictune.com/mncv", mode: "solo" },
-    { title: "Power Wash Simulator", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1290000/0184e192ea58230dd82aa8aed8134be3ed8fc4c2/capsule_616x353.jpg", link: "https://www.clictune.com/mncw", mode: "multiplayer" },
-    { title: "Road 96", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1466640/capsule_616x353.jpg", link: "https://www.clictune.com/mncx", mode: "solo" },
-    { title: "Cities Skylines", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/255710/c950fea5ca1836a8727dabf7da3393c1941f1bc3/capsule_616x353.jpg", link: "https://www.clictune.com/mnj5", mode: "solo" },
-    { title: "Mini Metro", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/287980/capsule_616x353.jpg", link: "https://www.clictune.com/mnj6", mode: "solo" },
-    { title: "Subnautica", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/264710/capsule_616x353.jpg", link: "https://www.clictune.com/mnj7", mode: "solo" },
-    { title: "American Truck Simulator", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/270880/d9b2ee173096a4dabcc574835de06f603d5c9797/capsule_616x353_alt_assets_7.jpg", link: "https://www.clictune.com/mnj8", mode: "multiplayer" },
-    { title: "Portal Knights", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/374040/capsule_616x353.jpg", link: "https://www.clictune.com/mnj9", mode: "solo" },
-    { title: "Drive Beyond Horizons", image: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2625420/capsule_616x353.jpg", link: "https://www.clictune.com/mnja", mode: "multiplayer" },
-    { title: "60 Seconds!", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/368360/capsule_616x353.jpg", link: "https://www.clictune.com/mnjb", mode: "solo" },
-    { title: "BoneLab", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2165980/capsule_616x353.jpg", link: "https://www.clictune.com/mnjc", mode: "solo" },
-    { title: "Garry's mod", image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4000/ecae0f862ac2f087f1581122999dd1e6281ce3b5/capsule_616x353.jpg", link: "https://www.clictune.com/mnjd", mode: "solo" }
-];
-
 // Fonction pour générer les éléments de jeu (uniquement pour la page actuelle)
 function generateGameElements(games) {
     const gamesGrid = document.getElementById('gamesGrid');
@@ -212,17 +187,16 @@ async function initGamePage() {
     gamesGrid.innerHTML = '<p class="games-loading">Loading games...</p>';
 
     try {
-        const res = await fetch('/api/games', { cache: 'no-store' });
+        const res = await fetch('games.json', { cache: 'no-store' });
         if (res.ok) {
             const data = await res.json();
             allGames = Array.isArray(data) ? data : (data.games || data.items || []);
+        } else {
+            console.error('Failed to load games.json:', res.statusText);
         }
     } catch (e) {
-        console.warn('API load failed, using fallback:', e.message);
-        allGames = GAMES_FALLBACK;
+        console.error('Error loading games.json:', e.message);
     }
-
-    if (!allGames.length) allGames = GAMES_FALLBACK;
 
     filteredGames = [...allGames];
     applyFilters(); // Initial display
