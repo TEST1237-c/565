@@ -976,5 +976,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/557340\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnq1",
         "mode": "solo"
+    },
+    {
+        "title": "Overcooked",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/448510\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnq2",
+        "mode": "solo"
     }
 ]
