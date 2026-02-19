@@ -898,5 +898,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/415600\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnpO",
         "mode": "solo"
+    },
+    {
+        "title": "Islanders",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1046030\\/05e2de4de7daa4386049db4197fe35aca6a2bb1c\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnpP",
+        "mode": "solo"
     }
 ]
