@@ -802,5 +802,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1260270\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnpy",
         "mode": "solo"
+    },
+    {
+        "title": "Subnautica Below Zero",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/848450\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnpz",
+        "mode": "solo"
     }
 ]
