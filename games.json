@@ -772,11 +772,5 @@
         "modalId": "skyrim",
         "modalTitle": "Comment installer Skyrim ?",
         "modalContent": "<ul><li><strong>Problème de plein écran ?</strong> Allez dans <code>Documents\\My Games\\Skyrim Special Edition GOG\\</code>. Ouvrez <code>skyrimprefs.ini</code>, cherchez <code>bFullScreen=0</code> et remplacez par <code>bFullScreen=1</code>.</li><li><strong>Problème de langue FR ?</strong> Dans le même dossier, ouvrez <code>Skyrim.ini</code> et remplacez <code>sLanguage=ENGLISH</code> par <code>sLanguage=FRENCH</code>.</li></ul><div class=\"modal-btns\"><a href=\"https://www.clictune.com/mnpt\" class=\"download-btn\" target=\"_blank\" rel=\"noopener\">Télécharger le jeu</a></div>"
-    },
-    {
-        "title": "test",
-        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/270880/d9b2ee173096a4dabcc574835de06f603d5c9797/capsule_616x353_alt_assets_7.jpg",
-        "link": "https://www.clictune.com/mnjd",
-        "mode": "solo"
     }
 ]
