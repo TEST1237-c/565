@@ -850,5 +850,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/48000\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnpG",
         "mode": "solo"
+    },
+    {
+        "title": "Megaquarium",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/600480\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnpH",
+        "mode": "solo"
     }
 ]
