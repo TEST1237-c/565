@@ -184,18 +184,37 @@ async function initGamePage() {
     const gamesGrid = document.getElementById('gamesGrid');
     if (!gamesGrid) return;
 
-    gamesGrid.innerHTML = '<p class="games-loading">Loading games...</p>';
+    gamesGrid.innerHTML = '<p class="games-loading">Chargement des jeux...</p>';
 
-    try {
-        const res = await fetch('games.json', { cache: 'no-store' });
-        if (res.ok) {
-            const data = await res.json();
-            allGames = Array.isArray(data) ? data : (data.games || data.items || []);
-        } else {
-            console.error('Failed to load games.json:', res.statusText);
+    const tryFetch = async (path) => {
+        try {
+            const res = await fetch(path, { cache: 'no-store' });
+            if (res.ok) {
+                const data = await res.json();
+                const games = Array.isArray(data) ? data : (data.games || data.items || []);
+                if (games.length > 0) return games;
+            }
+        } catch (e) {
+            console.warn(`Échec de ${path}:`, e.message);
         }
-    } catch (e) {
-        console.error('Error loading games.json:', e.message);
+        return null;
+    };
+
+    // Ordre de priorité : local puis API
+    allGames = await tryFetch('games.json') ||
+        await tryFetch('/games.json') ||
+        await tryFetch('/api/games') ||
+        [];
+
+    if (allGames.length === 0) {
+        gamesGrid.innerHTML = `
+            <div class="coming-soon-message">
+                <p>Oups ! Aucun jeu n'a été trouvé.</p>
+                <p style="font-size: 0.9rem; margin-top: 10px; color: var(--text-muted);">
+                    Vérifie que le fichier games.json est présent et accessible.
+                </p>
+            </div>
+        `;
     }
 
     filteredGames = [...allGames];
