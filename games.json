@@ -844,5 +844,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/324310\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnpF",
         "mode": "solo"
+    },
+    {
+        "title": "Limbo",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/48000\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnpG",
+        "mode": "solo"
     }
 ]
