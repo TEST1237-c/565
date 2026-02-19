@@ -952,5 +952,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/227300\\/2e55c00b065f30dd2b178377cb67073c2c71bf52\\/capsule_616x353_alt_assets_7.jpg",
         "link": "https://www.clictune.com/mnpX",
         "mode": "multiplayer"
+    },
+    {
+        "title": "American Fugitive",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/934780\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnpY",
+        "mode": "solo"
     }
 ]
