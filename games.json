@@ -1102,5 +1102,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/221260\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnu8",
         "mode": "solo"
+    },
+    {
+        "title": "The Binding of Isaac Rebirth",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/322660\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnu9",
+        "mode": "solo"
     }
 ]
