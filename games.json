@@ -1132,5 +1132,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1148650\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnud",
         "mode": "solo"
+    },
+    {
+        "title": "Ranch Simulator",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1119730\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnue",
+        "mode": "multiplayer"
     }
 ]
