@@ -1048,5 +1048,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/993690\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mntZ",
         "mode": "solo"
+    },
+    {
+        "title": "Brick Rigs",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/552100\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnu0",
+        "mode": "multiplayer"
     }
 ]
