@@ -1072,5 +1072,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/753640\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnu3",
         "mode": "solo"
+    },
+    {
+        "title": "Superliminal",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1049410\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnu4",
+        "mode": "solo"
     }
 ]
