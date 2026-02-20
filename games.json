@@ -1060,5 +1060,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/844960\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnu1",
         "mode": "solo"
+    },
+    {
+        "title": "PIPE by BMX Streets",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/815780\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnu2",
+        "mode": "solo"
     }
 ]
