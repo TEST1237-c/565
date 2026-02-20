@@ -1174,5 +1174,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/870780\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnul",
         "mode": "solo"
+    },
+    {
+        "title": "Universe Sandbox 2",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/230290\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnum",
+        "mode": "solo"
     }
 ]
