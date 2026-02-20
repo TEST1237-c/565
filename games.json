@@ -1192,5 +1192,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/427520\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnuo",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Gang Beasts",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/285900\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnup",
+        "mode": "multiplayer"
     }
 ]
