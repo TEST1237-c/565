@@ -1198,5 +1198,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/285900\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnup",
         "mode": "multiplayer"
+    },
+    {
+        "title": "The Witcher 3",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/292030\\/96b8627588997030e5a6b56ca5e9944756c8f288\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnuq",
+        "mode": "solo"
     }
 ]
