@@ -1138,5 +1138,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1119730\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnue",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Farmers Dynasty",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/678900\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnuf",
+        "mode": "solo"
     }
 ]
