@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,36 +8,145 @@
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .admin-wrap { max-width: 560px; margin: 2rem auto; padding: 0 1rem; }
-        .admin-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-primary); font-weight: 700; }
-        .admin-form label { display: block; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem; }
-        .admin-form input, .admin-form select, .admin-form textarea {
-            width: 100%; margin-top: 0.25rem; padding: 0.6rem 0.75rem; border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass); background: var(--bg-card); color: var(--text-primary);
-            font-family: inherit; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s;
+        .admin-wrap {
+            max-width: 560px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
-        .admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus {
-            outline: none; border-color: var(--accent-violet); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+
+        .admin-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 700;
         }
-        .admin-form textarea { min-height: 80px; resize: vertical; }
+
+        .admin-form label {
+            display: block;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .admin-form input,
+        .admin-form select,
+        .admin-form textarea {
+            width: 100%;
+            margin-top: 0.25rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-glass);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .admin-form input:focus,
+        .admin-form select:focus,
+        .admin-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+
+        .admin-form textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
         .admin-form button[type="submit"] {
-            margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, var(--accent-violet), var(--accent-light)); color: #fff;
-            border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
             transition: transform 0.15s, box-shadow 0.2s;
         }
-        .admin-form button[type="submit"]:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4); }
-        .admin-form .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
-        .admin-msg { margin-top: 1rem; padding: 0.75rem; border-radius: var(--radius-sm); display: none; }
-        .admin-msg.success { background: rgba(34, 197, 94, 0.2); color: #86efac; }
-        .admin-msg.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
-        .admin-back { display: inline-block; margin-bottom: 1rem; color: var(--accent-light); text-decoration: none; transition: color 0.2s; }
-        .admin-back:hover { color: #fff; text-decoration: underline; }
-        .admin-toggle { margin-top: 1rem; }
-        .admin-toggle label { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; }
-        .admin-optional { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-glass); }
-        .admin-screen { display: none; }
-        .admin-screen.active { display: block; animation: adminFadeIn 0.35s ease-out; }
-        @keyframes adminFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .admin-form button[type="submit"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .admin-form .hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .admin-msg {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: var(--radius-sm);
+            display: none;
+        }
+
+        .admin-msg.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+
+        .admin-msg.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .admin-back {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .admin-back:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .admin-toggle {
+            margin-top: 1rem;
+        }
+
+        .admin-toggle label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .admin-optional {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .admin-screen {
+            display: none;
+        }
+
+        .admin-screen.active {
+            display: block;
+            animation: adminFadeIn 0.35s ease-out;
+        }
+
+        @keyframes adminFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* Login card stylé */
         .admin-login-card {
@@ -48,154 +158,508 @@
             position: relative;
             overflow: hidden;
         }
+
         .admin-login-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent-violet), var(--accent-light), transparent);
             opacity: 0.8;
         }
+
         .admin-login-icon {
-            width: 56px; height: 56px; margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center;
-            background: rgba(124, 58, 237, 0.2); border-radius: 50%; border: 1px solid rgba(124, 58, 237, 0.4);
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(124, 58, 237, 0.2);
+            border-radius: 50%;
+            border: 1px solid rgba(124, 58, 237, 0.4);
             font-size: 1.5rem;
         }
+
         .admin-login-card .admin-title {
-            text-align: center; font-family: 'Orbitron', sans-serif; font-size: 1.35rem; font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; margin-bottom: 0.5rem;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
         }
+
         .admin-login-card .admin-subtitle {
-            text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
         }
-        .admin-login-card #loginForm label { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.35rem; }
+
+        .admin-login-card #loginForm label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.35rem;
+        }
+
         .admin-login-card #loginForm input {
-            width: 100%; max-width: 100%; padding: 0.85rem 1rem 0.85rem 2.75rem;
-            border-radius: var(--radius-sm); border: 1px solid var(--border-glass);
-            background: rgba(0, 0, 0, 0.25); font-size: 1rem; color: #fff;
+            width: 100%;
+            max-width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-glass);
+            background: rgba(0, 0, 0, 0.25);
+            font-size: 1rem;
+            color: #fff;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
+
         .admin-login-card #loginForm input:focus {
-            border-color: var(--accent-violet); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
         }
-        .admin-login-card #loginForm input::placeholder { color: var(--text-muted); }
-        .admin-password-wrap { position: relative; }
+
+        .admin-login-card #loginForm input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .admin-password-wrap {
+            position: relative;
+        }
+
         .admin-password-wrap::before {
-            content: '🔐'; position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%);
-            font-size: 1.1rem; opacity: 0.7; pointer-events: none;
+            content: '🔐';
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            opacity: 0.7;
+            pointer-events: none;
         }
-        .admin-password-wrap input { padding-left: 2.75rem; }
+
+        .admin-password-wrap input {
+            padding-left: 2.75rem;
+        }
+
         .admin-login-card #loginForm button[type="submit"] {
-            width: 100%; margin-top: 1.25rem; padding: 0.9rem;
+            width: 100%;
+            margin-top: 1.25rem;
+            padding: 0.9rem;
             background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
-            border: none; border-radius: var(--radius-sm); color: #fff; font-weight: 600; font-size: 1rem;
-            cursor: pointer; transition: transform 0.15s, box-shadow 0.2s;
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
         }
+
         .admin-login-card #loginForm button[type="submit"]:hover {
-            transform: translateY(-2px); box-shadow: 0 6px 24px rgba(124, 58, 237, 0.45);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(124, 58, 237, 0.45);
         }
-        .admin-login-card #loginForm button[type="submit"]:active { transform: translateY(0); }
+
+        .admin-login-card #loginForm button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
         .admin-logout {
-            margin-top: 1rem; padding: 0.5rem 1rem; background: transparent; color: var(--text-muted);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-sm); cursor: pointer; font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
             transition: color 0.2s, border-color 0.2s;
         }
-        .admin-logout:hover { color: var(--text-primary); border-color: var(--text-muted); }
+
+        .admin-logout:hover {
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
 
         /* Liste des jeux */
-        .admin-wrap { max-width: 640px; }
-        .admin-games-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-glass); }
-        .admin-games-section h2 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-secondary); }
+        .admin-wrap {
+            max-width: 640px;
+        }
+
+        .admin-games-section {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .admin-games-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
         .admin-games-search {
-            width: 100%; padding: 0.6rem 0.85rem; margin-bottom: 0.75rem; border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass); background: var(--bg-card); color: var(--text-primary);
-            font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+            padding: 0.6rem 0.85rem;
+            margin-bottom: 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-glass);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
+
         .admin-games-search:focus {
-            outline: none; border-color: var(--accent-violet); box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+            outline: none;
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
         }
-        .admin-games-search::placeholder { color: var(--text-muted); }
-        .admin-games-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .admin-games-search::placeholder {
+            color: var(--text-muted);
+        }
+
+        .admin-games-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
         .admin-game-row {
-            display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem;
-            background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-sm);
         }
-        .admin-game-row img { width: 80px; height: 46px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
-        .admin-game-row .title { flex: 1; font-weight: 600; color: var(--text-primary); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .admin-game-row .mode { font-size: 0.8rem; color: var(--text-muted); text-transform: capitalize; }
-        .admin-game-row .actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
-        .admin-game-row .btn-edit, .admin-game-row .btn-delete {
-            padding: 0.4rem 0.65rem; border-radius: var(--radius-sm); font-size: 0.8rem; cursor: pointer; border: none; font-weight: 500;
+
+        .admin-game-row img {
+            width: 80px;
+            height: 46px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
         }
-        .admin-game-row .btn-edit { background: rgba(124, 58, 237, 0.3); color: var(--accent-light); }
-        .admin-game-row .btn-edit:hover { background: rgba(124, 58, 237, 0.5); color: #fff; }
-        .admin-game-row .btn-delete { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
-        .admin-game-row .btn-delete:hover { background: rgba(239, 68, 68, 0.4); color: #fff; }
-        .admin-games-loading { color: var(--text-muted); padding: 1rem; }
-        .admin-games-empty { color: var(--text-muted); padding: 1rem; font-size: 0.9rem; }
+
+        .admin-game-row .title {
+            flex: 1;
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .admin-game-row .mode {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: capitalize;
+        }
+
+        .admin-game-row .actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .admin-game-row .btn-edit,
+        .admin-game-row .btn-delete {
+            padding: 0.4rem 0.65rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: none;
+            font-weight: 500;
+        }
+
+        .admin-game-row .btn-edit {
+            background: rgba(124, 58, 237, 0.3);
+            color: var(--accent-light);
+        }
+
+        .admin-game-row .btn-edit:hover {
+            background: rgba(124, 58, 237, 0.5);
+            color: #fff;
+        }
+
+        .admin-game-row .btn-delete {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .admin-game-row .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.4);
+            color: #fff;
+        }
+
+        .admin-games-loading {
+            color: var(--text-muted);
+            padding: 1rem;
+        }
+
+        .admin-games-empty {
+            color: var(--text-muted);
+            padding: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Nouveau Toggle Section Jeux */
+        .admin-games-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .btn-toggle-list {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-toggle-list:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .admin-games-content {
+            transition: all 0.3s ease;
+        }
+
+        .admin-games-content.is-hidden {
+            display: none;
+        }
 
         /* Modal édition — stylé type login */
         .admin-modal-bg {
-            display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 1rem;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px);
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
             animation: adminModalFadeIn 0.25s ease-out;
         }
-        .admin-modal-bg.active { display: flex; }
-        @keyframes adminModalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .admin-modal-bg.active {
+            display: flex;
+        }
+
+        @keyframes adminModalFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
         .admin-modal {
             background: linear-gradient(145deg, rgba(30, 25, 50, 0.98), rgba(18, 15, 28, 0.98));
-            border-radius: var(--radius-lg); border: 1px solid var(--border-accent);
-            max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto;
-            box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1), 0 24px 64px rgba(0,0,0,0.5), 0 0 80px -16px rgba(124, 58, 237, 0.2);
-            position: relative; animation: adminModalSlideIn 0.3s ease-out;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-accent);
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1), 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 80px -16px rgba(124, 58, 237, 0.2);
+            position: relative;
+            animation: adminModalSlideIn 0.3s ease-out;
         }
-        @keyframes adminModalSlideIn { from { opacity: 0; transform: scale(0.96) translateY(-10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        @keyframes adminModalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
         .admin-modal::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
             background: linear-gradient(90deg, transparent, var(--accent-violet), var(--accent-light), transparent);
-            opacity: 0.9; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            opacity: 0.9;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
         }
+
         .admin-modal .modal-close {
-            position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px;
-            border: none; background: rgba(255,255,255,0.08); color: var(--text-secondary);
-            border-radius: 50%; font-size: 1.4rem; line-height: 1; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            border-radius: 50%;
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s;
         }
-        .admin-modal .modal-close:hover { background: rgba(239, 68, 68, 0.3); color: #fca5a5; }
-        .admin-modal .modal-header { text-align: center; padding: 1.75rem 2rem 0; padding-right: 3rem; }
+
+        .admin-modal .modal-close:hover {
+            background: rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .admin-modal .modal-header {
+            text-align: center;
+            padding: 1.75rem 2rem 0;
+            padding-right: 3rem;
+        }
+
         .admin-modal .modal-icon {
-            width: 52px; height: 52px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;
-            background: rgba(124, 58, 237, 0.25); border-radius: 50%; border: 1px solid rgba(124, 58, 237, 0.45);
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(124, 58, 237, 0.25);
+            border-radius: 50%;
+            border: 1px solid rgba(124, 58, 237, 0.45);
             font-size: 1.4rem;
         }
+
         .admin-modal .modal-title {
-            font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
         }
-        .admin-modal .modal-body { padding: 1.25rem 2rem 2rem; }
-        .admin-modal .modal-body label { display: block; margin-top: 0.85rem; margin-bottom: 0.3rem; color: var(--text-secondary); font-size: 0.9rem; }
-        .admin-modal .modal-body input, .admin-modal .modal-body select, .admin-modal .modal-body textarea {
-            width: 100%; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass); background: rgba(0, 0, 0, 0.25); color: var(--text-primary);
-            font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s;
+
+        .admin-modal .modal-body {
+            padding: 1.25rem 2rem 2rem;
         }
-        .admin-modal .modal-body input:focus, .admin-modal .modal-body select:focus, .admin-modal .modal-body textarea:focus {
-            outline: none; border-color: var(--accent-violet); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+
+        .admin-modal .modal-body label {
+            display: block;
+            margin-top: 0.85rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
-        .admin-modal .modal-body textarea { min-height: 72px; resize: vertical; }
-        .admin-modal .modal-body .admin-toggle { margin-top: 1rem; }
-        .admin-modal .modal-body .admin-optional { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-glass); }
-        .admin-modal .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
-        .admin-modal .modal-actions button { flex: 1; padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: transform 0.15s, box-shadow 0.2s; border: none; }
+
+        .admin-modal .modal-body input,
+        .admin-modal .modal-body select,
+        .admin-modal .modal-body textarea {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-glass);
+            background: rgba(0, 0, 0, 0.25);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .admin-modal .modal-body input:focus,
+        .admin-modal .modal-body select:focus,
+        .admin-modal .modal-body textarea:focus {
+            outline: none;
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+
+        .admin-modal .modal-body textarea {
+            min-height: 72px;
+            resize: vertical;
+        }
+
+        .admin-modal .modal-body .admin-toggle {
+            margin-top: 1rem;
+        }
+
+        .admin-modal .modal-body .admin-optional {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .admin-modal .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .admin-modal .modal-actions button {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: transform 0.15s, box-shadow 0.2s;
+            border: none;
+        }
+
         .admin-modal .modal-actions .btn-save {
-            background: linear-gradient(135deg, var(--accent-violet), var(--accent-light)); color: #fff;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
+            color: #fff;
         }
-        .admin-modal .modal-actions .btn-save:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4); }
+
+        .admin-modal .modal-actions .btn-save:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
         .admin-modal .modal-actions .btn-cancel {
-            background: transparent; color: var(--text-secondary); border: 1px solid var(--border-glass);
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-glass);
         }
-        .admin-modal .modal-actions .btn-cancel:hover { color: var(--text-primary); border-color: var(--text-muted); }
+
+        .admin-modal .modal-actions .btn-cancel:hover {
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
     </style>
 </head>
+
 <body class="page-jeux">
     <div class="container-jeux">
         <a href="index.html" class="admin-back">← Retour au site</a>
@@ -209,7 +673,8 @@
                     <form id="loginForm">
                         <label for="adminPassword">Mot de passe</label>
                         <div class="admin-password-wrap">
-                            <input type="password" id="adminPassword" name="password" required placeholder="••••••••" autocomplete="current-password">
+                            <input type="password" id="adminPassword" name="password" required placeholder="••••••••"
+                                autocomplete="current-password">
                         </div>
                         <button type="submit">Se connecter</button>
                     </form>
@@ -253,10 +718,18 @@
                 <div class="admin-msg" id="adminMsg"></div>
 
                 <div class="admin-games-section">
-                    <h2>Jeux actuels</h2>
-                    <input type="text" class="admin-games-search" id="adminGamesSearch" placeholder="Rechercher un jeu (titre ou mode)…">
-                    <div id="adminGamesList" class="admin-games-list">
-                        <span class="admin-games-loading">Chargement…</span>
+                    <div class="admin-games-header">
+                        <h2>Jeux actuels</h2>
+                        <button type="button" class="btn-toggle-list" id="toggleGamesBtn">
+                            <span class="icon">👁️</span> <span class="text">Masquer les jeux</span>
+                        </button>
+                    </div>
+                    <div id="adminGamesContainer" class="admin-games-content">
+                        <input type="text" class="admin-games-search" id="adminGamesSearch"
+                            placeholder="Rechercher un jeu (titre ou mode)…">
+                        <div id="adminGamesList" class="admin-games-list">
+                            <span class="admin-games-loading">Chargement…</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -285,7 +758,8 @@
                     <option value="multiplayer">Multiplayer</option>
                 </select>
                 <div class="admin-toggle">
-                    <label><input type="checkbox" name="hasModal" id="editHasModal"> Instructions d'installation (modal)</label>
+                    <label><input type="checkbox" name="hasModal" id="editHasModal"> Instructions d'installation
+                        (modal)</label>
                 </div>
                 <div class="admin-optional" id="editModalFields" style="display: none;">
                     <label for="editModalId">ID du modal</label>
@@ -293,7 +767,8 @@
                     <label for="editModalTitle">Titre du modal</label>
                     <input type="text" name="modalTitle" id="editModalTitle" placeholder="Comment installer ?">
                     <label for="editModalContent">Contenu HTML du modal</label>
-                    <textarea name="modalContent" id="editModalContent" placeholder="<ul><li>Étape 1</li></ul>..."></textarea>
+                    <textarea name="modalContent" id="editModalContent"
+                        placeholder="<ul><li>Étape 1</li></ul>..."></textarea>
                 </div>
                 <div class="modal-actions">
                     <button type="submit" class="btn-save">Enregistrer</button>
@@ -319,6 +794,25 @@
         if (isLoggedIn()) {
             showScreen('addGameScreen');
             loadGames();
+        }
+
+        // Toggle visibility de la liste des jeux
+        const toggleBtn = document.getElementById('toggleGamesBtn');
+        const gamesContainer = document.getElementById('adminGamesContainer');
+        if (toggleBtn && gamesContainer) {
+            toggleBtn.addEventListener('click', () => {
+                const isHidden = gamesContainer.classList.toggle('is-hidden');
+                const textEl = toggleBtn.querySelector('.text');
+                const iconEl = toggleBtn.querySelector('.icon');
+
+                if (isHidden) {
+                    textEl.textContent = 'Afficher les jeux';
+                    iconEl.textContent = '👁️‍🗨️';
+                } else {
+                    textEl.textContent = 'Masquer les jeux';
+                    iconEl.textContent = '👁️';
+                }
+            });
         }
 
         function getAdminPassword() {
@@ -550,4 +1044,5 @@
         });
     </script>
 </body>
+
 </html>
