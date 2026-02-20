@@ -1144,5 +1144,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/678900\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnuf",
         "mode": "solo"
+    },
+    {
+        "title": "Cup Head",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/268910\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnug",
+        "mode": "solo"
     }
 ]
