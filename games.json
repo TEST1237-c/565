@@ -1066,5 +1066,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/815780\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnu2",
         "mode": "solo"
+    },
+    {
+        "title": "Outer Wilds",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/753640\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnu3",
+        "mode": "solo"
     }
 ]
