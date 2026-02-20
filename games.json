@@ -1078,5 +1078,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1049410\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnu4",
         "mode": "solo"
+    },
+    {
+        "title": "Motorsport Manager",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/415200\\/97b6dfaa473ac7e76f7549a733ee6b7b6f9e39ab\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnu5",
+        "mode": "solo"
     }
 ]
