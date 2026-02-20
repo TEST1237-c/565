@@ -1186,5 +1186,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/526870\\/290c413f4075e43a5d2e106dcbbaa036b3271621\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnun",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Factorio",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/427520\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnuo",
+        "mode": "multiplayer"
     }
 ]
