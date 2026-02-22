@@ -1330,5 +1330,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/367520\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFI",
         "mode": "solo"
+    },
+    {
+        "title": "Starbound",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/268090\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFJ",
+        "mode": "solo"
     }
 ]
