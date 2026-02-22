@@ -1548,5 +1548,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/10180\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnGh",
         "mode": "solo"
+    },
+    {
+        "title": "Northgard",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/466560\\/3f653067940e08ffa04b6867fd5d7787cf2e49ae\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnGi",
+        "mode": "multiplayer"
     }
 ]
