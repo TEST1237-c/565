@@ -1418,5 +1418,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1253680\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFW",
         "mode": "solo"
+    },
+    {
+        "title": "Hitman",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/236870\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFX",
+        "mode": "solo"
     }
 ]
