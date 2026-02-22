@@ -1578,5 +1578,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/739630\\/7f23b8880cd70d80d9426e1c61e434ff75ac87f4\\/capsule_616x353_alt_assets_6.jpg",
         "link": "https://www.clictune.com/mnGm",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Partisans 1941",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1227530\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnGn",
+        "mode": "solo"
     }
 ]
