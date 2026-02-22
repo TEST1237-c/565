@@ -1806,5 +1806,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/517970\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnKn",
         "mode": "solo"
+    },
+    {
+        "title": "Devour",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1274570\\/5f17e30c0192b9ef30e809683b91219821c49dd8\\/capsule_616x353_alt_assets_4.jpg",
+        "link": "https://www.clictune.com/mnKo",
+        "mode": "multiplayer"
     }
 ]
