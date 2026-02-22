@@ -1520,5 +1520,15 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1250410\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnGd",
         "mode": "multiplayer"
+    },
+    {
+        "title": "No Man's Sky",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/275850\\/d3d1550cec60e9d6b3d1ec00dbb6190e314683b2\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnGe",
+        "mode": "multiplayer",
+        "hasModal": true,
+        "modalId": "No-Man's-Sky",
+        "modalTitle": "Comment Lancer No Man's Sky ?",
+        "modalContent": "<p><strong>Voici comment lancer No Man&#39;s Sky :<\\/strong><\\/p><p><br><\\/p><ol><li>Dans le menu <strong>D\\u00e9marrer de Windows<\\/strong>, recherchez les param\\u00e8tres de <strong>d\\u00e9veloppeur<\\/strong>. Une fois ouvert, activez le mode d\\u00e9veloppeur.<\\/li><li>Lancez <strong>GDK Helper.bat<\\/strong> en tant qu&#39;administrateur.<\\/li><li>Une fois l&#39;installation termin\\u00e9e, <strong>d\\u00e9cochez le mode d\\u00e9veloppeur<\\/strong>.<\\/li><li>Lancez le jeu depuis le menu <strong>D\\u00e9marrer de Windows<\\/strong>.<\\/li><li>Connectez-vous avec votre compte <strong>Xbox<\\/strong>.<\\/li><\\/ol><p><br><\\/p><p><strong>\\u26a0\\ufe0f <\\/strong>Le jeu fonctionne avec tout le monde, que ce soit ma version ou la version officielle \\u26a0\\ufe0f<\\/p>"
     }
 ]
