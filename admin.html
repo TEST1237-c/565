@@ -8,470 +8,983 @@
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .admin-wrap {
-            max-width: 560px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+        /* ===================== ADMIN RESET ===================== */
+        .admin-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .admin-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-            font-weight: 700;
+        /* ===================== TOAST ===================== */
+        #toastContainer {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: .65rem;
+            pointer-events: none;
         }
 
-        .admin-form label {
-            display: block;
-            margin-top: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .admin-form input,
-        .admin-form select,
-        .admin-form textarea {
-            width: 100%;
-            margin-top: 0.25rem;
-            padding: 0.6rem 0.75rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .admin-form input:focus,
-        .admin-form select:focus,
-        .admin-form textarea:focus {
-            outline: none;
-            border-color: var(--accent-violet);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-        }
-
-        .admin-form textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        .admin-form button[type="submit"] {
-            margin-top: 1.5rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
-            color: #fff;
-            border: none;
-            border-radius: var(--radius-sm);
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .85rem 1.25rem;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            font-size: .9rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.2s;
+            pointer-events: auto;
+            animation: toastIn .35s cubic-bezier(.34, 1.56, .64, 1) both;
+            min-width: 260px;
+            max-width: 380px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
         }
 
-        .admin-form button[type="submit"]:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
-        }
-
-        .admin-form .hint {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
-
-        .admin-msg {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            border-radius: var(--radius-sm);
-            display: none;
-        }
-
-        .admin-msg.success {
-            background: rgba(34, 197, 94, 0.2);
+        .toast.success {
+            background: rgba(34, 197, 94, .15);
+            border: 1px solid rgba(34, 197, 94, .35);
             color: #86efac;
         }
 
-        .admin-msg.error {
-            background: rgba(239, 68, 68, 0.2);
+        .toast.error {
+            background: rgba(239, 68, 68, .15);
+            border: 1px solid rgba(239, 68, 68, .35);
             color: #fca5a5;
         }
 
-        .admin-back {
-            display: inline-block;
-            margin-bottom: 1rem;
-            color: var(--accent-light);
-            text-decoration: none;
-            transition: color 0.2s;
+        .toast.info {
+            background: rgba(139, 92, 246, .15);
+            border: 1px solid rgba(139, 92, 246, .35);
+            color: #c4b5fd;
         }
 
-        .admin-back:hover {
-            color: #fff;
-            text-decoration: underline;
+        .toast .toast-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
-        .admin-toggle {
-            margin-top: 1rem;
+        .toast.hide {
+            animation: toastOut .3s ease forwards;
         }
 
-        .admin-toggle label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-
-        .admin-optional {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .admin-screen {
-            display: none;
-        }
-
-        .admin-screen.active {
-            display: block;
-            animation: adminFadeIn 0.35s ease-out;
-        }
-
-        @keyframes adminFadeIn {
+        @keyframes toastIn {
             from {
                 opacity: 0;
-                transform: translateY(8px);
+                transform: translateX(60px) scale(.9);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0) scale(1);
             }
         }
 
-        /* Login card stylé */
-        .admin-login-card {
-            background: linear-gradient(145deg, rgba(30, 25, 50, 0.6), rgba(15, 12, 25, 0.8));
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            border: 1px solid var(--border-accent);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(124, 58, 237, 0.1), 0 0 60px -12px rgba(124, 58, 237, 0.15);
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+        }
+
+        /* ===================== LOGIN SCREEN ===================== */
+        .login-screen {
+            display: none;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-screen.active {
+            display: flex;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: linear-gradient(145deg, rgba(25, 20, 45, .8), rgba(12, 10, 22, .9));
+            border: 1px solid rgba(139, 92, 246, .3);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 0 0 1px rgba(139, 92, 246, .1), 0 30px 80px rgba(0, 0, 0, .5), 0 0 80px -20px rgba(139, 92, 246, .3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp .5s cubic-bezier(.4, 0, .2, 1) both;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-violet), var(--accent-light), var(--accent-cyan), transparent);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo .icon-wrap {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1rem;
+            background: rgba(139, 92, 246, .2);
+            border: 1px solid rgba(139, 92, 246, .4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 0 30px rgba(139, 92, 246, .3);
+        }
+
+        .login-logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-logo p {
+            color: var(--text-muted);
+            font-size: .85rem;
+            margin-top: .35rem;
+        }
+
+        .field-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: .8rem;
+            color: var(--text-muted);
+            margin-bottom: .45rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .field-input-wrap {
+            position: relative;
+        }
+
+        .field-input-wrap .fi-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            opacity: .5;
+            pointer-events: none;
+        }
+
+        .field-input-wrap input {
+            width: 100%;
+            padding: .85rem 1rem .85rem 2.75rem;
+            background: rgba(0, 0, 0, .3);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color .25s, box-shadow .25s;
+            outline: none;
+        }
+
+        .field-input-wrap input:focus {
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, .2);
+        }
+
+        .field-input-wrap input::placeholder {
+            color: rgba(255, 255, 255, .25);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: .95rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-dark));
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: .05em;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, .35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, .5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* ===================== MAIN LAYOUT ===================== */
+        .admin-layout {
+            display: none;
+            flex: 1;
+            min-height: 100vh;
+        }
+
+        .admin-layout.active {
+            display: flex;
+        }
+
+        /* SIDEBAR */
+        .admin-sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: rgba(10, 8, 20, .85);
+            border-right: 1px solid rgba(255, 255, 255, .06);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .5rem .75rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            margin-bottom: 1.25rem;
+        }
+
+        .sidebar-brand .brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, .4);
+        }
+
+        .sidebar-brand .brand-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: .95rem;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-brand .brand-sub {
+            font-size: .7rem;
+            color: var(--text-muted);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .7rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: .88rem;
+            font-weight: 500;
+            transition: all .2s;
+            border: 1px solid transparent;
+            background: none;
+            font-family: inherit;
+            text-decoration: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .05);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: rgba(139, 92, 246, .15);
+            color: var(--accent-light);
+            border-color: rgba(139, 92, 246, .25);
+            box-shadow: inset 0 0 20px rgba(139, 92, 246, .05);
+        }
+
+        .nav-item .ni-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .nav-item .ni-badge {
+            margin-left: auto;
+            background: rgba(139, 92, 246, .3);
+            color: var(--accent-light);
+            font-size: .7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 99px;
+        }
+
+        .sidebar-footer {
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .65rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(239, 68, 68, .2);
+            background: rgba(239, 68, 68, .08);
+            color: #fca5a5;
+            font-size: .85rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s;
+            width: 100%;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .18);
+            border-color: rgba(239, 68, 68, .4);
+        }
+
+        .btn-back-site {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .65rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .07);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: .85rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s;
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .btn-back-site:hover {
+            background: rgba(255, 255, 255, .05);
+            color: var(--text-primary);
+        }
+
+        /* MAIN CONTENT */
+        .admin-main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            min-width: 0;
+        }
+
+        /* PAGE HEADER */
+        .page-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-hdr-left h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hdr-left p {
+            color: var(--text-muted);
+            font-size: .85rem;
+            margin-top: .2rem;
+        }
+
+        /* STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform .25s, box-shadow .25s;
             position: relative;
             overflow: hidden;
         }
 
-        .admin-login-card::before {
+        .stat-card::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-violet), var(--accent-light), transparent);
-            opacity: 0.8;
+            background: var(--stat-color, var(--accent-violet));
+            border-radius: 16px 16px 0 0;
         }
 
-        .admin-login-icon {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 1.25rem;
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .3);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(124, 58, 237, 0.2);
-            border-radius: 50%;
-            border: 1px solid rgba(124, 58, 237, 0.4);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            background: var(--stat-bg, rgba(139, 92, 246, .15));
+            border: 1px solid var(--stat-border, rgba(139, 92, 246, .3));
         }
 
-        .admin-login-card .admin-title {
-            text-align: center;
+        .stat-info .stat-val {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.35rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
         }
 
-        .admin-login-card .admin-subtitle {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        .stat-info .stat-lbl {
+            font-size: .75rem;
+            color: var(--text-muted);
+            margin-top: .25rem;
+        }
+
+        /* PANEL SECTIONS */
+        .admin-panel {
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: 16px;
+            overflow: hidden;
             margin-bottom: 1.5rem;
         }
 
-        .admin-login-card #loginForm label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.35rem;
+        .panel-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            background: rgba(255, 255, 255, .02);
         }
 
-        .admin-login-card #loginForm input {
-            width: 100%;
-            max-width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.75rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass);
-            background: rgba(0, 0, 0, 0.25);
-            font-size: 1rem;
-            color: #fff;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .admin-login-card #loginForm input:focus {
-            border-color: var(--accent-violet);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
-        }
-
-        .admin-login-card #loginForm input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .admin-password-wrap {
-            position: relative;
-        }
-
-        .admin-password-wrap::before {
-            content: '🔐';
-            position: absolute;
-            left: 0.9rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.1rem;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .admin-password-wrap input {
-            padding-left: 2.75rem;
-        }
-
-        .admin-login-card #loginForm button[type="submit"] {
-            width: 100%;
-            margin-top: 1.25rem;
-            padding: 0.9rem;
-            background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
-            border: none;
-            border-radius: var(--radius-sm);
-            color: #fff;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.2s;
-        }
-
-        .admin-login-card #loginForm button[type="submit"]:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(124, 58, 237, 0.45);
-        }
-
-        .admin-login-card #loginForm button[type="submit"]:active {
-            transform: translateY(0);
-        }
-
-        .admin-logout {
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        .admin-logout:hover {
+        .panel-hdr-title {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            font-weight: 700;
+            font-size: .95rem;
             color: var(--text-primary);
-            border-color: var(--text-muted);
         }
 
-        /* Liste des jeux */
-        .admin-wrap {
-            max-width: 640px;
-        }
-
-        .admin-games-section {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .admin-games-section h2 {
-            font-family: 'Orbitron', sans-serif;
+        .panel-hdr-title .ph-icon {
             font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-secondary);
         }
 
-        .admin-games-search {
-            width: 100%;
-            padding: 0.6rem 0.85rem;
-            margin-bottom: 0.75rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
+        .panel-body {
+            padding: 1.5rem;
         }
 
-        .admin-games-search:focus {
-            outline: none;
-            border-color: var(--accent-violet);
-            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+        /* FORM GRID */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
-        .admin-games-search::placeholder {
-            color: var(--text-muted);
+        .form-grid .span2 {
+            grid-column: span 2;
         }
 
-        .admin-games-list {
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid .span2 {
+                grid-column: span 1;
+            }
+        }
+
+        .form-field {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: .4rem;
         }
 
-        .admin-game-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.6rem 0.75rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-sm);
-        }
-
-        .admin-game-row img {
-            width: 80px;
-            height: 46px;
-            object-fit: cover;
-            border-radius: 4px;
-            flex-shrink: 0;
-        }
-
-        .admin-game-row .title {
-            flex: 1;
+        .form-field label {
+            font-size: .78rem;
+            color: var(--text-muted);
+            letter-spacing: .04em;
+            text-transform: uppercase;
             font-weight: 600;
-            color: var(--text-primary);
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
-        .admin-game-row .mode {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: capitalize;
-        }
-
-        .admin-game-row .actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-shrink: 0;
-        }
-
-        .admin-game-row .btn-edit,
-        .admin-game-row .btn-delete {
-            padding: 0.4rem 0.65rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.8rem;
-            cursor: pointer;
-            border: none;
-            font-weight: 500;
-        }
-
-        .admin-game-row .btn-edit {
-            background: rgba(124, 58, 237, 0.3);
-            color: var(--accent-light);
-        }
-
-        .admin-game-row .btn-edit:hover {
-            background: rgba(124, 58, 237, 0.5);
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            padding: .7rem .9rem;
+            background: rgba(0, 0, 0, .25);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 10px;
             color: #fff;
+            font-size: .95rem;
+            font-family: inherit;
+            transition: border-color .2s, box-shadow .2s;
+            outline: none;
+            width: 100%;
         }
 
-        .admin-game-row .btn-delete {
-            background: rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, .2);
         }
 
-        .admin-game-row .btn-delete:hover {
-            background: rgba(239, 68, 68, 0.4);
-            color: #fff;
+        .form-field input::placeholder,
+        .form-field textarea::placeholder {
+            color: rgba(255, 255, 255, .2);
         }
 
-        .admin-games-loading {
+        .form-field textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .form-field select option {
+            background: #1a1530;
+        }
+
+        .form-field .hint {
+            font-size: .75rem;
             color: var(--text-muted);
-            padding: 1rem;
         }
 
-        .admin-games-empty {
-            color: var(--text-muted);
-            padding: 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* Nouveau Toggle Section Jeux */
-        .admin-games-header {
+        .toggle-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: .75rem;
+            padding: .8rem;
+            background: rgba(255, 255, 255, .02);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .06);
+            cursor: pointer;
+        }
+
+        .toggle-row input[type=checkbox] {
+            display: none;
+        }
+
+        .toggle-knob {
+            width: 42px;
+            height: 24px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 99px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            position: relative;
+            flex-shrink: 0;
+            transition: background .25s, border-color .25s;
+        }
+
+        .toggle-knob::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .5);
+            transition: transform .25s, background .25s;
+        }
+
+        input:checked+.toggle-knob {
+            background: rgba(139, 92, 246, .5);
+            border-color: rgba(139, 92, 246, .6);
+        }
+
+        input:checked+.toggle-knob::after {
+            transform: translateX(18px);
+            background: var(--accent-light);
+        }
+
+        .toggle-label {
+            font-size: .9rem;
+            color: var(--text-secondary);
+        }
+
+        .optional-fields {
+            border: 1px dashed rgba(139, 92, 246, .25);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: .75rem;
+            display: none;
+        }
+
+        .optional-fields.visible {
+            display: flex;
+            flex-direction: column;
+            gap: .75rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: .75rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+            align-items: center;
+        }
+
+        .btn-submit {
+            padding: .8rem 2rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-dark));
+            color: #fff;
+            font-size: .9rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: .04em;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, .3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(139, 92, 246, .5);
+        }
+
+        .btn-ghost {
+            padding: .75rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: .88rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, .05);
+            color: var(--text-primary);
+        }
+
+        /* GAMES LIST */
+        .games-toolbar {
+            display: flex;
+            gap: .75rem;
+            align-items: center;
+            flex-wrap: wrap;
             margin-bottom: 1rem;
         }
 
-        .btn-toggle-list {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass);
-            color: var(--text-secondary);
-            padding: 0.45rem 1rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .search-admin {
+            flex: 1;
+            min-width: 180px;
+            padding: .65rem 1rem .65rem 2.5rem;
+            background: rgba(0, 0, 0, .25);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: .9rem;
             font-family: inherit;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+            position: relative;
+        }
+
+        .search-admin:focus {
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, .2);
+        }
+
+        .search-admin::placeholder {
+            color: rgba(255, 255, 255, .25);
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .search-wrap .s-icon {
+            position: absolute;
+            left: .8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, .3);
+            pointer-events: none;
+            font-size: .9rem;
+        }
+
+        .filter-pill {
+            padding: .55rem 1rem;
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 99px;
+            background: rgba(255, 255, 255, .03);
+            color: var(--text-muted);
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s;
+            white-space: nowrap;
+        }
+
+        .filter-pill.active {
+            background: rgba(139, 92, 246, .2);
+            border-color: rgba(139, 92, 246, .4);
+            color: var(--accent-light);
+        }
+
+        .filter-pill:hover {
+            border-color: rgba(255, 255, 255, .2);
+            color: var(--text-primary);
+        }
+
+        .games-table {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .game-row {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: .85rem;
+            padding: .75rem 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .025);
+            border: 1px solid rgba(255, 255, 255, .06);
+            transition: all .2s;
+            position: relative;
         }
 
-        .btn-toggle-list:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
+        .game-row:hover {
+            background: rgba(255, 255, 255, .05);
+            border-color: rgba(255, 255, 255, .12);
         }
 
-        .admin-games-content {
-            transition: all 0.3s ease;
+        .game-row.hidden-game {
+            opacity: .5;
         }
 
-        .admin-games-content.is-hidden {
-            display: none;
+        .game-thumb {
+            width: 88px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, .05);
         }
 
-        /* Modal édition — stylé type login */
-        .admin-modal-bg {
+        .game-thumb-placeholder {
+            width: 88px;
+            height: 50px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, .05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, .2);
+        }
+
+        .game-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .game-info .g-title {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: .9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-info .g-meta {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-top: .2rem;
+        }
+
+        .g-badge {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 99px;
+        }
+
+        .g-badge.solo {
+            background: rgba(6, 182, 212, .15);
+            border: 1px solid rgba(6, 182, 212, .3);
+            color: #67e8f9;
+        }
+
+        .g-badge.multiplayer {
+            background: rgba(139, 92, 246, .15);
+            border: 1px solid rgba(139, 92, 246, .3);
+            color: var(--accent-light);
+        }
+
+        .g-badge.hidden {
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            color: var(--text-muted);
+        }
+
+        .g-badge.has-modal {
+            background: rgba(34, 197, 94, .1);
+            border: 1px solid rgba(34, 197, 94, .25);
+            color: #86efac;
+        }
+
+        .game-row-actions {
+            display: flex;
+            gap: .4rem;
+            flex-shrink: 0;
+        }
+
+        .act-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: .85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            flex-shrink: 0;
+        }
+
+        .act-btn.edit {
+            background: rgba(139, 92, 246, .2);
+            color: var(--accent-light);
+        }
+
+        .act-btn.edit:hover {
+            background: rgba(139, 92, 246, .4);
+        }
+
+        .act-btn.toggle-vis {
+            background: rgba(255, 200, 50, .1);
+            color: #fde68a;
+        }
+
+        .act-btn.toggle-vis:hover {
+            background: rgba(255, 200, 50, .25);
+        }
+
+        .act-btn.del {
+            background: rgba(239, 68, 68, .12);
+            color: #fca5a5;
+        }
+
+        .act-btn.del:hover {
+            background: rgba(239, 68, 68, .3);
+        }
+
+        .games-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            font-size: .9rem;
+        }
+
+        .games-empty .em-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: .4;
+        }
+
+        /* EDIT MODAL */
+        .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            z-index: 100;
+            z-index: 1000;
+            background: rgba(0, 0, 0, .7);
+            backdrop-filter: blur(6px);
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            animation: adminModalFadeIn 0.25s ease-out;
         }
 
-        .admin-modal-bg.active {
+        .modal-overlay.active {
             display: flex;
+            animation: fadeIn .25s ease;
         }
 
-        @keyframes adminModalFadeIn {
+        @keyframes fadeIn {
             from {
                 opacity: 0;
             }
@@ -481,23 +994,23 @@
             }
         }
 
-        .admin-modal {
-            background: linear-gradient(145deg, rgba(30, 25, 50, 0.98), rgba(18, 15, 28, 0.98));
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-accent);
-            max-width: 520px;
+        .edit-modal {
             width: 100%;
+            max-width: 560px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1), 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 80px -16px rgba(124, 58, 237, 0.2);
+            background: linear-gradient(145deg, rgba(25, 20, 45, .98), rgba(12, 10, 22, .98));
+            border: 1px solid rgba(139, 92, 246, .25);
+            border-radius: 20px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .6), 0 0 60px -20px rgba(139, 92, 246, .2);
             position: relative;
-            animation: adminModalSlideIn 0.3s ease-out;
+            animation: modalIn .35s cubic-bezier(.34, 1.56, .64, 1);
         }
 
-        @keyframes adminModalSlideIn {
+        @keyframes modalIn {
             from {
                 opacity: 0;
-                transform: scale(0.96) translateY(-10px);
+                transform: scale(.93) translateY(-16px);
             }
 
             to {
@@ -506,504 +1019,574 @@
             }
         }
 
-        .admin-modal::before {
+        .edit-modal::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 3px;
+            border-radius: 20px 20px 0 0;
             background: linear-gradient(90deg, transparent, var(--accent-violet), var(--accent-light), transparent);
-            opacity: 0.9;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
         }
 
-        .admin-modal .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 36px;
-            height: 36px;
+        .modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 1.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .modal-head-title {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-close-btn {
+            width: 32px;
+            height: 32px;
             border: none;
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-secondary);
             border-radius: 50%;
-            font-size: 1.4rem;
-            line-height: 1;
+            background: rgba(255, 255, 255, .07);
+            color: var(--text-secondary);
             cursor: pointer;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s, color 0.2s;
+            transition: background .2s, color .2s;
         }
 
-        .admin-modal .modal-close:hover {
-            background: rgba(239, 68, 68, 0.3);
+        .modal-close-btn:hover {
+            background: rgba(239, 68, 68, .25);
             color: #fca5a5;
         }
 
-        .admin-modal .modal-header {
-            text-align: center;
-            padding: 1.75rem 2rem 0;
-            padding-right: 3rem;
-        }
-
-        .admin-modal .modal-icon {
-            width: 52px;
-            height: 52px;
-            margin: 0 auto 1rem;
+        .modal-content {
+            padding: 1.5rem 1.75rem;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(124, 58, 237, 0.25);
-            border-radius: 50%;
-            border: 1px solid rgba(124, 58, 237, 0.45);
-            font-size: 1.4rem;
+            flex-direction: column;
+            gap: .85rem;
         }
 
-        .admin-modal .modal-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 0;
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .admin-modal .modal-body {
-            padding: 1.25rem 2rem 2rem;
-        }
+        /* Responsive */
+        @media (max-width: 800px) {
+            .admin-sidebar {
+                width: 60px;
+                padding: 1rem .5rem;
+            }
 
-        .admin-modal .modal-body label {
-            display: block;
-            margin-top: 0.85rem;
-            margin-bottom: 0.3rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
+            .sidebar-brand .brand-name,
+            .sidebar-brand .brand-sub,
+            .nav-item span:not(.ni-icon),
+            .nav-item .ni-badge,
+            .sidebar-footer span,
+            .btn-logout span:not(:first-child),
+            .btn-back-site span:not(:first-child) {
+                display: none;
+            }
 
-        .admin-modal .modal-body input,
-        .admin-modal .modal-body select,
-        .admin-modal .modal-body textarea {
-            width: 100%;
-            padding: 0.65rem 0.85rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-glass);
-            background: rgba(0, 0, 0, 0.25);
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
+            .admin-main {
+                padding: 1.25rem;
+            }
 
-        .admin-modal .modal-body input:focus,
-        .admin-modal .modal-body select:focus,
-        .admin-modal .modal-body textarea:focus {
-            outline: none;
-            border-color: var(--accent-violet);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-        }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
 
-        .admin-modal .modal-body textarea {
-            min-height: 72px;
-            resize: vertical;
-        }
-
-        .admin-modal .modal-body .admin-toggle {
-            margin-top: 1rem;
-        }
-
-        .admin-modal .modal-body .admin-optional {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .admin-modal .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        .admin-modal .modal-actions button {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: transform 0.15s, box-shadow 0.2s;
-            border: none;
-        }
-
-        .admin-modal .modal-actions .btn-save {
-            background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
-            color: #fff;
-        }
-
-        .admin-modal .modal-actions .btn-save:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
-        }
-
-        .admin-modal .modal-actions .btn-cancel {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-glass);
-        }
-
-        .admin-modal .modal-actions .btn-cancel:hover {
-            color: var(--text-primary);
-            border-color: var(--text-muted);
+            .form-grid .span2 {
+                grid-column: span 1;
+            }
         }
     </style>
 </head>
 
-<body class="page-jeux">
-    <div class="container-jeux">
-        <a href="index.html" class="admin-back">← Retour au site</a>
-        <div class="admin-wrap">
-            <!-- Écran de connexion -->
-            <div class="admin-screen active" id="loginScreen">
-                <div class="admin-login-card">
-                    <div class="admin-login-icon" aria-hidden="true">🔒</div>
-                    <h2 class="admin-title">Espace admin</h2>
-                    <p class="admin-subtitle">Entre ton mot de passe pour accéder à l’ajout de jeux</p>
-                    <form id="loginForm">
-                        <label for="adminPassword">Mot de passe</label>
-                        <div class="admin-password-wrap">
-                            <input type="password" id="adminPassword" name="password" required placeholder="••••••••"
-                                autocomplete="current-password">
+<body class="admin-page">
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer"></div>
+
+    <!-- =================== LOGIN SCREEN =================== -->
+    <div class="login-screen active" id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">
+                <div class="icon-wrap">🔐</div>
+                <h1>NOVAPLAY ADMIN</h1>
+                <p>Accès sécurisé à l'espace administrateur</p>
+            </div>
+            <form id="loginForm">
+                <div class="field-group">
+                    <label>Mot de passe</label>
+                    <div class="field-input-wrap">
+                        <span class="fi-icon">🔑</span>
+                        <input type="password" id="adminPassword" placeholder="••••••••" autocomplete="current-password"
+                            required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" id="loginBtn">Se connecter →</button>
+            </form>
+            <p style="text-align:center;margin-top:1.25rem;font-size:.8rem;color:var(--text-muted);">
+                <a href="index.html" style="color:var(--accent-light);text-decoration:none;">← Retour au site</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- =================== ADMIN LAYOUT =================== -->
+    <div class="admin-layout" id="adminLayout">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">🎮</div>
+                <div>
+                    <div class="brand-name">NovaPlay</div>
+                    <div class="brand-sub">Admin Panel</div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-page="dashboard" onclick="showAdminPage('dashboard')">
+                    <span class="ni-icon">📊</span>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-page="add-game" onclick="showAdminPage('add-game')">
+                    <span class="ni-icon">➕</span>
+                    <span>Ajouter un jeu</span>
+                </button>
+                <button class="nav-item" data-page="manage-games" onclick="showAdminPage('manage-games')">
+                    <span class="ni-icon">🗂️</span>
+                    <span>Gérer les jeux</span>
+                    <span class="ni-badge" id="navGameCount">0</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="btn-back-site">
+                    <span>🌐</span>
+                    <span>Voir le site</span>
+                </a>
+                <button class="btn-logout" id="logoutBtn">
+                    <span>🚪</span>
+                    <span>Déconnexion</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="admin-main">
+
+            <!-- === DASHBOARD PAGE === -->
+            <div id="page-dashboard" class="admin-page-content">
+                <div class="page-hdr">
+                    <div class="page-hdr-left">
+                        <h2>Dashboard</h2>
+                        <p>Vue d'ensemble de ta bibliothèque de jeux</p>
+                    </div>
+                </div>
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card"
+                        style="--stat-color:var(--accent-violet);--stat-bg:rgba(139,92,246,.12);--stat-border:rgba(139,92,246,.25)">
+                        <div class="stat-icon">🎮</div>
+                        <div class="stat-info">
+                            <div class="stat-val" id="statTotal">–</div>
+                            <div class="stat-lbl">Total jeux</div>
                         </div>
-                        <button type="submit">Se connecter</button>
-                    </form>
-                    <div class="admin-msg" id="loginMsg"></div>
+                    </div>
+                    <div class="stat-card"
+                        style="--stat-color:#67e8f9;--stat-bg:rgba(6,182,212,.1);--stat-border:rgba(6,182,212,.2)">
+                        <div class="stat-icon">👤</div>
+                        <div class="stat-info">
+                            <div class="stat-val" id="statSolo">–</div>
+                            <div class="stat-lbl">Solo</div>
+                        </div>
+                    </div>
+                    <div class="stat-card"
+                        style="--stat-color:var(--accent-light);--stat-bg:rgba(167,139,250,.1);--stat-border:rgba(167,139,250,.2)">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <div class="stat-val" id="statMulti">–</div>
+                            <div class="stat-lbl">Multijoueur</div>
+                        </div>
+                    </div>
+                    <div class="stat-card"
+                        style="--stat-color:#86efac;--stat-bg:rgba(34,197,94,.08);--stat-border:rgba(34,197,94,.18)">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-info">
+                            <div class="stat-val" id="statModal">–</div>
+                            <div class="stat-lbl">Avec modal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-panel">
+                    <div class="panel-hdr">
+                        <div class="panel-hdr-title"><span class="ph-icon">🕐</span>Derniers jeux ajoutés</div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="games-table" id="recentGamesList">
+                            <div class="games-empty">
+                                <div class="em-icon">⏳</div>Chargement…
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Écran ajout de jeux (après connexion) -->
-            <div class="admin-screen" id="addGameScreen">
-                <h1 class="admin-title">Ajouter un jeu</h1>
-                <form class="admin-form" id="adminForm">
-                    <label>Titre du jeu *</label>
-                    <input type="text" name="title" required placeholder="Ex: Cyberpunk 2077">
-                    <label>URL de l'image (616×353) *</label>
-                    <input type="url" name="image" required placeholder="https://...">
-                    <span class="hint">Ex: image Steam (capsule_616x353)</span>
-                    <label>Lien de téléchargement *</label>
-                    <input type="url" name="link" required placeholder="https://...">
-                    <label>Mode *</label>
-                    <select name="mode" required>
-                        <option value="solo">Solo</option>
-                        <option value="multiplayer">Multiplayer</option>
-                    </select>
-                    <div class="admin-toggle">
-                        <label>
-                            <input type="checkbox" name="hasModal" id="hasModal">
-                            Instructions d'installation (modal)
+            <!-- === ADD GAME PAGE === -->
+            <div id="page-add-game" class="admin-page-content" style="display:none">
+                <div class="page-hdr">
+                    <div class="page-hdr-left">
+                        <h2>Ajouter un jeu</h2>
+                        <p>Remplis le formulaire pour ajouter un jeu à la bibliothèque</p>
+                    </div>
+                </div>
+                <div class="admin-panel">
+                    <div class="panel-hdr">
+                        <div class="panel-hdr-title"><span class="ph-icon">📝</span>Informations du jeu</div>
+                    </div>
+                    <div class="panel-body">
+                        <form id="addGameForm">
+                            <div class="form-grid">
+                                <div class="form-field span2">
+                                    <label>Titre du jeu *</label>
+                                    <input type="text" name="title" placeholder="Ex: Cyberpunk 2077" required>
+                                </div>
+                                <div class="form-field">
+                                    <label>URL de l'image *</label>
+                                    <input type="url" name="image" placeholder="https://..." required>
+                                    <span class="hint">Recommandé : 616×353 (capsule Steam)</span>
+                                </div>
+                                <div class="form-field">
+                                    <label>Lien de téléchargement *</label>
+                                    <input type="url" name="link" placeholder="https://..." required>
+                                </div>
+                                <div class="form-field">
+                                    <label>Mode *</label>
+                                    <select name="mode" required>
+                                        <option value="solo">Solo</option>
+                                        <option value="multiplayer">Multijoueur</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="margin-top:1.25rem">
+                                <label class="toggle-row" for="hasModalAdd">
+                                    <input type="checkbox" id="hasModalAdd" name="hasModal">
+                                    <span class="toggle-knob"></span>
+                                    <span class="toggle-label">📖 Ajouter des instructions d'installation (modal)</span>
+                                </label>
+                            </div>
+                            <div class="optional-fields" id="addModalFields">
+                                <div class="form-field">
+                                    <label>ID du modal (sans espaces)</label>
+                                    <input type="text" name="modalId" placeholder="mon-jeu">
+                                </div>
+                                <div class="form-field">
+                                    <label>Titre du modal</label>
+                                    <input type="text" name="modalTitle" placeholder="Comment installer ?">
+                                </div>
+                                <div class="form-field">
+                                    <label>Contenu HTML du modal</label>
+                                    <textarea name="modalContent" placeholder="<ul><li>Étape 1</li></ul>..."></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-submit">➕ Ajouter le jeu</button>
+                                <button type="reset" class="btn-ghost">Réinitialiser</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- === MANAGE GAMES PAGE === -->
+            <div id="page-manage-games" class="admin-page-content" style="display:none">
+                <div class="page-hdr">
+                    <div class="page-hdr-left">
+                        <h2>Gérer les jeux</h2>
+                        <p id="manageSubtitle">Chargement…</p>
+                    </div>
+                    <button class="btn-submit" style="padding:.65rem 1.25rem;font-size:.82rem;" onclick="loadGames()">🔄
+                        Actualiser</button>
+                </div>
+
+                <div class="admin-panel">
+                    <div class="panel-hdr">
+                        <div class="panel-hdr-title"><span class="ph-icon">🗂️</span>Bibliothèque</div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="games-toolbar">
+                            <div class="search-wrap">
+                                <span class="s-icon">🔍</span>
+                                <input type="text" class="search-admin" id="manageSearch" placeholder="Rechercher…"
+                                    oninput="filterGames()">
+                            </div>
+                            <button class="filter-pill active" data-filter="all"
+                                onclick="setFilter('all',this)">Tous</button>
+                            <button class="filter-pill" data-filter="solo"
+                                onclick="setFilter('solo',this)">Solo</button>
+                            <button class="filter-pill" data-filter="multiplayer"
+                                onclick="setFilter('multiplayer',this)">Multi</button>
+                        </div>
+                        <div class="games-table" id="manageGamesList">
+                            <div class="games-empty">
+                                <div class="em-icon">⏳</div>Chargement…
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- =================== EDIT MODAL =================== -->
+    <div class="modal-overlay" id="editModalOverlay">
+        <div class="edit-modal">
+            <div class="modal-head">
+                <div class="modal-head-title">✏️ Modifier le jeu</div>
+                <button class="modal-close-btn" onclick="closeEditModal()">×</button>
+            </div>
+            <div class="modal-content">
+                <form id="editGameForm">
+                    <input type="hidden" id="editIdx">
+                    <div class="form-grid">
+                        <div class="form-field span2">
+                            <label>Titre *</label>
+                            <input type="text" id="eTitle" placeholder="Titre du jeu" required>
+                        </div>
+                        <div class="form-field">
+                            <label>URL image *</label>
+                            <input type="url" id="eImage" placeholder="https://..." required>
+                        </div>
+                        <div class="form-field">
+                            <label>Lien download *</label>
+                            <input type="url" id="eLink" placeholder="https://..." required>
+                        </div>
+                        <div class="form-field">
+                            <label>Mode *</label>
+                            <select id="eMode">
+                                <option value="solo">Solo</option>
+                                <option value="multiplayer">Multijoueur</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top:1rem">
+                        <label class="toggle-row" for="eHasModal">
+                            <input type="checkbox" id="eHasModal">
+                            <span class="toggle-knob"></span>
+                            <span class="toggle-label">📖 Instructions d'installation</span>
                         </label>
                     </div>
-                    <div class="admin-optional" id="modalFields" style="display: none;">
-                        <label>ID du modal (sans espaces)</label>
-                        <input type="text" name="modalId" placeholder="mon-jeu">
-                        <label>Titre du modal</label>
-                        <input type="text" name="modalTitle" placeholder="Comment installer ?">
-                        <label>Contenu HTML du modal</label>
-                        <textarea name="modalContent" placeholder="<ul><li>Étape 1</li></ul>..."></textarea>
-                    </div>
-                    <button type="submit">Ajouter le jeu</button>
-                </form>
-                <button type="button" class="admin-logout" id="logoutBtn">Se déconnecter</button>
-                <div class="admin-msg" id="adminMsg"></div>
-
-                <div class="admin-games-section">
-                    <div class="admin-games-header">
-                        <h2>Jeux actuels</h2>
-                        <button type="button" class="btn-toggle-list" id="toggleGamesBtn">
-                            <span class="icon">👁️</span> <span class="text">Masquer les jeux</span>
-                        </button>
-                    </div>
-                    <div id="adminGamesContainer" class="admin-games-content">
-                        <input type="text" class="admin-games-search" id="adminGamesSearch"
-                            placeholder="Rechercher un jeu (titre ou mode)…">
-                        <div id="adminGamesList" class="admin-games-list">
-                            <span class="admin-games-loading">Chargement…</span>
+                    <div class="optional-fields" id="eModalFields">
+                        <div class="form-field">
+                            <label>ID modal</label>
+                            <input type="text" id="eModalId" placeholder="mon-jeu">
+                        </div>
+                        <div class="form-field">
+                            <label>Titre modal</label>
+                            <input type="text" id="eModalTitle" placeholder="Comment installer ?">
+                        </div>
+                        <div class="form-field">
+                            <label>Contenu HTML</label>
+                            <textarea id="eModalContent" placeholder="<ul><li>Étape 1</li></ul>"></textarea>
                         </div>
                     </div>
-                </div>
+                    <div class="form-actions" style="margin-top:1.25rem">
+                        <button type="submit" class="btn-submit">💾 Enregistrer</button>
+                        <button type="button" class="btn-ghost" onclick="closeEditModal()">Annuler</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal modification -->
-    <div class="admin-modal-bg" id="editModal">
-        <div class="admin-modal">
-            <button type="button" class="modal-close" id="editModalClose" aria-label="Fermer">×</button>
-            <div class="modal-header">
-                <div class="modal-icon" aria-hidden="true">✏️</div>
-                <h3 class="modal-title">Modifier le jeu</h3>
-            </div>
-            <form id="editForm" class="modal-body">
-                <input type="hidden" name="index" id="editIndex">
-                <label for="editTitle">Titre du jeu *</label>
-                <input type="text" name="title" id="editTitle" required placeholder="Nom du jeu">
-                <label for="editImage">URL de l'image *</label>
-                <input type="url" name="image" id="editImage" required placeholder="https://...">
-                <label for="editLink">Lien de téléchargement *</label>
-                <input type="url" name="link" id="editLink" required placeholder="https://...">
-                <label for="editMode">Mode *</label>
-                <select name="mode" id="editMode" required>
-                    <option value="solo">Solo</option>
-                    <option value="multiplayer">Multiplayer</option>
-                </select>
-                <div class="admin-toggle">
-                    <label><input type="checkbox" name="hasModal" id="editHasModal"> Instructions d'installation
-                        (modal)</label>
-                </div>
-                <div class="admin-optional" id="editModalFields" style="display: none;">
-                    <label for="editModalId">ID du modal</label>
-                    <input type="text" name="modalId" id="editModalId" placeholder="mon-jeu">
-                    <label for="editModalTitle">Titre du modal</label>
-                    <input type="text" name="modalTitle" id="editModalTitle" placeholder="Comment installer ?">
-                    <label for="editModalContent">Contenu HTML du modal</label>
-                    <textarea name="modalContent" id="editModalContent"
-                        placeholder="<ul><li>Étape 1</li></ul>..."></textarea>
-                </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-save">Enregistrer</button>
-                    <button type="button" class="btn-cancel" id="editModalCancel">Annuler</button>
-                </div>
-            </form>
-        </div>
-    </div>
     <script>
         const LOGIN_KEY = 'adminLoggedIn';
-        const PASSWORD_KEY = 'adminPass';
+        const PASS_KEY = 'adminPass';
+        let allGames = [];
+        let activeFilter = 'all';
 
-        function showScreen(id) {
-            document.querySelectorAll('.admin-screen').forEach(el => el.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+        /* ========== TOAST ========== */
+        function toast(msg, type = 'info') {
+            const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+            const t = document.createElement('div');
+            t.className = 'toast ' + type;
+            t.innerHTML = `<span class="toast-icon">${icons[type]}</span><span>${msg}</span>`;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 3500);
         }
 
-        function isLoggedIn() {
-            return sessionStorage.getItem(LOGIN_KEY) === '1';
-        }
+        /* ========== AUTH ========== */
+        function isLoggedIn() { return sessionStorage.getItem(LOGIN_KEY) === '1'; }
+        function getPass() { return sessionStorage.getItem(PASS_KEY); }
 
-        // Au chargement : si déjà connecté, afficher le formulaire d’ajout
-        if (isLoggedIn()) {
-            showScreen('addGameScreen');
+        if (isLoggedIn()) { showAdmin(); }
+
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            const btn = document.getElementById('loginBtn');
+            btn.textContent = '⏳ Connexion…'; btn.disabled = true;
+            try {
+                const res = await fetch('/api/check-admin', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+                if (res.ok) {
+                    sessionStorage.setItem(LOGIN_KEY, '1');
+                    sessionStorage.setItem(PASS_KEY, password);
+                    showAdmin();
+                    toast('Connexion réussie ! Bienvenue.', 'success');
+                } else {
+                    const d = await res.json().catch(() => ({}));
+                    toast(d.error || 'Mot de passe incorrect', 'error');
+                }
+            } catch (err) {
+                toast('Erreur réseau : ' + err.message, 'error');
+            } finally {
+                btn.textContent = 'Se connecter →'; btn.disabled = false;
+            }
+        });
+
+        function showAdmin() {
+            document.getElementById('loginScreen').classList.remove('active');
+            document.getElementById('adminLayout').classList.add('active');
             loadGames();
         }
 
-        // Toggle visibility de la liste des jeux
-        const toggleBtn = document.getElementById('toggleGamesBtn');
-        const gamesContainer = document.getElementById('adminGamesContainer');
-        if (toggleBtn && gamesContainer) {
-            toggleBtn.addEventListener('click', () => {
-                const isHidden = gamesContainer.classList.toggle('is-hidden');
-                const textEl = toggleBtn.querySelector('.text');
-                const iconEl = toggleBtn.querySelector('.icon');
-
-                if (isHidden) {
-                    textEl.textContent = 'Afficher les jeux';
-                    iconEl.textContent = '👁️‍🗨️';
-                } else {
-                    textEl.textContent = 'Masquer les jeux';
-                    iconEl.textContent = '👁️';
-                }
-            });
-        }
-
-        function getAdminPassword() {
-            const p = sessionStorage.getItem(PASSWORD_KEY);
-            if (!p) { showScreen('loginScreen'); return null; }
-            return p;
-        }
-
-        async function loadGames() {
-            const el = document.getElementById('adminGamesList');
-            if (!el) return;
-            el.innerHTML = '<span class="admin-games-loading">Chargement…</span>';
-            try {
-                const res = await fetch('/api/games', { cache: 'no-store' });
-                const games = res.ok ? await res.json() : [];
-                if (!Array.isArray(games) || games.length === 0) {
-                    el.innerHTML = '<span class="admin-games-empty">Aucun jeu.</span>';
-                    return;
-                }
-                el.innerHTML = games.map((g, i) => `
-                    <div class="admin-game-row" data-index="${i}" data-search="${escapeAttr((g.title + ' ' + (g.mode || 'solo')).toLowerCase())}">
-                        <img src="${g.image}" alt="" onerror="this.style.display='none'">
-                        <div>
-                            <div class="title">${escapeHtml(g.title)}</div>
-                            <div class="mode">${g.mode || 'solo'}</div>
-                        </div>
-                        <div class="actions">
-                            <button type="button" class="btn-edit" data-index="${i}">Modifier</button>
-                            <button type="button" class="btn-delete" data-index="${i}">Supprimer</button>
-                        </div>
-                    </div>
-                `).join('');
-                el.querySelectorAll('.btn-edit').forEach(btn => btn.addEventListener('click', function () {
-                    openEditModal(parseInt(this.getAttribute('data-index'), 10), games[parseInt(this.getAttribute('data-index'), 10)]);
-                }));
-                el.querySelectorAll('.btn-delete').forEach(btn => btn.addEventListener('click', function () {
-                    const i = parseInt(this.getAttribute('data-index'), 10);
-                    deleteGame(i, games[i].title);
-                }));
-                filterAdminGames();
-            } catch (e) {
-                el.innerHTML = '<span class="admin-games-empty">Erreur.</span>';
-            }
-        }
-
-        function filterAdminGames() {
-            const q = (document.getElementById('adminGamesSearch').value || '').trim().toLowerCase();
-            const rows = document.querySelectorAll('#adminGamesList .admin-game-row');
-            rows.forEach(row => {
-                const search = (row.getAttribute('data-search') || '');
-                row.style.display = q === '' || search.indexOf(q) !== -1 ? '' : 'none';
-            });
-        }
-        document.getElementById('adminGamesSearch').addEventListener('input', filterAdminGames);
-
-        function escapeHtml(s) {
-            const d = document.createElement('div');
-            d.textContent = s;
-            return d.innerHTML;
-        }
-        function escapeAttr(s) {
-            return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-        }
-
-        function openEditModal(index, game) {
-            document.getElementById('editIndex').value = index;
-            document.getElementById('editTitle').value = game.title || '';
-            document.getElementById('editImage').value = game.image || '';
-            document.getElementById('editLink').value = game.link || '';
-            document.getElementById('editMode').value = game.mode === 'multiplayer' ? 'multiplayer' : 'solo';
-            document.getElementById('editHasModal').checked = !!game.hasModal;
-            document.getElementById('editModalId').value = game.modalId || '';
-            document.getElementById('editModalTitle').value = game.modalTitle || '';
-            document.getElementById('editModalContent').value = game.modalContent || '';
-            document.getElementById('editModalFields').style.display = game.hasModal ? 'block' : 'none';
-            document.getElementById('editModal').classList.add('active');
-        }
-
-        document.getElementById('editHasModal').addEventListener('change', function () {
-            document.getElementById('editModalFields').style.display = this.checked ? 'block' : 'none';
-        });
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('active');
-        }
-        document.getElementById('editModalClose').addEventListener('click', closeEditModal);
-        document.getElementById('editModalCancel').addEventListener('click', closeEditModal);
-        document.getElementById('editModal').addEventListener('click', function (e) {
-            if (e.target === this) closeEditModal();
-        });
-
-        document.getElementById('editForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const index = document.getElementById('editIndex').value;
-            const game = {
-                title: document.getElementById('editTitle').value.trim(),
-                image: document.getElementById('editImage').value.trim(),
-                link: document.getElementById('editLink').value.trim(),
-                mode: document.getElementById('editMode').value
-            };
-            if (document.getElementById('editHasModal').checked) {
-                game.hasModal = true;
-                game.modalId = document.getElementById('editModalId').value.trim().replace(/\s+/g, '-') || game.title.toLowerCase().replace(/\s+/g, '-');
-                game.modalTitle = document.getElementById('editModalTitle').value.trim() || 'Installation';
-                game.modalContent = document.getElementById('editModalContent').value.trim();
-            }
-            const adminPassword = getAdminPassword();
-            if (!adminPassword) return;
-            try {
-                const res = await fetch('/api/update-game', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ adminPassword, index: parseInt(index, 10), game })
-                });
-                const data = await res.json().catch(() => ({}));
-                if (res.ok) {
-                    closeEditModal();
-                    loadGames();
-                } else {
-                    alert(data.error || 'Erreur ' + res.status);
-                }
-            } catch (err) {
-                alert('Erreur réseau: ' + err.message);
-            }
-        });
-
-        async function deleteGame(index, title) {
-            if (!confirm('Supprimer le jeu « ' + title + ' » ?')) return;
-            const adminPassword = getAdminPassword();
-            if (!adminPassword) return;
-            try {
-                const res = await fetch('/api/delete-game', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ adminPassword, index })
-                });
-                const data = await res.json().catch(() => ({}));
-                if (res.ok) loadGames();
-                else alert(data.error || 'Erreur ' + res.status);
-            } catch (err) {
-                alert('Erreur réseau: ' + err.message);
-            }
-        }
-
-        // Connexion
-        document.getElementById('loginForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const password = new FormData(this).get('password');
-            const msg = document.getElementById('loginMsg');
-            msg.style.display = 'none';
-            try {
-                const res = await fetch('/api/check-admin', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password })
-                });
-                const data = await res.json().catch(() => ({}));
-                if (res.ok) {
-                    sessionStorage.setItem(LOGIN_KEY, '1');
-                    sessionStorage.setItem(PASSWORD_KEY, password);
-                    showScreen('addGameScreen');
-                    loadGames();
-                } else {
-                    msg.className = 'admin-msg error';
-                    msg.textContent = data.error || 'Mot de passe incorrect';
-                    msg.style.display = 'block';
-                }
-            } catch (err) {
-                msg.className = 'admin-msg error';
-                msg.textContent = 'Erreur réseau: ' + err.message;
-                msg.style.display = 'block';
-            }
-        });
-
-        // Déconnexion
         document.getElementById('logoutBtn').addEventListener('click', function () {
             sessionStorage.removeItem(LOGIN_KEY);
-            sessionStorage.removeItem(PASSWORD_KEY);
-            showScreen('loginScreen');
+            sessionStorage.removeItem(PASS_KEY);
+            document.getElementById('adminLayout').classList.remove('active');
+            document.getElementById('loginScreen').classList.add('active');
+            toast('Vous avez été déconnecté.', 'info');
         });
 
-        // Modal option
-        document.getElementById('hasModal').addEventListener('change', function () {
-            document.getElementById('modalFields').style.display = this.checked ? 'block' : 'none';
+        /* ========== NAVIGATION ========== */
+        function showAdminPage(page) {
+            document.querySelectorAll('.admin-page-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('page-' + page).style.display = '';
+            document.querySelector(`[data-page="${page}"]`).classList.add('active');
+        }
+
+        /* ========== LOAD GAMES ========== */
+        async function loadGames() {
+            try {
+                const res = await fetch('/api/games', { cache: 'no-store' });
+                allGames = res.ok ? await res.json() : [];
+                if (!Array.isArray(allGames)) allGames = [];
+            } catch (e) {
+                allGames = [];
+            }
+            updateStats();
+            renderManageList();
+            renderRecentList();
+            document.getElementById('navGameCount').textContent = allGames.length;
+        }
+
+        function updateStats() {
+            const total = allGames.length;
+            const solo = allGames.filter(g => (g.mode || 'solo') === 'solo').length;
+            const multi = allGames.filter(g => g.mode === 'multiplayer').length;
+            const modal = allGames.filter(g => g.hasModal).length;
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statSolo').textContent = solo;
+            document.getElementById('statMulti').textContent = multi;
+            document.getElementById('statModal').textContent = modal;
+            document.getElementById('manageSubtitle').textContent = `${total} jeu${total !== 1 ? 'x' : ''} dans la bibliothèque`;
+        }
+
+        function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+        function gameRowHTML(g, i) {
+            const mode = g.mode || 'solo';
+            const isMulti = mode === 'multiplayer';
+            const isHid = !!g.hidden;
+            return `
+        <div class="game-row ${isHid ? 'hidden-game' : ''}" data-index="${i}" data-filter="${mode}" data-search="${(g.title + ' ' + mode).toLowerCase()}">
+            ${g.image
+                    ? `<img src="${escHtml(g.image)}" alt="" class="game-thumb" onerror="this.style.display='none';">`
+                    : `<div class="game-thumb-placeholder">🎮</div>`}
+            <div class="game-info">
+                <div class="g-title">${escHtml(g.title)}</div>
+                <div class="g-meta">
+                    <span class="g-badge ${mode}">${isMulti ? '👥 Multi' : '👤 Solo'}</span>
+                    ${g.hasModal ? '<span class="g-badge has-modal">📖 Modal</span>' : ''}
+                    ${isHid ? '<span class="g-badge hidden">🙈 Masqué</span>' : ''}
+                </div>
+            </div>
+            <div class="game-row-actions">
+                <button class="act-btn edit" title="Modifier" onclick="openEditModal(${i})">✏️</button>
+                <button class="act-btn toggle-vis" title="${isHid ? 'Afficher' : 'Masquer'}" onclick="toggleVisibility(${i})">${isHid ? '👁️' : '🙈'}</button>
+                <button class="act-btn del" title="Supprimer" onclick="deleteGame(${i}, '${escHtml(g.title).replace(/'/g, "\\'")}')">🗑️</button>
+            </div>
+        </div>`;
+        }
+
+        function renderManageList() {
+            const el = document.getElementById('manageGamesList');
+            if (!allGames.length) {
+                el.innerHTML = '<div class="games-empty"><div class="em-icon">🎮</div>Aucun jeu pour l\'instant.</div>';
+                return;
+            }
+            el.innerHTML = allGames.map((g, i) => gameRowHTML(g, i)).join('');
+            filterGames();
+        }
+
+        function renderRecentList() {
+            const el = document.getElementById('recentGamesList');
+            const recent = [...allGames].slice(-5).reverse();
+            if (!recent.length) {
+                el.innerHTML = '<div class="games-empty"><div class="em-icon">🎮</div>Aucun jeu.</div>';
+                return;
+            }
+            el.innerHTML = recent.map((g, idx) => {
+                const realIdx = allGames.length - 1 - idx;
+                return gameRowHTML(g, realIdx);
+            }).join('');
+        }
+
+        /* ========== FILTER / SEARCH ========== */
+        function setFilter(f, btn) {
+            activeFilter = f;
+            document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterGames();
+        }
+
+        function filterGames() {
+            const q = (document.getElementById('manageSearch')?.value || '').trim().toLowerCase();
+            document.querySelectorAll('#manageGamesList .game-row').forEach(row => {
+                const matchQ = !q || (row.dataset.search || '').includes(q);
+                const matchF = activeFilter === 'all' || row.dataset.filter === activeFilter;
+                row.style.display = (matchQ && matchF) ? '' : 'none';
+            });
+        }
+
+        /* ========== ADD GAME ========== */
+        document.getElementById('hasModalAdd').addEventListener('change', function () {
+            document.getElementById('addModalFields').classList.toggle('visible', this.checked);
         });
 
-        // Ajout de jeu (utilise le mot de passe en session)
-        document.getElementById('adminForm').addEventListener('submit', async function (e) {
+        document.getElementById('addGameForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            const form = e.target;
-            const msg = document.getElementById('adminMsg');
-            const fd = new FormData(form);
+            const fd = new FormData(this);
             const game = {
                 title: fd.get('title'),
                 image: fd.get('image'),
@@ -1016,32 +1599,137 @@
                 game.modalTitle = fd.get('modalTitle') || 'Installation';
                 game.modalContent = fd.get('modalContent') || '';
             }
-            const adminPassword = sessionStorage.getItem(PASSWORD_KEY);
-            if (!adminPassword) {
-                msg.className = 'admin-msg error';
-                msg.textContent = 'Session expirée. Reconnecte-toi.';
-                msg.style.display = 'block';
-                showScreen('loginScreen');
-                return;
-            }
-            msg.style.display = 'none';
+            const adminPassword = getPass();
+            const btn = this.querySelector('button[type=submit]');
+            btn.textContent = '⏳ Ajout…'; btn.disabled = true;
             try {
                 const res = await fetch('/api/add-game', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ adminPassword, game })
                 });
-                const data = await res.json().catch(() => ({}));
-                msg.className = 'admin-msg ' + (res.ok ? 'success' : 'error');
-                msg.textContent = data.error || data.message || (res.ok ? 'Jeu ajouté.' : 'Erreur ' + res.status);
-                msg.style.display = 'block';
-                if (res.ok) { form.reset(); loadGames(); }
+                const d = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    toast(`✨ "${game.title}" ajouté !`, 'success');
+                    this.reset();
+                    document.getElementById('addModalFields').classList.remove('visible');
+                    await loadGames();
+                    showAdminPage('manage-games');
+                } else {
+                    toast(d.error || 'Erreur ' + res.status, 'error');
+                }
             } catch (err) {
-                msg.className = 'admin-msg error';
-                msg.textContent = 'Erreur réseau: ' + err.message;
-                msg.style.display = 'block';
+                toast('Erreur réseau : ' + err.message, 'error');
+            } finally {
+                btn.textContent = '➕ Ajouter le jeu'; btn.disabled = false;
             }
         });
+
+        /* ========== EDIT MODAL ========== */
+        function openEditModal(i) {
+            const g = allGames[i];
+            if (!g) return;
+            document.getElementById('editIdx').value = i;
+            document.getElementById('eTitle').value = g.title || '';
+            document.getElementById('eImage').value = g.image || '';
+            document.getElementById('eLink').value = g.link || '';
+            document.getElementById('eMode').value = g.mode === 'multiplayer' ? 'multiplayer' : 'solo';
+            document.getElementById('eHasModal').checked = !!g.hasModal;
+            document.getElementById('eModalId').value = g.modalId || '';
+            document.getElementById('eModalTitle').value = g.modalTitle || '';
+            document.getElementById('eModalContent').value = g.modalContent || '';
+            document.getElementById('eModalFields').classList.toggle('visible', !!g.hasModal);
+            document.getElementById('editModalOverlay').classList.add('active');
+        }
+        function closeEditModal() {
+            document.getElementById('editModalOverlay').classList.remove('active');
+        }
+        document.getElementById('editModalOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeEditModal();
+        });
+        document.getElementById('eHasModal').addEventListener('change', function () {
+            document.getElementById('eModalFields').classList.toggle('visible', this.checked);
+        });
+
+        document.getElementById('editGameForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const i = parseInt(document.getElementById('editIdx').value, 10);
+            const game = {
+                title: document.getElementById('eTitle').value.trim(),
+                image: document.getElementById('eImage').value.trim(),
+                link: document.getElementById('eLink').value.trim(),
+                mode: document.getElementById('eMode').value
+            };
+            if (document.getElementById('eHasModal').checked) {
+                game.hasModal = true;
+                game.modalId = document.getElementById('eModalId').value.trim().replace(/\s+/g, '-') || game.title.toLowerCase().replace(/\s+/g, '-');
+                game.modalTitle = document.getElementById('eModalTitle').value.trim() || 'Installation';
+                game.modalContent = document.getElementById('eModalContent').value.trim();
+            }
+            const adminPassword = getPass();
+            const btn = this.querySelector('[type=submit]');
+            btn.textContent = '⏳ Sauvegarde…'; btn.disabled = true;
+            try {
+                const res = await fetch('/api/update-game', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminPassword, index: i, game })
+                });
+                const d = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    toast('Jeu mis à jour avec succès !', 'success');
+                    closeEditModal();
+                    await loadGames();
+                } else {
+                    toast(d.error || 'Erreur ' + res.status, 'error');
+                }
+            } catch (err) {
+                toast('Erreur réseau : ' + err.message, 'error');
+            } finally {
+                btn.textContent = '💾 Enregistrer'; btn.disabled = false;
+            }
+        });
+
+        /* ========== DELETE / VISIBILITY ========== */
+        async function deleteGame(i, title) {
+            if (!confirm(`Supprimer "${title}" définitivement ?`)) return;
+            const adminPassword = getPass();
+            try {
+                const res = await fetch('/api/delete-game', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminPassword, index: i })
+                });
+                const d = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    toast(`"${title}" supprimé.`, 'success');
+                    await loadGames();
+                } else {
+                    toast(d.error || 'Erreur ' + res.status, 'error');
+                }
+            } catch (err) {
+                toast('Erreur réseau : ' + err.message, 'error');
+            }
+        }
+
+        async function toggleVisibility(i) {
+            const g = allGames[i];
+            if (!g) return;
+            const updated = { ...g, hidden: !g.hidden };
+            const adminPassword = getPass();
+            try {
+                const res = await fetch('/api/update-game', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminPassword, index: i, game: updated })
+                });
+                if (res.ok) {
+                    toast(updated.hidden ? `"${g.title}" masqué.` : `"${g.title}" affiché.`, 'info');
+                    await loadGames();
+                } else {
+                    const d = await res.json().catch(() => ({}));
+                    toast(d.error || 'Erreur', 'error');
+                }
+            } catch (err) {
+                toast('Erreur réseau : ' + err.message, 'error');
+            }
+        }
     </script>
 </body>
 
