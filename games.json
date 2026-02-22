@@ -1358,5 +1358,11 @@
         "modalId": "deep-rock-galactic",
         "modalTitle": "Comment Jouer En Ligne ?",
         "modalContent": "<p><strong>⚠️ Exécutez le jeu via ModIOAuth.exe (effectué une fois par an), puis vous pouvez exécuter via FSD.exe.</strong></p><p><br></p><p><strong>Voici comment jouer en multijoueur :</strong></p><p><br></p><ol><li>Lancez votre jeu via <strong>LSD.exe</strong>.</li><li>Quand vous arrivez dans le menu du jeu au lancement, sélectionnez votre langue et ensuite ne décochez pas la petite case en bas à droite où il est écrit <strong>Afficher l&#39;écran d&#39;information au démarrage</strong>.</li><li>Maintenant, pour jouer avec vos amis, il suffit simplement que :<ul><li>L&#39;hôte de la partie entre dans le <strong>HUB</strong> de lancement de mission et invite les joueurs via <strong>c</strong>.</li><li>Les joueurs qui rejoignent la partie doivent <strong>RESTER</strong> dans <strong>l&#39;écran d&#39;information au démarrage</strong> et ne doivent surtout pas cliquer sur <strong>CONTINUER</strong>.</li></ul></li><li>(Il vous suffit simplement d'attendre l'invitation de l'hôte.)</li></ol><div class=\"modal-btns\"><a href=\"https://www.clictune.com/mnFM\" class=\"download-btn\" target=\"_blank\" rel=\"noopener\">Télécharger le jeu</a></div>"
+    },
+    {
+        "title": "Stranded Deep",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/313120\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFN",
+        "mode": "multiplayer"
     }
 ]
