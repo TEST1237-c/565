@@ -1514,5 +1514,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1133330\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnGc",
         "mode": "solo"
+    },
+    {
+        "title": "Microsoft Flight Simulator",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1250410\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnGd",
+        "mode": "multiplayer"
     }
 ]
