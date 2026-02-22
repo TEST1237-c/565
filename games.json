@@ -1306,5 +1306,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/814740\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFB",
         "mode": "solo"
+    },
+    {
+        "title": "Jalopy",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/446020\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFF",
+        "mode": "solo"
     }
 ]
