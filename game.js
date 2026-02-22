@@ -71,6 +71,9 @@ function generateGameElements(games) {
                 const modalBg = document.getElementById(game.modalId + '-modal-bg');
                 if (modalBg) {
                     modalBg.style.display = 'flex';
+                    // Force reflow
+                    modalBg.offsetHeight;
+                    modalBg.classList.add('show');
                     document.body.style.overflow = 'hidden';
                 }
             });
@@ -119,8 +122,11 @@ function generateModals(games) {
         document.body.appendChild(modalBg);
 
         const closeModalFn = () => {
-            modalBg.style.display = 'none';
-            document.body.style.overflow = '';
+            modalBg.classList.remove('show');
+            setTimeout(() => {
+                modalBg.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 500); // Correspond à la durée de la transition CSS
         };
 
         closeBtn.addEventListener('click', closeModalFn);
@@ -128,7 +134,7 @@ function generateModals(games) {
             if (e.target === modalBg) closeModalFn();
         });
         document.addEventListener('keydown', function (e) {
-            if (modalBg.style.display === 'flex' && (e.key === 'Escape' || e.keyCode === 27)) {
+            if (modalBg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) {
                 closeModalFn();
             }
         });
