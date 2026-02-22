@@ -1584,5 +1584,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1227530\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnGn",
         "mode": "solo"
+    },
+    {
+        "title": "Space Crew",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1176710\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnGo",
+        "mode": "solo"
     }
 ]
