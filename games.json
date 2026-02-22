@@ -1282,5 +1282,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/311690\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFx",
         "mode": "solo"
+    },
+    {
+        "title": "Exit the Gungeon",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1209490\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFy",
+        "mode": "solo"
     }
 ]
