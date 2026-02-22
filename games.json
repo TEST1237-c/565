@@ -1348,5 +1348,15 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/410900\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFL",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Deep Rock Galactic",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/548430\\/capsule_616x353_alt_assets_25.jpg",
+        "link": "https://www.clictune.com/mnFM",
+        "mode": "multiplayer",
+        "hasModal": true,
+        "modalId": "Deep-Rock-Galactic",
+        "modalTitle": "Comment Jouer En Ligne ?",
+        "modalContent": "<p><strong>\\u26a0\\ufe0f Ex\\u00e9cutez le jeu via ModIOAuth.exe (effectu\\u00e9 une fois par an), puis vous pouvez ex\\u00e9cuter via FSD.exe.<\\/strong><\\/p><p><br><\\/p><p><strong>Voici comment jouer en multijoueur :<\\/strong><\\/p><p><br><\\/p><ol><li>Lancez votre jeu via <strong>LSD.exe<\\/strong>.<\\/li><li>Quand vous arrivez dans le menu du jeu au lancement, s\\u00e9lectionnez votre langue et ensuite ne d\\u00e9cochez pas la petite case en bas \\u00e0 droite o\\u00f9 il est \\u00e9crit <strong>Afficher l&#39;\\u00e9cran d&#39;information au d\\u00e9marrage<\\/strong>.<\\/li><li>Maintenant, pour jouer avec vos amis, il suffit simplement que :<ul><li>L&#39;h\\u00f4te de la partie entre dans le <strong>HUB<\\/strong> de lancement de mission et invite les joueurs via <strong>c<\\/strong>.<\\/li><li>Les joueurs qui rejoignent la partie doivent <strong>RESTER<\\/strong> dans <strong>l&#39;\\u00e9cran d&#39;information au d\\u00e9marrage<\\/strong> et ne doivent surtout pas cliquer sur <strong>CONTINUER<\\/strong>.<\\/li><\\/ul><\\/li><li>(Il vous suffit simplement d&#39;attendre l&#39;invitation de l&#39;h\\u00f4te.)<\\/li><\\/ol>"
     }
 ]
