@@ -1460,5 +1460,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/635260\\/db9a16e2ccb357d707a6c5bd73e77b234600cee5\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnG3",
         "mode": "solo"
+    },
+    {
+        "title": "SpongeBob SquarePants Battle for Bikini Bottom Rehydrated",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/969990\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnG4",
+        "mode": "multiplayer"
     }
 ]
