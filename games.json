@@ -1632,5 +1632,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/582160\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnJp",
         "mode": "solo"
+    },
+    {
+        "title": "Use Your Words",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/521350\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnJr",
+        "mode": "multiplayer"
     }
 ]
