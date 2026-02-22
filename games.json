@@ -1758,5 +1758,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/49540\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnKa",
         "mode": "multiplayer"
+    },
+    {
+        "title": "PAC-MAN CHAMPIONSHIP EDITION 2",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/441380\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnKd",
+        "mode": "solo"
     }
 ]
