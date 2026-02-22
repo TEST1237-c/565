@@ -11,9 +11,15 @@
 </head>
 
 <body class="page-jeux">
+    <div class="mouse-follower"></div>
+    <div class="floating-glow glow-1"></div>
+    <div class="floating-glow glow-2"></div>
     <!-- Main Container -->
     <div class="container-jeux">
-        <div class="big-title" style="text-align:center; width:100%;">NovaPlay</div>
+        <div class="title-container">
+            <h1 class="big-title glitch" data-text="NovaPlay">NovaPlay</h1>
+            <div class="title-underline"></div>
+        </div>
 
         <!-- Discord Link -->
         <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="discord-inline-link">
@@ -23,14 +29,41 @@
 
         <!-- Search Bar -->
         <div class="search-bar-container">
-            <input type="text" class="search-bar" id="gameSearch" placeholder="Search games...">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-bar" id="gameSearch" placeholder="Search games...">
+            </div>
         </div>
 
         <!-- Category Filters -->
         <div class="filter-container" id="filterContainer">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="solo">Solo</button>
-            <button class="filter-btn" data-filter="multiplayer">Multiplayer</button>
+            <button class="filter-btn active" data-filter="all">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                All
+            </button>
+            <button class="filter-btn" data-filter="solo">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Solo
+            </button>
+            <button class="filter-btn" data-filter="multiplayer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Multiplayer
+            </button>
         </div>
 
         <!-- Games Grid -->
@@ -40,11 +73,47 @@
 
         <!-- Pagination -->
         <div class="pagination-container" id="paginationContainer"></div>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-logo">NovaPlay</h3>
+                    <p class="footer-tagline">The ultimate destination for premium cracked games. Safe, fast, and always
+                        up to date.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="https://discord.gg/scUwxCmf4D" target="_blank">Discord</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <p>Join our Discord to request games and report bugs.</p>
+                    <a href="https://discord.gg/scUwxCmf4D" class="footer-discord-btn" target="_blank">
+                        JOIN DISCORD
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 NovaPlay. All rights reserved.</p>
+                <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.
+                </div>
+            </div>
+        </footer>
     </div>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
 
     <script src="game.js"></script>
     <script src="script.js"></script>
 </body>
 
 </html>
-
