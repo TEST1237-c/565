@@ -1560,5 +1560,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/850190\\/56a63a197c679581422049d477131637461fba99\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnGj",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Art of Rally",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/550320\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnGk",
+        "mode": "solo"
     }
 ]
