@@ -1442,5 +1442,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1238860\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnG0",
         "mode": "solo"
+    },
+    {
+        "title": "ECO",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/382310\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnG1",
+        "mode": "multiplayer"
     }
 ]
