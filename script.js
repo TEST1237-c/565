@@ -107,14 +107,35 @@ function initTypewriterEffect() {
 }
 
 // ============================================
+// BACK TO TOP BUTTON
+// ============================================
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// ============================================
 // INITIALISATION
 // ============================================
-// Mouse follower disabled
-// initMouseFollower();
-
-// Initialiser la notification Discord sur toutes les pages
-initDiscordNotification();
-
-// Initialiser l'effet typewriter sur la page d'accueil
-initTypewriterEffect();
+document.addEventListener('DOMContentLoaded', () => {
+    initMouseFollower();
+    initDiscordNotification();
+    initTypewriterEffect();
+    initBackToTop();
+});
 
