@@ -1530,5 +1530,11 @@
         "modalId": "No-Man's-Sky",
         "modalTitle": "Comment Lancer No Man's Sky ?",
         "modalContent": "<p><strong>Voici comment lancer No Man's Sky :</strong></p><p><br></p><ol><li>Dans le menu <strong>Démarrer de Windows</strong>, recherchez les paramètres de <strong>développeur</strong>. Une fois ouvert, activez le mode développeur.</li><li>Lancez <strong>GDK Helper.bat</strong> en tant qu'administrateur.</li><li>Une fois l'installation terminée, <strong>décochez le mode développeur</strong>.</li><li>Lancez le jeu depuis le menu <strong>Démarrer de Windows</strong>.</li><li>Connectez-vous avec votre compte <strong>Xbox</strong>.</li></ol><p><br></p><p><strong>⚠️ </strong>Le jeu fonctionne avec tout le monde, que ce soit ma version ou la version officielle ⚠️</p>"
+    },
+    {
+        "title": "Democracy 4",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1410710\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnGf",
+        "mode": "solo"
     }
 ]
