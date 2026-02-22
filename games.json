@@ -1752,5 +1752,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/110800\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnK9",
         "mode": "solo"
+    },
+    {
+        "title": "Aliens Colonial Marine",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/49540\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnKa",
+        "mode": "multiplayer"
     }
 ]
