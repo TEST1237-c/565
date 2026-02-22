@@ -1424,5 +1424,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/236870\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFX",
         "mode": "solo"
+    },
+    {
+        "title": "SimAirport",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/598330\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFY",
+        "mode": "solo"
     }
 ]
