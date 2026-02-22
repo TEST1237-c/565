@@ -1466,5 +1466,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/969990\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnG4",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Townscaper",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1291340\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnG5",
+        "mode": "solo"
     }
 ]
