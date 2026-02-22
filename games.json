@@ -1364,5 +1364,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/313120\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFN",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Poly Bridge 2",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1062160\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFO",
+        "mode": "solo"
     }
 ]
