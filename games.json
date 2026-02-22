@@ -1228,5 +1228,11 @@
         "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/393220\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnut",
         "mode": "solo"
+    },
+    {
+        "title": "Graveyard Keeper",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/599140\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFo",
+        "mode": "solo"
     }
 ]
