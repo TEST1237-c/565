@@ -1342,5 +1342,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/815370\\/4a4325781844ab83154dbccdc59e1913cf5facfc\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnFK",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Forts",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/410900\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnFL",
+        "mode": "multiplayer"
     }
 ]
