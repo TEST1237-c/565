@@ -7,7 +7,7 @@ let allGames = [];
 let filteredGames = [];
 let currentFilter = 'all';
 
-// Fonction pour générer les éléments de jeu (uniquement pour la page actuelle)
+// Génère les éléments de jeu
 function generateGameElements(games) {
     const gamesGrid = document.getElementById('gamesGrid');
     if (!gamesGrid) return;
@@ -19,7 +19,7 @@ function generateGameElements(games) {
     const paginatedGames = games.slice(startIndex, endIndex);
 
     if (paginatedGames.length === 0) {
-        gamesGrid.innerHTML = '<p class="coming-soon-message">No games found.</p>';
+        gamesGrid.innerHTML = '<p class="coming-soon-message">Aucun jeu trouvé.</p>';
         return;
     }
 
@@ -31,13 +31,14 @@ function generateGameElements(games) {
         gameLink.rel = 'noopener';
         gameLink.setAttribute('data-title', game.title);
         gameLink.setAttribute('data-mode', game.mode);
-        gameLink.style.animationDelay = (0.1 + index * 0.03) + 's';
+        gameLink.style.animationDelay = (0.05 + index * 0.025) + 's';
 
         gameLink.addEventListener('animationend', function () {
             gameLink.classList.remove('animating');
             gameLink.style.animationDelay = '';
         }, { once: true });
 
+        // Image
         const img = document.createElement('img');
         img.className = 'jeu-thumb-img';
         img.src = game.image;
@@ -46,22 +47,42 @@ function generateGameElements(games) {
         img.height = 353;
         img.loading = 'lazy';
 
-        const titleSpan = document.createElement('span');
-        titleSpan.className = 'jeu-title-hover';
-        titleSpan.textContent = game.title;
-
+        // Badge mode (top-left)
         const badgeWrapper = document.createElement('div');
         badgeWrapper.className = 'badge-mode-wrapper';
-        const badge = document.createElement('img');
-        badge.className = 'badge-mode' + (game.mode === 'solo' ? ' solo' : '');
-        badge.src = game.mode === 'solo' ? 'https://i.imgur.com/AVgyUuC.png' : 'https://i.imgur.com/Yrz60le.png';
-        badge.alt = game.mode;
-        badge.loading = 'lazy';
+        const badge = document.createElement('span');
+        const modeLabel = game.mode === 'solo' ? 'Solo' : 'Multi';
+        badge.className = 'badge-mode-tag ' + (game.mode === 'solo' ? 'solo' : 'multiplayer');
+        badge.textContent = modeLabel;
         badgeWrapper.appendChild(badge);
 
+        // Hover overlay
+        const titleHover = document.createElement('div');
+        titleHover.className = 'jeu-title-hover';
+
+        const titleText = document.createElement('span');
+        titleText.className = 'jeu-title-text';
+        titleText.textContent = game.title;
+
+        const titleSub = document.createElement('div');
+        titleSub.className = 'jeu-title-sub';
+
+        const downloadHint = document.createElement('span');
+        downloadHint.className = 'jeu-download-hint';
+        downloadHint.innerHTML = `
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Télécharger
+        `;
+
+        titleSub.appendChild(downloadHint);
+        titleHover.appendChild(titleText);
+        titleHover.appendChild(titleSub);
+
         gameLink.appendChild(img);
-        gameLink.appendChild(titleSpan);
         gameLink.appendChild(badgeWrapper);
+        gameLink.appendChild(titleHover);
 
         if (game.hasModal) {
             gameLink.id = game.modalId + '-link';
@@ -71,8 +92,7 @@ function generateGameElements(games) {
                 const modalBg = document.getElementById(game.modalId + '-modal-bg');
                 if (modalBg) {
                     modalBg.style.display = 'flex';
-                    // Force reflow
-                    modalBg.offsetHeight;
+                    modalBg.offsetHeight; // Force reflow
                     modalBg.classList.add('show');
                     document.body.style.overflow = 'hidden';
                 }
@@ -83,9 +103,8 @@ function generateGameElements(games) {
     });
 }
 
-// Fonction pour générer les modales
+// Génère les modales
 function generateModals(games) {
-    // Supprimer les anciennes modales générées (pour éviter les doublons lors du changement de page)
     document.querySelectorAll('.modal-bg').forEach(m => m.remove());
 
     games.forEach(game => {
@@ -126,7 +145,7 @@ function generateModals(games) {
             setTimeout(() => {
                 modalBg.style.display = 'none';
                 document.body.style.overflow = '';
-            }, 500); // Correspond à la durée de la transition CSS
+            }, 500);
         };
 
         closeBtn.addEventListener('click', closeModalFn);
@@ -141,26 +160,67 @@ function generateModals(games) {
     });
 }
 
-// Fonction pour gérer la pagination UI
+// Pagination UI
 function renderPagination(totalItems) {
     const container = document.getElementById('paginationContainer');
     if (!container) return;
 
     container.innerHTML = '';
     const totalPages = Math.ceil(totalItems / GAMES_PER_PAGE);
-
     if (totalPages <= 1) return;
 
-    for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
-        btn.textContent = i;
-        btn.addEventListener('click', () => {
-            currentPage = i;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            updateDisplay();
-        });
-        container.appendChild(btn);
+    const goToPage = (page) => {
+        currentPage = page;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        updateDisplay();
+    };
+
+    // Prev button
+    if (currentPage > 1) {
+        const prev = document.createElement('button');
+        prev.className = 'pagination-btn';
+        prev.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`;
+        prev.addEventListener('click', () => goToPage(currentPage - 1));
+        container.appendChild(prev);
+    }
+
+    // Page numbers (smart ellipsis)
+    const maxVisible = 7;
+    let pages = [];
+    if (totalPages <= maxVisible) {
+        pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    } else {
+        pages = [1];
+        if (currentPage > 3) pages.push('…');
+        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+            pages.push(i);
+        }
+        if (currentPage < totalPages - 2) pages.push('…');
+        pages.push(totalPages);
+    }
+
+    pages.forEach(p => {
+        if (p === '…') {
+            const sep = document.createElement('span');
+            sep.className = 'pagination-sep';
+            sep.textContent = '…';
+            container.appendChild(sep);
+        } else {
+            const btn = document.createElement('button');
+            btn.className = 'pagination-btn' + (p === currentPage ? ' active' : '');
+            btn.textContent = p;
+            btn.addEventListener('click', () => goToPage(p));
+            container.appendChild(btn);
+        }
+    });
+
+    // Next button
+    if (currentPage < totalPages) {
+        const next = document.createElement('button');
+        next.className = 'pagination-btn';
+        next.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+        next.addEventListener('click', () => goToPage(currentPage + 1));
+        container.appendChild(next);
     }
 }
 
@@ -182,7 +242,7 @@ function applyFilters() {
         return matchesSearch && matchesFilter;
     });
 
-    currentPage = 1; // Reset to first page when filtering
+    currentPage = 1;
     updateDisplay();
 }
 
@@ -206,7 +266,6 @@ async function initGamePage() {
         return null;
     };
 
-    // Ordre de priorité : local puis API
     allGames = await tryFetch('games.json') ||
         await tryFetch('/games.json') ||
         await tryFetch('/api/games') ||
@@ -216,15 +275,20 @@ async function initGamePage() {
         gamesGrid.innerHTML = `
             <div class="coming-soon-message">
                 <p>Oups ! Aucun jeu n'a été trouvé.</p>
-                <p style="font-size: 0.9rem; margin-top: 10px; color: var(--text-muted);">
+                <p style="font-size:0.85rem;margin-top:10px;color:var(--text-muted);">
                     Vérifie que le fichier games.json est présent et accessible.
                 </p>
             </div>
         `;
     }
 
+    // Dispatch event for header count
+    window.dispatchEvent(new CustomEvent('novaplay:gamesLoaded', {
+        detail: { count: allGames.length }
+    }));
+
     filteredGames = [...allGames];
-    applyFilters(); // Initial display
+    applyFilters();
 
     const gameSearch = document.getElementById('gameSearch');
     if (gameSearch) {
@@ -242,7 +306,7 @@ async function initGamePage() {
     });
 }
 
-// Initialisation de la page jeux
+// Init
 if (document.body.classList.contains('page-jeux')) {
     initGamePage();
 }
