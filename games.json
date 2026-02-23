@@ -2010,5 +2010,11 @@
         "image": "https://shared.fastly.steamstatic.com//store_item_assets//steam//apps//997010//849658b8ef82f1123a581ce00a5138747055465f//capsule_616x353_alt_assets_1.jpg",
         "link": "https://www.clictune.com/mnMc",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Trailmakers",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/585420\\/9363a927b4f1329597e90122f51f2ce1a53801cc\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnMd",
+        "mode": "solo"
     }
 ]
