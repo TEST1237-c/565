@@ -1848,5 +1848,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/656350\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnLM",
         "mode": "solo"
+    },
+    {
+        "title": "Mechanica",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1226990\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnLN",
+        "mode": "solo"
     }
 ]
