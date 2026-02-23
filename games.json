@@ -1836,5 +1836,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/593150\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnKs",
         "mode": "solo"
+    },
+    {
+        "title": "Stonehearth",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/253250\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnLL",
+        "mode": "multiplayer"
     }
 ]
