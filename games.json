@@ -1884,5 +1884,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1167630\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnLS",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Ghostrunner",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1139900\\/60f0924935dd337bb0a023558939b29aa666d168\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnLT",
+        "mode": "solo"
     }
 ]
