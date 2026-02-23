@@ -2058,5 +2058,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1553230\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnMl",
         "mode": "solo"
+    },
+    {
+        "title": "Mafia Definitive Edition",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1030840\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnMm",
+        "mode": "multiplayer"
     }
 ]
