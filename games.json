@@ -2046,5 +2046,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1158310\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnMj",
         "mode": "multiplayer"
+    },
+    {
+        "title": "The Architect Paris",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1525620\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnMk",
+        "mode": "solo"
     }
 ]
