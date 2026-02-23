@@ -2016,5 +2016,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/585420\\/9363a927b4f1329597e90122f51f2ce1a53801cc\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnMd",
         "mode": "solo"
+    },
+    {
+        "title": "The Game of Life 2",
+        "image": "https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1455630\\/13e92781114d4cd33c1535cb35c77f3acb665e2e\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnMe",
+        "mode": "multiplayer"
     }
 ]
