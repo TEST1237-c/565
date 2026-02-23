@@ -1860,5 +1860,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/570940\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnLO",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Dark Souls II",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/236430\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnLP",
+        "mode": "solo"
     }
 ]
