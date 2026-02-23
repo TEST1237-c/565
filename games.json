@@ -2079,8 +2079,14 @@
     },
     {
         "title": "Mud runner",
-        "image": "https:\/\/shared.fastly.steamstatic.com\/store_item_assets\/steam\/apps\/675010\/capsule_616x353.jpg",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/675010/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnMr",
+        "mode": "multiplayer"
+    },
+    {
+        "title": "Demon Slayer -Kimetsu no Yaiba- The Hinokami Chronicles 2",
+        "image": "https://i.imgur.com/v3oSUOU.jpeg",
+        "link": "https://www.clictune.com/mnMt",
         "mode": "multiplayer"
     }
 ]
