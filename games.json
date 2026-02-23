@@ -1896,5 +1896,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/962130\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnLU",
         "mode": "multiplayer"
+    },
+    {
+        "title": "King of Retail",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/968250\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnLV",
+        "mode": "solo"
     }
 ]
