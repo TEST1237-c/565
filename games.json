@@ -1968,5 +1968,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/602960\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnM5",
         "mode": "multiplayer"
+    },
+    {
+        "title": "Just Die Already",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/979070\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnM6",
+        "mode": "solo"
     }
 ]
