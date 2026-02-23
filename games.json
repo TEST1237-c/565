@@ -1938,5 +1938,11 @@
         "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/1145360\\/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mnM1",
         "mode": "solo"
+    },
+    {
+        "title": "OneShot",
+        "image": "https:\\/\\/shared.fastly.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/420530\\/capsule_616x353.jpg",
+        "link": "https://www.clictune.com/mnM2",
+        "mode": "solo"
     }
 ]
