@@ -47,14 +47,28 @@ function generateGameElements(games) {
         img.height = 353;
         img.loading = 'lazy';
 
-        // Badge mode (top-left)
+        // Badge container (top-left)
         const badgeWrapper = document.createElement('div');
         badgeWrapper.className = 'badge-mode-wrapper';
+
+        // Mode badge (Solo/Multi)
         const badge = document.createElement('span');
         const modeLabel = game.mode === 'solo' ? 'Solo' : 'Multi';
         badge.className = 'badge-mode-tag ' + (game.mode === 'solo' ? 'solo' : 'multiplayer');
         badge.textContent = modeLabel;
         badgeWrapper.appendChild(badge);
+
+        // "NEW" Badge (stays for 1 hour)
+        if (game.addedAt) {
+            const oneHour = 60 * 60 * 1000;
+            const now = Date.now();
+            if (now - game.addedAt < oneHour) {
+                const newBadge = document.createElement('span');
+                newBadge.className = 'badge-new-tag';
+                newBadge.textContent = 'NEW';
+                badgeWrapper.appendChild(newBadge);
+            }
+        }
 
         // Hover overlay
         const titleHover = document.createElement('div');
