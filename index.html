@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaPlay - Cracked Games</title>
-    <meta name="description" content="NovaPlay - Browse and download cracked games. Safe, fast, always up to date.">
+    <title>NovaPlay — Cracked Games</title>
+    <meta name="description" content="NovaPlay — Browse and download cracked games. Safe, fast, always up to date.">
+    <meta name="theme-color" content="#02030d">
     <link rel="icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <style>
         /* ===== MAINTENANCE MODE ===== */
@@ -15,7 +18,7 @@
             position: fixed;
             inset: 0;
             z-index: 99999;
-            background: #050508;
+            background: #02030d;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -34,15 +37,15 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 80% 60% at 20% 20%, rgba(139, 92, 246, 0.18) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+                radial-gradient(ellipse 80% 60% at 20% 20%, rgba(34, 211, 238, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 60%);
             pointer-events: none;
         }
 
         .maint-gear {
             font-size: 5rem;
             animation: spin 6s linear infinite;
-            filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.7));
+            filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.7));
             margin-bottom: 1.5rem;
         }
 
@@ -54,9 +57,9 @@
 
         .maint-badge {
             display: inline-block;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(99, 102, 241, 0.15));
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            color: #a78bfa;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(124, 58, 237, 0.15));
+            border: 1px solid rgba(34, 211, 238, 0.35);
+            color: #67e8f9;
             font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.2em;
@@ -69,7 +72,7 @@
         .maint-title {
             font-size: clamp(2rem, 6vw, 4rem);
             font-weight: 800;
-            background: linear-gradient(135deg, #c4b5fd, #818cf8, #6366f1);
+            background: linear-gradient(135deg, #fff, #67e8f9, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -87,7 +90,7 @@
         .maint-progress-wrap {
             width: min(400px, 90vw);
             height: 4px;
-            background: rgba(139, 92, 246, 0.12);
+            background: rgba(34, 211, 238, 0.1);
             border-radius: 999px;
             overflow: hidden;
             margin-bottom: 2.5rem;
@@ -96,7 +99,7 @@
         .maint-progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #7c3aed, #6366f1, #a78bfa);
+            background: linear-gradient(90deg, #22d3ee, #7c3aed, #a78bfa);
             border-radius: 999px;
             animation: progress 4s ease-in-out infinite alternate;
         }
@@ -155,13 +158,21 @@
             <div class="maint-progress-bar"></div>
         </div>
         <a href="https://discord.gg/scUwxCmf4D" target="_blank" class="maint-discord">
-            <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="20" height="20" />
+            <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="20" height="20">
             Rejoindre le Discord
         </a>
         <p class="maint-footer">© 2026 NovaPlay</p>
     </div>
-    <!-- ========================================= -->
 
+    <!-- ========== COSMOS BACKGROUND ========== -->
+    <div class="aurora-layer">
+        <div class="aurora-band"></div>
+        <div class="aurora-band"></div>
+        <div class="aurora-band"></div>
+    </div>
+    <div class="nebula-orb nebula-orb-1" id="nebulaOrb1"></div>
+    <div class="nebula-orb nebula-orb-2" id="nebulaOrb2"></div>
+    <div class="nebula-orb nebula-orb-3" id="nebulaOrb3"></div>
     <div class="mouse-follower" id="mouseFollower"></div>
     <div class="floating-glow glow-1"></div>
     <div class="floating-glow glow-2"></div>
@@ -177,10 +188,10 @@
                     <path d="M8 21h8M12 17v4" />
                 </svg>
                 <span id="headerGameCount" class="header-stat-number">—</span>
-                <span>jeux disponibles</span>
+                <span>jeux</span>
             </div>
             <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="header-discord">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
+                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" loading="lazy">
                 Discord
             </a>
         </div>
@@ -188,9 +199,34 @@
 
     <!-- Main Container -->
     <div class="container-jeux">
+
+        <!-- Title -->
         <div class="title-container">
             <h1 class="big-title glitch" data-text="NovaPlay">NovaPlay</h1>
             <div class="title-underline"></div>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <strong id="statSolo">—</strong>
+                <span>solo</span>
+            </div>
+            <div class="stat-chip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <strong id="statMulti">—</strong>
+                <span>multi</span>
+            </div>
         </div>
 
         <!-- Search Bar -->
@@ -201,49 +237,50 @@
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.35-4.35" />
                 </svg>
-                <input type="text" class="search-bar" id="gameSearch" placeholder="Rechercher un jeu...">
+                <input type="text" class="search-bar" id="gameSearch" placeholder="Rechercher un jeu..."
+                    autocomplete="off" spellcheck="false">
             </div>
         </div>
 
-        <!-- Category Filters -->
+        <!-- Filters -->
         <div class="filter-container" id="filterContainer">
             <button class="filter-btn active" data-filter="all">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
                 </svg>
                 Tous
             </button>
             <button class="filter-btn" data-filter="solo">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
                 </svg>
                 Solo
             </button>
             <button class="filter-btn" data-filter="multiplayer">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
                 Multijoueur
             </button>
         </div>
 
+        <!-- Results info -->
+        <p class="results-info" id="resultsInfo" aria-live="polite"></p>
+
         <!-- Games Grid -->
-        <div class="games-grid" id="gamesGrid">
-            <!-- Games are generated automatically by game.js -->
-        </div>
+        <div class="games-grid" id="gamesGrid" role="list"></div>
 
         <!-- Pagination -->
-        <div class="pagination-container" id="paginationContainer"></div>
+        <nav class="pagination-container" id="paginationContainer" aria-label="Pagination"></nav>
 
         <!-- Footer -->
         <footer class="site-footer">
@@ -257,40 +294,40 @@
                     <h4>Liens rapides</h4>
                     <ul class="footer-links">
                         <li><a href="index.html">Accueil</a></li>
-                        <li><a href="https://discord.gg/scUwxCmf4D" target="_blank">Discord</a></li>
+                        <li><a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener">Discord</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Communauté</h4>
-                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Rejoins notre Discord pour
+                    <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:8px;">Rejoins notre Discord pour
                         demander des jeux ou signaler des bugs.</p>
-                    <a href="https://discord.gg/scUwxCmf4D" class="footer-discord-btn" target="_blank">
-                        <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
+                    <a href="https://discord.gg/scUwxCmf4D" class="footer-discord-btn" target="_blank" rel="noopener">
+                        <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="15" height="15" loading="lazy">
                         REJOINDRE
                     </a>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>© 2026 NovaPlay. All rights reserved.</p>
-                <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.
-                </div>
+                <p class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.
+                </p>
             </div>
         </footer>
     </div>
 
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+    <button id="backToTop" class="back-to-top" aria-label="Retour en haut">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
             stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
+            <polyline points="18 15 12 9 6 15" />
         </svg>
     </button>
 
     <script src="game.js"></script>
     <script src="script.js"></script>
 
-    <!-- MAINTENANCE LOGIC -->
     <script>
         (function () {
+            // ── Maintenance ──────────────────────────────────────────
             var SECRET = 'NOVAPLAYTEST1234560OPTEST';
             var MAINTENANCE = false;
             var params = new URLSearchParams(window.location.search);
@@ -298,42 +335,87 @@
                 localStorage.setItem('novaplay_bypass', SECRET);
                 history.replaceState(null, '', window.location.pathname);
             }
-            var hasAccess = localStorage.getItem('novaplay_bypass') === SECRET;
-            if (MAINTENANCE && !hasAccess) {
+            if (MAINTENANCE && localStorage.getItem('novaplay_bypass') !== SECRET) {
                 document.getElementById('maintenance-overlay').classList.add('active');
             }
-        })();
 
-        // Mouse follower
-        (function () {
-            const follower = document.getElementById('mouseFollower');
-            if (!follower) return;
-            document.addEventListener('mousemove', e => {
-                follower.style.left = e.clientX + 'px';
-                follower.style.top = e.clientY + 'px';
-            });
-        })();
-
-        // Sticky header scroll effect
-        (function () {
-            const header = document.getElementById('siteHeader');
-            if (!header) return;
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 20) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
+            // ── Cosmos: scroll parallax for nebula orbs ──────────────
+            var orb1 = document.getElementById('nebulaOrb1');
+            var orb2 = document.getElementById('nebulaOrb2');
+            var orb3 = document.getElementById('nebulaOrb3');
+            var rafPending = false;
+            window.addEventListener('scroll', function () {
+                if (!rafPending) {
+                    rafPending = true;
+                    requestAnimationFrame(function () {
+                        var sy = window.scrollY;
+                        if (orb1) orb1.style.transform = 'translateY(' + (sy * 0.15) + 'px)';
+                        if (orb2) orb2.style.transform = 'translateY(' + (sy * -0.1) + 'px)';
+                        if (orb3) orb3.style.transform = 'translateY(' + (sy * 0.08) + 'px)';
+                        rafPending = false;
+                    });
                 }
             }, { passive: true });
-        })();
 
-        // Update game count in header
-        window.addEventListener('novaplay:gamesLoaded', function (e) {
-            const el = document.getElementById('headerGameCount');
-            if (el && e.detail && typeof e.detail.count === 'number') {
-                el.textContent = e.detail.count.toLocaleString('fr-FR');
+            // ── Shooting stars ───────────────────────────────────────
+            function spawnStar() {
+                var s = document.createElement('div');
+                s.className = 'shooting-star';
+                s.style.left = (Math.random() * window.innerWidth * 0.8 + window.innerWidth * 0.08) + 'px';
+                s.style.top = (Math.random() * window.innerHeight * 0.4) + 'px';
+                var dur = 1.1 + Math.random() * 0.9;
+                s.style.animation = 'shoot ' + dur + 's linear forwards';
+                document.body.appendChild(s);
+                setTimeout(function () { s.remove(); }, (dur + 0.2) * 1000);
             }
-        });
+            (function scheduleNext() {
+                setTimeout(function () { spawnStar(); scheduleNext(); }, 4500 + Math.random() * 6000);
+            })();
+
+            // ── Mouse follower (smooth lag) ──────────────────────────
+            var follower = document.getElementById('mouseFollower');
+            if (follower) {
+                var mx = 0, my = 0, fx = 0, fy = 0;
+                document.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
+                (function animF() {
+                    fx += (mx - fx) * 0.09;
+                    fy += (my - fy) * 0.09;
+                    follower.style.left = fx + 'px';
+                    follower.style.top = fy + 'px';
+                    requestAnimationFrame(animF);
+                })();
+            }
+
+            // ── Header scroll ────────────────────────────────────────
+            var header = document.getElementById('siteHeader');
+            if (header) {
+                window.addEventListener('scroll', function () {
+                    header.classList.toggle('scrolled', window.scrollY > 20);
+                }, { passive: true });
+            }
+
+            // ── Stats bar update ──────────────────────────────────────
+            window.addEventListener('novaplay:gamesLoaded', function (e) {
+                var d = e.detail || {};
+                var el = document.getElementById('headerGameCount');
+                if (el && typeof d.count === 'number') el.textContent = d.count.toLocaleString('fr-FR');
+                var st = document.getElementById('statTotal');
+                var ss = document.getElementById('statSolo');
+                var sm = document.getElementById('statMulti');
+                if (st) st.textContent = (d.count || 0).toLocaleString('fr-FR');
+                if (ss) ss.textContent = (d.solo || 0).toLocaleString('fr-FR');
+                if (sm) sm.textContent = (d.multi || 0).toLocaleString('fr-FR');
+            });
+
+            // ── Back to top ──────────────────────────────────────────
+            var btt = document.getElementById('backToTop');
+            if (btt) {
+                window.addEventListener('scroll', function () {
+                    btt.classList.toggle('show', window.scrollY > 500);
+                }, { passive: true });
+                btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            }
+        })();
     </script>
 </body>
 
