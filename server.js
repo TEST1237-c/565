@@ -118,9 +118,6 @@ app.post("/api/add-game", async (req, res) => {
   const clean = sanitizeGame(game);
   if (!clean) return okJson(res, 400, { error: "Jeu invalide (title, image, link, mode requis)" });
 
-  // Add creation timestamp for the "NEW" badge
-  clean.addedAt = Date.now();
-
   try {
     const games = await readGames();
     // Vérifier si le titre existe déjà
@@ -152,11 +149,6 @@ app.post("/api/update-game", async (req, res) => {
     // Vérifier si le nouveau titre existe déjà ailleurs
     const exists = games.some((g, idx) => idx !== i && g.title.toLowerCase() === clean.title.toLowerCase());
     if (exists) return okJson(res, 400, { error: "Un autre jeu porte déjà ce nom" });
-
-    // Preserve the original timestamp if it exists
-    if (games[i].addedAt) {
-      clean.addedAt = games[i].addedAt;
-    }
 
     games[i] = clean;
     await writeGames(games);
