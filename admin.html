@@ -101,6 +101,9 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            background:
+                radial-gradient(ellipse 70% 60% at 20% 30%, rgba(139, 92, 246, .12) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 80% 70%, rgba(99, 102, 241, .1) 0%, transparent 60%);
         }
 
         .login-screen.active {
@@ -109,12 +112,12 @@
 
         .login-card {
             width: 100%;
-            max-width: 420px;
-            background: linear-gradient(145deg, rgba(25, 20, 45, .8), rgba(12, 10, 22, .9));
+            max-width: 440px;
+            background: linear-gradient(145deg, rgba(25, 20, 45, .92), rgba(12, 10, 22, .97));
             border: 1px solid rgba(139, 92, 246, .3);
             border-radius: 24px;
-            padding: 3rem 2.5rem;
-            box-shadow: 0 0 0 1px rgba(139, 92, 246, .1), 0 30px 80px rgba(0, 0, 0, .5), 0 0 80px -20px rgba(139, 92, 246, .3);
+            padding: 2.75rem 2.5rem 2.25rem;
+            box-shadow: 0 0 0 1px rgba(139, 92, 246, .1), 0 30px 80px rgba(0, 0, 0, .55), 0 0 100px -20px rgba(139, 92, 246, .35);
             position: relative;
             overflow: hidden;
             animation: fadeUp .5s cubic-bezier(.4, 0, .2, 1) both;
@@ -130,23 +133,42 @@
             background: linear-gradient(90deg, transparent, var(--accent-violet), var(--accent-light), var(--accent-cyan), transparent);
         }
 
+        /* Subtle grid texture */
+        .login-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(139, 92, 246, .03) 40px, rgba(139, 92, 246, .03) 41px),
+                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(139, 92, 246, .03) 40px, rgba(139, 92, 246, .03) 41px);
+            pointer-events: none;
+        }
+
         .login-logo {
             text-align: center;
             margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .login-logo .icon-wrap {
-            width: 72px;
-            height: 72px;
+            width: 76px;
+            height: 76px;
             margin: 0 auto 1rem;
-            background: rgba(139, 92, 246, .2);
-            border: 1px solid rgba(139, 92, 246, .4);
+            background: rgba(139, 92, 246, .18);
+            border: 1px solid rgba(139, 92, 246, .45);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 0 30px rgba(139, 92, 246, .3);
+            font-size: 2.2rem;
+            box-shadow: 0 0 40px rgba(139, 92, 246, .35), inset 0 0 20px rgba(139, 92, 246, .1);
+            transition: box-shadow .3s, transform .3s;
+        }
+
+        .login-card.locked .icon-wrap {
+            background: rgba(239, 68, 68, .15);
+            border-color: rgba(239, 68, 68, .4);
+            box-shadow: 0 0 40px rgba(239, 68, 68, .3), inset 0 0 20px rgba(239, 68, 68, .08);
         }
 
         .login-logo h1 {
@@ -165,17 +187,70 @@
             margin-top: .35rem;
         }
 
+        /* Attempt dots */
+        .attempt-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: .75rem;
+        }
+
+        .attempt-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .15);
+            transition: background .3s, border-color .3s, transform .3s;
+        }
+
+        .attempt-dot.used {
+            background: rgba(239, 68, 68, .7);
+            border-color: rgba(239, 68, 68, .9);
+            transform: scale(1.15);
+        }
+
+        .attempt-dot.last-used {
+            animation: dotPop .4s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes dotPop {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.6);
+            }
+
+            100% {
+                transform: scale(1.15);
+            }
+        }
+
         .field-group {
             margin-bottom: 1.25rem;
+            position: relative;
+            z-index: 1;
         }
 
         .field-group label {
-            display: block;
-            font-size: .8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: .78rem;
             color: var(--text-muted);
             margin-bottom: .45rem;
             letter-spacing: .04em;
             text-transform: uppercase;
+        }
+
+        .attempts-left-label {
+            font-size: .72rem;
+            letter-spacing: 0;
+            text-transform: none;
+            color: rgba(252, 165, 165, .8);
+            font-weight: 600;
         }
 
         .field-input-wrap {
@@ -190,12 +265,13 @@
             font-size: 1rem;
             opacity: .5;
             pointer-events: none;
+            z-index: 2;
         }
 
         .field-input-wrap input {
             width: 100%;
-            padding: .85rem 1rem .85rem 2.75rem;
-            background: rgba(0, 0, 0, .3);
+            padding: .85rem 3rem .85rem 2.75rem;
+            background: rgba(0, 0, 0, .35);
             border: 1px solid rgba(255, 255, 255, .08);
             border-radius: 10px;
             color: #fff;
@@ -203,6 +279,7 @@
             font-family: inherit;
             transition: border-color .25s, box-shadow .25s;
             outline: none;
+            box-sizing: border-box;
         }
 
         .field-input-wrap input:focus {
@@ -210,8 +287,121 @@
             box-shadow: 0 0 0 3px rgba(139, 92, 246, .2);
         }
 
+        .field-input-wrap input.error {
+            border-color: rgba(239, 68, 68, .6);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, .15);
+        }
+
         .field-input-wrap input::placeholder {
-            color: rgba(255, 255, 255, .25);
+            color: rgba(255, 255, 255, .22);
+        }
+
+        /* Toggle show password */
+        .toggle-pass-btn {
+            position: absolute;
+            right: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: .25rem;
+            color: rgba(255, 255, 255, .35);
+            font-size: 1.05rem;
+            line-height: 1;
+            transition: color .2s, opacity .2s;
+            z-index: 2;
+        }
+
+        .toggle-pass-btn:hover {
+            color: rgba(255, 255, 255, .7);
+        }
+
+        /* Shake animation */
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            15% {
+                transform: translateX(-8px);
+            }
+
+            30% {
+                transform: translateX(7px);
+            }
+
+            45% {
+                transform: translateX(-6px);
+            }
+
+            60% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-3px);
+            }
+
+            90% {
+                transform: translateX(2px);
+            }
+        }
+
+        .shake {
+            animation: shake .5s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        /* Error hint */
+        .field-hint {
+            font-size: .78rem;
+            margin-top: .4rem;
+            min-height: 1.1em;
+            transition: color .25s;
+        }
+
+        .field-hint.err {
+            color: #fca5a5;
+        }
+
+        .field-hint.ok {
+            color: #86efac;
+        }
+
+        /* Lockout banner */
+        .lockout-banner {
+            display: none;
+            background: rgba(239, 68, 68, .1);
+            border: 1px solid rgba(239, 68, 68, .3);
+            border-radius: 10px;
+            padding: .8rem 1rem;
+            margin-bottom: 1.1rem;
+            text-align: center;
+            font-size: .88rem;
+            color: #fca5a5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lockout-banner.active {
+            display: block;
+        }
+
+        .lockout-banner strong {
+            display: block;
+            font-size: .95rem;
+            margin-bottom: .2rem;
+        }
+
+        .lockout-timer {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #f87171;
+            margin-top: .35rem;
+            letter-spacing: .05em;
         }
 
         .btn-primary {
@@ -226,17 +416,69 @@
             cursor: pointer;
             font-family: 'Orbitron', sans-serif;
             letter-spacing: .05em;
-            transition: transform .2s, box-shadow .2s;
+            transition: transform .2s, box-shadow .2s, opacity .2s;
             box-shadow: 0 4px 20px rgba(139, 92, 246, .35);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .6rem;
+            overflow: hidden;
         }
 
-        .btn-primary:hover {
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .08), transparent);
+            opacity: 0;
+            transition: opacity .25s;
+        }
+
+        .btn-primary:hover:not(:disabled)::after {
+            opacity: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(139, 92, 246, .5);
         }
 
-        .btn-primary:active {
+        .btn-primary:active:not(:disabled) {
             transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Spinner inside button */
+        .btn-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .btn-primary.loading .btn-spinner {
+            display: block;
+        }
+
+        .btn-primary.loading .btn-text {
+            opacity: .7;
         }
 
         /* ===================== MAIN LAYOUT ===================== */
@@ -1126,24 +1368,51 @@
 
     <!-- =================== LOGIN SCREEN =================== -->
     <div class="login-screen active" id="loginScreen">
-        <div class="login-card">
+        <div class="login-card" id="loginCard">
             <div class="login-logo">
-                <div class="icon-wrap">🔐</div>
+                <div class="icon-wrap" id="loginIconWrap">🔐</div>
                 <h1>NOVAPLAY ADMIN</h1>
                 <p>Accès sécurisé à l'espace administrateur</p>
+                <!-- Dots showing failed attempts (max 5) -->
+                <div class="attempt-dots" id="attemptDots">
+                    <div class="attempt-dot" id="dot0"></div>
+                    <div class="attempt-dot" id="dot1"></div>
+                    <div class="attempt-dot" id="dot2"></div>
+                    <div class="attempt-dot" id="dot3"></div>
+                    <div class="attempt-dot" id="dot4"></div>
+                </div>
             </div>
-            <form id="loginForm">
+
+            <!-- Lockout banner -->
+            <div class="lockout-banner" id="lockoutBanner">
+                <strong>🔒 Trop de tentatives échouées</strong>
+                Compte temporairement bloqué. Réessaie dans :
+                <div class="lockout-timer" id="lockoutTimer">—</div>
+            </div>
+
+            <form id="loginForm" autocomplete="off">
                 <div class="field-group">
-                    <label>Mot de passe</label>
-                    <div class="field-input-wrap">
+                    <label for="adminPassword">
+                        <span>Mot de passe</span>
+                        <span class="attempts-left-label" id="attemptsLeftLabel" style="display:none"></span>
+                    </label>
+                    <div class="field-input-wrap" id="passwordWrap">
                         <span class="fi-icon">🔑</span>
                         <input type="password" id="adminPassword" placeholder="••••••••" autocomplete="current-password"
                             required>
+                        <button type="button" class="toggle-pass-btn" id="togglePassBtn" title="Afficher/masquer">
+                            👁️
+                        </button>
                     </div>
+                    <div class="field-hint" id="fieldHint"></div>
                 </div>
-                <button type="submit" class="btn-primary" id="loginBtn">Se connecter →</button>
+                <button type="submit" class="btn-primary" id="loginBtn">
+                    <div class="btn-spinner" id="loginSpinner"></div>
+                    <span class="btn-text">Se connecter →</span>
+                </button>
             </form>
-            <p style="text-align:center;margin-top:1.25rem;font-size:.8rem;color:var(--text-muted);">
+            <p
+                style="text-align:center;margin-top:1.25rem;font-size:.8rem;color:var(--text-muted);position:relative;z-index:1;">
                 <a href="index.html" style="color:var(--accent-light);text-decoration:none;">← Retour au site</a>
             </p>
         </div>
@@ -1418,8 +1687,16 @@
     <script>
         const LOGIN_KEY = 'adminLoggedIn';
         const PASS_KEY = 'adminPass';
+        const SESSION_EXPIRES_KEY = 'adminSessionExpires';
+        const ATTEMPTS_KEY = 'adminFailedAttempts';
+        const LOCKOUT_UNTIL_KEY = 'adminLockoutUntil';
+        const MAX_ATTEMPTS = 5;
+        const LOCKOUT_DURATION_MS = 3 * 60 * 1000; // 3 minutes
+        const SESSION_DURATION_MS = 4 * 60 * 60 * 1000; // 4 hours
+
         let allGames = [];
         let activeFilter = 'all';
+        let lockoutInterval = null;
 
         /* ========== TOAST ========== */
         function toast(msg, type = 'info') {
@@ -1431,35 +1708,218 @@
             setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 3500);
         }
 
-        /* ========== AUTH ========== */
-        function isLoggedIn() { return sessionStorage.getItem(LOGIN_KEY) === '1'; }
+        /* ========== AUTH HELPERS ========== */
+        function isLoggedIn() {
+            if (sessionStorage.getItem(LOGIN_KEY) !== '1') return false;
+            const expires = parseInt(sessionStorage.getItem(SESSION_EXPIRES_KEY) || '0', 10);
+            if (Date.now() > expires) {
+                // Session expired
+                sessionStorage.removeItem(LOGIN_KEY);
+                sessionStorage.removeItem(PASS_KEY);
+                sessionStorage.removeItem(SESSION_EXPIRES_KEY);
+                return false;
+            }
+            return true;
+        }
+
         function getPass() { return sessionStorage.getItem(PASS_KEY); }
 
-        if (isLoggedIn()) { showAdmin(); }
+        function getFailedAttempts() {
+            return parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0', 10);
+        }
+
+        function incrementFailedAttempts() {
+            const n = getFailedAttempts() + 1;
+            localStorage.setItem(ATTEMPTS_KEY, String(n));
+            return n;
+        }
+
+        function resetFailedAttempts() {
+            localStorage.removeItem(ATTEMPTS_KEY);
+            localStorage.removeItem(LOCKOUT_UNTIL_KEY);
+        }
+
+        function getLockoutUntil() {
+            return parseInt(localStorage.getItem(LOCKOUT_UNTIL_KEY) || '0', 10);
+        }
+
+        function setLockout() {
+            const until = Date.now() + LOCKOUT_DURATION_MS;
+            localStorage.setItem(LOCKOUT_UNTIL_KEY, String(until));
+            return until;
+        }
+
+        function isLockedOut() {
+            return Date.now() < getLockoutUntil();
+        }
+
+        /* ========== UI HELPERS ========== */
+        function updateAttemptDots(used) {
+            for (let i = 0; i < MAX_ATTEMPTS; i++) {
+                const dot = document.getElementById('dot' + i);
+                if (!dot) continue;
+                dot.classList.remove('used', 'last-used');
+                if (i < used) {
+                    dot.classList.add('used');
+                    if (i === used - 1) dot.classList.add('last-used');
+                }
+            }
+            // Show attempts left label when at least 1 attempt used
+            const label = document.getElementById('attemptsLeftLabel');
+            if (used > 0 && used < MAX_ATTEMPTS) {
+                label.style.display = '';
+                label.textContent = `${MAX_ATTEMPTS - used} essai${MAX_ATTEMPTS - used > 1 ? 's' : ''} restant${MAX_ATTEMPTS - used > 1 ? 's' : ''}`;
+            } else {
+                label.style.display = 'none';
+            }
+        }
+
+        function shakeField() {
+            const wrap = document.getElementById('passwordWrap');
+            const input = document.getElementById('adminPassword');
+            wrap.classList.remove('shake');
+            input.classList.add('error');
+            void wrap.offsetWidth; // reflow
+            wrap.classList.add('shake');
+            setTimeout(() => {
+                wrap.classList.remove('shake');
+                input.classList.remove('error');
+            }, 600);
+        }
+
+        function setFieldHint(msg, type) {
+            const h = document.getElementById('fieldHint');
+            h.textContent = msg;
+            h.className = 'field-hint ' + (type || '');
+        }
+
+        function setBtnLoading(loading) {
+            const btn = document.getElementById('loginBtn');
+            const spinner = document.getElementById('loginSpinner');
+            if (loading) {
+                btn.classList.add('loading');
+                btn.disabled = true;
+                spinner.style.display = 'block';
+                btn.querySelector('.btn-text').textContent = 'Connexion…';
+            } else {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btn.querySelector('.btn-text').textContent = 'Se connecter →';
+            }
+        }
+
+        function startLockoutUI(until) {
+            const card = document.getElementById('loginCard');
+            const banner = document.getElementById('lockoutBanner');
+            const timerEl = document.getElementById('lockoutTimer');
+            const btn = document.getElementById('loginBtn');
+            const input = document.getElementById('adminPassword');
+            card.classList.add('locked');
+            banner.classList.add('active');
+            btn.disabled = true;
+            input.disabled = true;
+
+            // Fill all dots
+            updateAttemptDots(MAX_ATTEMPTS);
+            document.getElementById('attemptsLeftLabel').style.display = 'none';
+
+            if (lockoutInterval) clearInterval(lockoutInterval);
+            lockoutInterval = setInterval(() => {
+                const remaining = Math.max(0, until - Date.now());
+                const mins = Math.floor(remaining / 60000);
+                const secs = Math.floor((remaining % 60000) / 1000);
+                timerEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                if (remaining <= 0) {
+                    clearInterval(lockoutInterval);
+                    lockoutInterval = null;
+                    resetFailedAttempts();
+                    card.classList.remove('locked');
+                    banner.classList.remove('active');
+                    btn.disabled = false;
+                    input.disabled = false;
+                    input.value = '';
+                    setFieldHint('Tu peux réessayer maintenant.', 'ok');
+                    updateAttemptDots(0);
+                }
+            }, 500);
+        }
+
+        /* ========== TOGGLE PASSWORD ========== */
+        document.getElementById('togglePassBtn').addEventListener('click', function () {
+            const input = document.getElementById('adminPassword');
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                this.textContent = '👁️';
+            }
+        });
+
+        /* ========== INIT AUTH STATE ========== */
+        (function initAuth() {
+            const attempts = getFailedAttempts();
+            updateAttemptDots(attempts);
+
+            if (isLockedOut()) {
+                startLockoutUI(getLockoutUntil());
+            }
+
+            if (isLoggedIn()) { showAdmin(); }
+        })();
 
         document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            if (isLockedOut()) {
+                shakeField();
+                return;
+            }
+
             const password = document.getElementById('adminPassword').value;
-            const btn = document.getElementById('loginBtn');
-            btn.textContent = '⏳ Connexion…'; btn.disabled = true;
+            setFieldHint('');
+            setBtnLoading(true);
+
             try {
                 const res = await fetch('/api/check-admin', {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ password })
                 });
+
                 if (res.ok) {
+                    resetFailedAttempts();
+                    updateAttemptDots(0);
+                    setFieldHint('');
+                    // Store session with expiry
                     sessionStorage.setItem(LOGIN_KEY, '1');
                     sessionStorage.setItem(PASS_KEY, password);
+                    sessionStorage.setItem(SESSION_EXPIRES_KEY, String(Date.now() + SESSION_DURATION_MS));
                     showAdmin();
                     toast('Connexion réussie ! Bienvenue.', 'success');
                 } else {
                     const d = await res.json().catch(() => ({}));
-                    toast(d.error || 'Mot de passe incorrect', 'error');
+                    const attempts = incrementFailedAttempts();
+                    updateAttemptDots(attempts);
+                    shakeField();
+
+                    if (attempts >= MAX_ATTEMPTS) {
+                        const until = setLockout();
+                        setFieldHint('Compte bloqué suite à trop de tentatives.', 'err');
+                        startLockoutUI(until);
+                        toast('🔒 Trop de tentatives. Bloqué 3 minutes.', 'error');
+                    } else {
+                        const remaining = MAX_ATTEMPTS - attempts;
+                        const msg = d.error || 'Mot de passe incorrect';
+                        setFieldHint(`${msg} (${remaining} essai${remaining > 1 ? 's' : ''} restant)`, 'err');
+                        toast(msg, 'error');
+                    }
                 }
             } catch (err) {
+                setFieldHint('Erreur réseau. Vérifie ta connexion.', 'err');
                 toast('Erreur réseau : ' + err.message, 'error');
             } finally {
-                btn.textContent = 'Se connecter →'; btn.disabled = false;
+                setBtnLoading(false);
             }
         });
 
@@ -1472,8 +1932,14 @@
         document.getElementById('logoutBtn').addEventListener('click', function () {
             sessionStorage.removeItem(LOGIN_KEY);
             sessionStorage.removeItem(PASS_KEY);
+            sessionStorage.removeItem(SESSION_EXPIRES_KEY);
             document.getElementById('adminLayout').classList.remove('active');
             document.getElementById('loginScreen').classList.add('active');
+            // Reset form
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').type = 'password';
+            document.getElementById('togglePassBtn').textContent = '👁️';
+            setFieldHint('');
             toast('Vous avez été déconnecté.', 'info');
         });
 
