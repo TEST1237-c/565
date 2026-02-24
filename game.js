@@ -60,9 +60,11 @@ function generateGameElements(games) {
 
         // "NEW" Badge (stays for 1 hour)
         if (game.addedAt) {
+            const addedTime = new Date(game.addedAt).getTime();
             const oneHour = 60 * 60 * 1000;
             const now = Date.now();
-            if (now - game.addedAt < oneHour) {
+
+            if (!isNaN(addedTime) && (now - addedTime < oneHour)) {
                 const newBadge = document.createElement('span');
                 newBadge.className = 'badge-new-tag';
                 newBadge.textContent = 'NEW';
