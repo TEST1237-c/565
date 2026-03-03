@@ -3,48 +3,40 @@
 
     document.addEventListener('contextmenu', function (e) {
         e.preventDefault();
-        showWarning();
     });
     document.addEventListener('keydown', function (e) {
         if (e.key === 'F12') {
             e.preventDefault();
-            showWarning();
             return;
         }
 
         if (e.ctrlKey && e.shiftKey && e.key === 'I') {
             e.preventDefault();
-            showWarning();
             return;
         }
 
         if (e.ctrlKey && e.shiftKey && e.key === 'J') {
             e.preventDefault();
-            showWarning();
             return;
         }
 
         if (e.ctrlKey && e.shiftKey && e.key === 'C') {
             e.preventDefault();
-            showWarning();
             return;
         }
 
         if (e.ctrlKey && e.key === 'u') {
             e.preventDefault();
-            showWarning();
             return;
         }
 
         if (e.ctrlKey && e.key === 's') {
             e.preventDefault();
-            showWarning();
             return;
         }
 
         if (e.ctrlKey && e.shiftKey && e.key === 'S') {
             e.preventDefault();
-            showWarning();
             return;
         }
 
@@ -109,60 +101,7 @@
         console.table = noop;
     } catch (_) { }
 
-    function showWarning() {
-        if (document.getElementById('np-protect-toast')) return;
 
-        const toast = document.createElement('div');
-        toast.id = 'np-protect-toast';
-        toast.innerHTML = `
-            <div style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 999999;
-                background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(185, 28, 28, 0.95));
-                color: white;
-                padding: 16px 24px;
-                border-radius: 12px;
-                font-family: 'Inter', system-ui, sans-serif;
-                font-size: 14px;
-                font-weight: 600;
-                box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4);
-                backdrop-filter: blur(12px);
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                animation: npToastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                max-width: 380px;
-            ">
-                <span style="font-size: 20px;">🛡️</span>
-                <span>Action bloquée — Le code source est protégé.</span>
-            </div>
-        `;
-
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes npToastIn {
-                from { opacity: 0; transform: translateX(60px) scale(0.9); }
-                to   { opacity: 1; transform: translateX(0) scale(1); }
-            }
-            @keyframes npToastOut {
-                from { opacity: 1; transform: translateX(0) scale(1); }
-                to   { opacity: 0; transform: translateX(60px) scale(0.9); }
-            }
-        `;
-        document.head.appendChild(style);
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-            const el = toast.querySelector('div');
-            if (el) el.style.animation = 'npToastOut 0.3s ease forwards';
-            setTimeout(() => {
-                toast.remove();
-                style.remove();
-            }, 300);
-        }, 3000);
-    }
 
     function showDevToolsOverlay() {
         if (document.getElementById('np-devtools-overlay')) return;
