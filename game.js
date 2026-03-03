@@ -1,13 +1,10 @@
-// ============================================
-// GAMES — chargement depuis /api/games (Vercel + GitHub)
-// ============================================
 const GAMES_PER_PAGE = 40;
 let currentPage = 1;
 let allGames = [];
 let filteredGames = [];
 let currentFilter = 'all';
 
-// Génère les éléments de jeu
+
 function generateGameElements(games) {
     const gamesGrid = document.getElementById('gamesGrid');
     if (!gamesGrid) return;
@@ -332,3 +329,4 @@ async function initGamePage() {
 if (document.body.classList.contains('page-jeux')) {
     initGamePage();
 }
+
