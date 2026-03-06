@@ -14,7 +14,8 @@
         _c: 0,           // check counter
         _h: Date.now(),  // heartbeat
         _k: 'np_' + Math.random().toString(36).slice(2, 8), // unique session key
-        _f: false        // frozen state
+        _f: false,       // frozen state
+        _isM: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     };
 
     // Freeze state object to prevent tampering
@@ -95,6 +96,7 @@
     var _thresh = 160;
 
     function _checkSize() {
+        if (_s._isM) return; // Skip size check on mobile (unreliable due to browser toolbars)
         var w = window.outerWidth - window.innerWidth > _thresh;
         var h = window.outerHeight - window.innerHeight > _thresh;
         if (w || h) _onDetect('size');
@@ -136,6 +138,7 @@
     // 7. DEVTOOLS DETECTION — METHOD 4: Performance timing
     // ============================================
     function _checkTiming() {
+        if (_s._isM) return; // Skip timing check on mobile (can be slow or trigger debugger falsely)
         var t0 = performance.now();
         for (var i = 0; i < 100; i++) {
             // Force layout/reflow detection — significantly slower with DevTools open
@@ -168,9 +171,10 @@
     var _detections = {};
 
     function _onDetect(method) {
+        if (_s._isM) return; // Never trigger detection on mobile
         _detections[method] = true;
         if (!_s._d) {
-            _s = { _d: true, _t: _s._t, _c: _s._c + 1, _h: Date.now(), _k: _s._k, _f: _s._f };
+            _s = { _d: true, _t: _s._t, _c: _s._c + 1, _h: Date.now(), _k: _s._k, _f: _s._f, _isM: _s._isM };
             _showOverlay();
         }
     }
@@ -179,7 +183,7 @@
         delete _detections[method];
         // Only clear if ALL methods report clean
         if (Object.keys(_detections).length === 0 && _s._d) {
-            _s = { _d: false, _t: _s._t, _c: _s._c, _h: Date.now(), _k: _s._k, _f: _s._f };
+            _s = { _d: false, _t: _s._t, _c: _s._c, _h: Date.now(), _k: _s._k, _f: _s._f, _isM: _s._isM };
             _hideOverlay();
         }
     }
