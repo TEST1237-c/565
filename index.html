@@ -4,373 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaPlay - Cracked Games</title>
-    <meta name="description" content="NovaPlay - Browse and download cracked games. Safe, fast, always up to date.">
+    <title>NovaPlay - Jeux Crackés & Cheats</title>
+    <meta name="description"
+        content="NovaPlay - La destination ultime pour les jeux crackés et les cheats premium. Sûr, rapide, toujours à jour.">
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* ===== MAINTENANCE MODE ===== */
-        #maintenance-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: #050508;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            font-family: 'Inter', system-ui, sans-serif;
-            overflow: hidden;
-        }
-
-        #maintenance-overlay.active {
-            display: flex;
-        }
-
-        #maintenance-overlay::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 20% 20%, rgba(139, 92, 246, 0.18) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .maint-gear {
-            font-size: 5rem;
-            animation: spin 6s linear infinite;
-            filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.7));
-            margin-bottom: 1.5rem;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .maint-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(99, 102, 241, 0.15));
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            color: #a78bfa;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            padding: 0.35rem 1rem;
-            border-radius: 999px;
-            margin-bottom: 1.5rem;
-        }
-
-        .maint-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: 800;
-            background: linear-gradient(135deg, #c4b5fd, #818cf8, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 0 0 1rem;
-        }
-
-        .maint-sub {
-            font-size: 1.05rem;
-            color: rgba(200, 200, 230, 0.65);
-            max-width: 460px;
-            line-height: 1.7;
-            margin: 0 0 2.5rem;
-        }
-
-        .maint-progress-wrap {
-            width: min(400px, 90vw);
-            height: 4px;
-            background: rgba(139, 92, 246, 0.12);
-            border-radius: 999px;
-            overflow: hidden;
-            margin-bottom: 2.5rem;
-        }
-
-        .maint-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #7c3aed, #6366f1, #a78bfa);
-            border-radius: 999px;
-            animation: progress 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes progress {
-            from {
-                width: 20%;
-            }
-
-            to {
-                width: 85%;
-            }
-        }
-
-        .maint-discord {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, #5865F2, #7c3aed);
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            padding: 0.75rem 1.75rem;
-            border-radius: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.35);
-        }
-
-        .maint-discord:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.5);
-        }
-
-        .maint-footer {
-            position: absolute;
-            bottom: 1.5rem;
-            font-size: 0.75rem;
-            color: rgba(200, 200, 230, 0.3);
-        }
-    </style>
 </head>
 
-<body class="page-jeux">
-
-    <!-- ========== MAINTENANCE OVERLAY ========== -->
-    <div id="maintenance-overlay">
-        <div class="maint-gear">⚙️</div>
-        <div class="maint-badge">System Status</div>
-        <h1 class="maint-title">We'll be back soon</h1>
-        <p class="maint-sub">
-            NovaPlay est actuellement en maintenance.<br>
-            On travaille dur pour améliorer votre expérience. Revenez très bientôt !
-        </p>
-        <div class="maint-progress-wrap">
-            <div class="maint-progress-bar"></div>
-        </div>
-        <a href="https://discord.gg/scUwxCmf4D" target="_blank" class="maint-discord">
-            <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="20" height="20" />
-            Rejoindre le Discord
-        </a>
-        <p class="maint-footer">© 2026 NovaPlay</p>
-    </div>
-    <!-- ========================================= -->
+<body class="page-accueil">
 
     <div class="mouse-follower" id="mouseFollower"></div>
     <div class="floating-glow glow-1"></div>
     <div class="floating-glow glow-2"></div>
 
-    <!-- ===== STICKY HEADER ===== -->
-    <header class="site-header" id="siteHeader">
-        <span class="header-logo">NovaPlay</span>
-        <div class="header-right">
-            <div class="header-stat" id="headerStat">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+    <!-- Center Content -->
+    <div class="center-container">
+        <div class="accueil-badge">
+            <span class="accueil-badge-dot"></span>
+            PLATEFORME #1 FRANCOPHONE
+        </div>
+        <h1 class="big-title glitch" data-text="NovaPlay" id="animatedTitle">NovaPlay</h1>
+        <p class="subtitle">Jeux cracks & cheats — gratuit, rapide, sûr.</p>
+        <nav>
+            <a href="jeux.html" id="navGames">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <path d="M8 21h8M12 17v4" />
+                    <rect x="2" y="6" width="20" height="12" rx="2" />
+                    <path d="M6 12h4M8 10v4" />
+                    <circle cx="15" cy="11" r="1" />
+                    <circle cx="18" cy="13" r="1" />
                 </svg>
-                <span id="headerGameCount" class="header-stat-number">—</span>
-                <span>jeux disponibles</span>
-            </div>
-            <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="header-discord">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
-                Discord
+                Jeux Cracks
             </a>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <div class="container-jeux">
-        <div class="title-container">
-            <h1 class="big-title glitch" data-text="NovaPlay">NovaPlay</h1>
-            <div class="title-underline"></div>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="search-bar-container">
-            <div class="search-bar-wrapper">
-                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            <a href="cheat.html" id="navCheats" class="nav-cheat">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.35-4.35" />
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
                 </svg>
-                <input type="text" class="search-bar" id="gameSearch" placeholder="Rechercher un jeu...">
-            </div>
-        </div>
-
-        <!-- Game Stats -->
-        <div class="game-stats-bar" id="gameStatsBar">
-            <div class="game-stat-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <path d="M8 21h8M12 17v4" />
-                </svg>
-                <span class="game-stat-number" id="statTotal">—</span>
-                <span class="game-stat-label">Jeux au total</span>
-            </div>
-            <div class="game-stat-divider"></div>
-            <div class="game-stat-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <span class="game-stat-number" id="statSolo">—</span>
-                <span class="game-stat-label">Solo</span>
-            </div>
-            <div class="game-stat-divider"></div>
-            <div class="game-stat-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-                <span class="game-stat-number" id="statMulti">—</span>
-                <span class="game-stat-label">Multijoueur</span>
-            </div>
-        </div>
-
-        <!-- Category Filters -->
-        <div class="filter-container" id="filterContainer">
-            <button class="filter-btn active" data-filter="all">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-                Tous
-            </button>
-            <button class="filter-btn" data-filter="solo">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                Solo
-            </button>
-            <button class="filter-btn" data-filter="multiplayer">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-                Multijoueur
-            </button>
-        </div>
-
-        <!-- Games Grid -->
-        <div class="games-grid" id="gamesGrid">
-            <!-- Games are generated automatically by game.js -->
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination-container" id="paginationContainer"></div>
-
-        <!-- Footer -->
-        <footer class="site-footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 class="footer-logo">NovaPlay</h3>
-                    <p class="footer-tagline">The ultimate destination for premium cracked games. Safe, fast, and always
-                        up to date.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Liens rapides</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Accueil</a></li>
-                        <li><a href="https://discord.gg/scUwxCmf4D" target="_blank">Discord</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Communauté</h4>
-                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Rejoins notre Discord pour
-                        demander des jeux ou signaler des bugs.</p>
-                    <a href="https://discord.gg/scUwxCmf4D" class="footer-discord-btn" target="_blank">
-                        <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
-                        REJOINDRE
-                    </a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 NovaPlay. All rights reserved.</p>
-                <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.
-                </div>
-            </div>
-        </footer>
+                Cheats
+            </a>
+        </nav>
+        <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="discord-inline-link">
+            <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
+            Rejoindre le Discord
+        </a>
     </div>
 
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
-        </svg>
-    </button>
-
     <script src="protect.js"></script>
-    <script src="game.js"></script>
     <script src="script.js"></script>
-
-    <!-- MAINTENANCE LOGIC -->
-    <script>
-        (function () {
-            var SECRET = 'NOVAPLAYTEST1234560OPTEST';
-            var MAINTENANCE = false;
-            var params = new URLSearchParams(window.location.search);
-            if (params.get('bypass') === SECRET) {
-                localStorage.setItem('novaplay_bypass', SECRET);
-                history.replaceState(null, '', window.location.pathname);
-            }
-            var hasAccess = localStorage.getItem('novaplay_bypass') === SECRET;
-            if (MAINTENANCE && !hasAccess) {
-                document.getElementById('maintenance-overlay').classList.add('active');
-            }
-        })();
-
-        // Mouse follower
-        (function () {
-            const follower = document.getElementById('mouseFollower');
-            if (!follower) return;
-            document.addEventListener('mousemove', e => {
-                follower.style.left = e.clientX + 'px';
-                follower.style.top = e.clientY + 'px';
-            });
-        })();
-
-        // Sticky header scroll effect
-        (function () {
-            const header = document.getElementById('siteHeader');
-            if (!header) return;
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 20) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            }, { passive: true });
-        })();
-
-        // Update game count in header
-        window.addEventListener('novaplay:gamesLoaded', function (e) {
-            const el = document.getElementById('headerGameCount');
-            if (el && e.detail && typeof e.detail.count === 'number') {
-                el.textContent = e.detail.count.toLocaleString('fr-FR');
-            }
-        });
-    </script>
 </body>
 
 </html>
