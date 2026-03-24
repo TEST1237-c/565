@@ -1,442 +1,357 @@
 /**
- * NovaPlay Protection System v3.0
- * Multi-layered client-side protection
+ *
+ * — Ne pas modifier —
  */
-(function (_np) {
-    'use strict';
+;(function(W,D,N,_){
+'use strict';
 
-    // ============================================
-    // INTERNAL STATE (obfuscated names)
-    // ============================================
-    var _s = {
-        _d: false,       // devtools detected
-        _t: [],          // timer IDs
-        _c: 0,           // check counter
-        _h: Date.now(),  // heartbeat
-        _k: 'np_' + Math.random().toString(36).slice(2, 8), // unique session key
-        _f: false,       // frozen state
-        _isM: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-    };
 
-    // Freeze state object to prevent tampering
-    if (Object.freeze) Object.freeze(_s);
+var _k=function(s){return s.split('').map(function(c){return String.fromCharCode(c.charCodeAt(0)^0x5A)}).join('');};
+var _ID_OV   = _k('\x16\x1f\x14\x2d\x1f\x19\x2d\x3f\x35');          // "np-dt-ov"
+var _ID_CSS  = _k('\x16\x1f\x14\x2d\x1f\x3b\x3f\x1a\x3e\x19\x19');  // "np-protect-css"
+var _ID_PRT  = _k('\x16\x1f\x14\x2d\x1f\x3b\x3b\x1f\x16\x19\x2d\x1c\x27\x3f\x19\x26'); // "np-print-block"
 
-    // ============================================
-    // 1. BLOCK CONTEXT MENU
-    // ============================================
-    var _bCM = function (e) { e.preventDefault(); return false; };
-    document.addEventListener('contextmenu', _bCM, true);
-    window.addEventListener('contextmenu', _bCM, true);
 
-    // ============================================
-    // 2. ADVANCED KEYBOARD SHORTCUT BLOCKING
-    // ============================================
-    var _blockedKeys = {
-        123: true,   // F12
-    };
-    var _blockedCtrl = {
-        85: true,  // U (view source)
-        83: true,  // S (save)
-        80: true,  // P (print)
-        72: true,  // H (history)
-        74: true,  // J (downloads)
-        71: true,  // G (find)
-    };
-    var _blockedCtrlShift = {
-        73: true,  // I (inspect)
-        74: true,  // J (console)
-        67: true,  // C (element picker)
-        75: true,  // K (firefox console)
-        77: true,  // M (responsive)
-        83: true,  // S (save as)
-        69: true,  // E (network, Edge)
-        81: true,  // Q (firefox devtools)
-    };
+var _st = Object.seal({
+    d:  false,    // devtools detected
+    m:  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(N.userAgent),
+    ts: 0
+});
 
-    function _blockKeys(e) {
-        var kc = e.keyCode || e.which;
 
-        // F-keys
-        if (_blockedKeys[kc]) {
-            e.preventDefault(); e.stopImmediatePropagation(); return false;
-        }
-        // Ctrl+Key
-        if (e.ctrlKey && !e.shiftKey && _blockedCtrl[kc]) {
-            if (kc === 67 && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
-            e.preventDefault(); e.stopImmediatePropagation(); return false;
-        }
-        // Ctrl+Shift+Key
-        if (e.ctrlKey && e.shiftKey && _blockedCtrlShift[kc]) {
-            e.preventDefault(); e.stopImmediatePropagation(); return false;
-        }
-        // Ctrl+A (select all, except inputs)
-        if (e.ctrlKey && kc === 65) {
-            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                e.preventDefault(); e.stopImmediatePropagation(); return false;
-            }
-        }
+var _det = {};
+var _THRESH = 160;
+
+
+try {
+    Object.defineProperty(W,'_np_st',{value:_st,writable:false,enumerable:false,configurable:false});
+} catch(_){}
+
+
+var _noCtx = function(e){e.preventDefault();return false;};
+D.addEventListener('contextmenu',_noCtx,true);
+W.addEventListener('contextmenu',_noCtx,true);
+
+var _BK  = {123:1};                        // F12
+var _BC  = {85:1,83:1,80:1,72:1,74:1,71:1,78:1}; // Ctrl+U/S/P/H/J/G/N
+var _BCS = {73:1,74:1,67:1,75:1,77:1,83:1,69:1,81:1,73:1}; // Ctrl+Shift
+
+function _blk(e){
+    var k=e.keyCode||e.which;
+    if(_BK[k]){e.preventDefault();e.stopImmediatePropagation();return false;}
+    if(e.ctrlKey&&!e.shiftKey&&_BC[k]){
+        if(k===67&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'))return;
+        e.preventDefault();e.stopImmediatePropagation();return false;
     }
-
-    document.addEventListener('keydown', _blockKeys, true);
-    window.addEventListener('keydown', _blockKeys, true);
-
-    // ============================================
-    // 3. BLOCK SELECTION, DRAG, COPY, CUT
-    // ============================================
-    function _isInput(t) { return t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable); }
-
-    document.addEventListener('selectstart', function (e) { if (!_isInput(e.target)) e.preventDefault(); }, true);
-    document.addEventListener('dragstart', function (e) { e.preventDefault(); }, true);
-    document.addEventListener('copy', function (e) { if (!_isInput(e.target)) e.preventDefault(); }, true);
-    document.addEventListener('cut', function (e) { if (!_isInput(e.target)) e.preventDefault(); }, true);
-
-    // ============================================
-    // 4. DEVTOOLS DETECTION — METHOD 1: Window size delta
-    // ============================================
-    var _thresh = 160;
-
-    function _checkSize() {
-        if (_s._isM) return; // Skip size check on mobile (unreliable due to browser toolbars)
-        var w = window.outerWidth - window.innerWidth > _thresh;
-        var h = window.outerHeight - window.innerHeight > _thresh;
-        if (w || h) _onDetect('size');
-        else _onClear('size');
+    if(e.ctrlKey&&e.shiftKey&&_BCS[k]){
+        e.preventDefault();e.stopImmediatePropagation();return false;
     }
-
-    // ============================================
-    // 5. DEVTOOLS DETECTION — METHOD 2: Console getter trap
-    // ============================================
-    function _checkConsoleGetter() {
-        var _img = new Image();
-        var _triggered = false;
-        Object.defineProperty(_img, 'id', {
-            get: function () {
-                _triggered = true;
-                _onDetect('getter');
-            }
-        });
-        try { console.log('%c', _img); } catch (_) { }
-        if (!_triggered) _onClear('getter');
+    // Ctrl+A hors input
+    if(e.ctrlKey&&k===65&&e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA'){
+        e.preventDefault();e.stopImmediatePropagation();return false;
     }
+}
+D.addEventListener('keydown',_blk,true);
+W.addEventListener('keydown',_blk,true);
 
-    // ============================================
-    // 6. DEVTOOLS DETECTION — METHOD 3: toString / regex trap
-    // ============================================
-    function _checkToString() {
-        var _r = /./;
-        var _count = 0;
-        _r.toString = function () {
-            _count++;
-            if (_count > 1) _onDetect('toString');
-            return '';
-        };
-        try { console.log(_r); } catch (_) { }
-        if (_count <= 1) _onClear('toString');
-    }
 
-    // ============================================
-    // 7. DEVTOOLS DETECTION — METHOD 4: Performance timing
-    // ============================================
-    function _checkTiming() {
-        if (_s._isM) return; // Skip timing check on mobile (can be slow or trigger debugger falsely)
-        var t0 = performance.now();
-        for (var i = 0; i < 100; i++) {
-            // Force layout/reflow detection — significantly slower with DevTools open
-            (function () { return i; })();
-        }
-        debugger;
-        var t1 = performance.now();
-        if (t1 - t0 > 100) _onDetect('timing');
-        else _onClear('timing');
-    }
+function _isInput(t){return t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable);}
+D.addEventListener('selectstart',function(e){if(!_isInput(e.target))e.preventDefault();},true);
+D.addEventListener('dragstart',  function(e){e.preventDefault();},true);
+D.addEventListener('copy',       function(e){if(!_isInput(e.target))e.preventDefault();},true);
+D.addEventListener('cut',        function(e){if(!_isInput(e.target))e.preventDefault();},true);
 
-    // ============================================
-    // 8. DEVTOOLS DETECTION — METHOD 5: Date.toLocaleString hack
-    // ============================================
-    function _checkDateTrap() {
-        var _date = new Date();
-        var _detected = false;
-        _date.toString = function () {
-            _detected = true;
-            _onDetect('dateTrap');
-            return '';
-        };
-        try { console.log(_date); } catch (_) { }
-        if (!_detected) _onClear('dateTrap');
-    }
 
-    // ============================================
-    // DETECTION MANAGER (requires 1+ methods to trigger)
-    // ============================================
-    var _detections = {};
+function _mkCSS(id,txt){
+    var s=D.createElement('style');
+    s.id=id;s.textContent=txt;
+    D.head.appendChild(s);
+    return s;
+}
+var _protCSS = _mkCSS(_ID_CSS,
+    'body{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important}'+
+    'input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-select:text!important}'+
+    'img,video,canvas{pointer-events:none;-webkit-user-drag:none;user-drag:none}'+
+    'a img{pointer-events:auto}'
+);
+var _printCSS = _mkCSS(_ID_PRT,
+    '@media print{body{display:none!important}html::after{content:"Non autorisé — NovaPlay";display:block;font-size:2rem;text-align:center;padding:4rem}}'
+);
 
-    function _onDetect(method) {
-        if (_s._isM) return; // Never trigger detection on mobile
-        _detections[method] = true;
-        if (!_s._d) {
-            _s = { _d: true, _t: _s._t, _c: _s._c + 1, _h: Date.now(), _k: _s._k, _f: _s._f, _isM: _s._isM };
-            _showOverlay();
-        }
-    }
 
-    function _onClear(method) {
-        delete _detections[method];
-        // Only clear if ALL methods report clean
-        if (Object.keys(_detections).length === 0 && _s._d) {
-            _s = { _d: false, _t: _s._t, _c: _s._c, _h: Date.now(), _k: _s._k, _f: _s._f, _isM: _s._isM };
-            _hideOverlay();
-        }
-    }
+try{
+    Object.defineProperty(W,'print',{get:function(){return function(){};},set:function(){},configurable:false});
+}catch(_){W.print=function(){};}
+W.addEventListener('beforeprint',function(){D.body.style.display='none';});
+W.addEventListener('afterprint', function(){D.body.style.display='';});
 
-    // Run all detection methods on staggered intervals
-    _s._t.push(setInterval(_checkSize, 700));
-    _s._t.push(setInterval(_checkConsoleGetter, 1200));
-    _s._t.push(setInterval(_checkToString, 1800));
-    _s._t.push(setInterval(_checkTiming, 5000));
-    _s._t.push(setInterval(_checkDateTrap, 2500));
 
-    // ============================================
-    // 9. CONSOLE OVERRIDE (hardened)
-    // ============================================
-    var _noop = function () { return undefined; };
-    var _methods = [
-        'log', 'warn', 'info', 'debug', 'error', 'dir', 'table',
-        'trace', 'assert', 'count', 'countReset',
-        'group', 'groupCollapsed', 'groupEnd',
-        'time', 'timeLog', 'timeEnd', 'timeStamp',
-        'profile', 'profileEnd', 'clear'
-    ];
+function _showOverlay(){
+    if(D.getElementById(_ID_OV))return;
+    var ov=D.createElement('div');
+    ov.id=_ID_OV;
+    ov.setAttribute('style','position:fixed;inset:0;z-index:2147483647;pointer-events:all;');
+    ov.innerHTML='<div style="position:fixed;inset:0;z-index:2147483647;background:rgba(5,5,8,0.98);'
+        +'display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;'
+        +'font-family:Inter,system-ui,sans-serif;padding:2rem;backdrop-filter:blur(20px)">'
+        +'<div style="font-size:4rem;margin-bottom:1.5rem">🛡️</div>'
+        +'<h2 style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444);'
+        +'-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 1rem">Accès Bloqué</h2>'
+        +'<p style="color:rgba(200,200,230,0.65);font-size:1rem;max-width:420px;line-height:1.7;margin:0 0 1.5rem">'
+        +'Les outils de développement ont été détectés.<br>Fermez-les pour continuer.</p>'
+        +'<div style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);'
+        +'border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">⚠️ Fermez les DevTools (F12)</div>'
+        +'<p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">NovaPlay Protection v4.0</p>'
+        +'</div>';
+    var st=D.createElement('style');
+    st.textContent='@keyframes npPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}';
+    D.head.appendChild(st);
+    D.body.appendChild(ov);
+}
+function _hideOverlay(){
+    var ov=D.getElementById(_ID_OV);
+    if(ov)ov.remove();
+}
 
-    function _killConsole() {
-        try {
-            _methods.forEach(function (m) {
-                try {
-                    Object.defineProperty(console, m, {
-                        get: function () { return _noop; },
-                        set: function () { },
-                        configurable: false
-                    });
-                } catch (_) {
-                    try { console[m] = _noop; } catch (__) { }
-                }
+
+function _onDetect(src){
+    if(_st.m)return;
+    _det[src]=1;
+    if(!_st.d){_st.d=true;_showOverlay();}
+}
+function _onClear(src){
+    delete _det[src];
+    if(Object.keys(_det).length===0&&_st.d){_st.d=false;_hideOverlay();}
+}
+
+
+
+
+function _chkSize(){
+    if(_st.m)return;
+    var w=W.outerWidth -W.innerWidth >_THRESH;
+    var h=W.outerHeight-W.innerHeight>_THRESH;
+    (w||h)?_onDetect('sz'):_onClear('sz');
+}
+
+
+function _chkGetter(){
+    var img=new Image(),hit=false;
+    Object.defineProperty(img,'id',{get:function(){hit=true;_onDetect('gt');}});
+    try{console.log('%c',img);}catch(_){}
+    if(!hit)_onClear('gt');
+}
+
+
+function _chkToString(){
+    var r=/./,n=0;
+    r.toString=function(){n++;if(n>1)_onDetect('ts');return '';};
+    try{console.log(r);}catch(_){}
+    if(n<=1)_onClear('ts');
+}
+
+
+function _chkDate(){
+    var d=new Date(),hit=false;
+    d.toString=function(){hit=true;_onDetect('dt');return '';};
+    try{console.log(d);}catch(_){}
+    if(!hit)_onClear('dt');
+}
+
+
+function _chkTiming(){
+    if(_st.m)return;
+    var t0=performance.now();
+    debugger; 
+    if(performance.now()-t0>120)_onDetect('tm');
+    else _onClear('tm');
+}
+
+
+function _chkFirebug(){
+    try{
+        if(W.Firebug&&W.Firebug.chrome&&W.Firebug.chrome.isInitialized)
+            _onDetect('fb');
+        else _onClear('fb');
+    }catch(_){_onClear('fb');}
+}
+
+
+function _chkStackDepth(){
+    try{
+        var e=new Error();
+        
+        if(e.stack&&e.stack.split('\n').length>6)_onDetect('sk');
+        else _onClear('sk');
+    }catch(_){_onClear('sk');}
+}
+
+
+var _lastTimeCheck=0;
+function _chkConsoleTime(){
+    if(_st.m)return;
+    var now=Date.now();
+    if(now-_lastTimeCheck<3000)return;
+    _lastTimeCheck=now;
+    var t=performance.now();
+    try{(function(){for(var i=0;i<200;i++){void 0;}})();}catch(_){}
+    if(performance.now()-t>50)_onDetect('ct');
+    else _onClear('ct');
+}
+
+
+setInterval(_chkSize,      700);
+setInterval(_chkGetter,   1300);
+setInterval(_chkToString, 1900);
+setInterval(_chkDate,     2600);
+setInterval(_chkTiming,   5000);
+setInterval(_chkFirebug,  3100);
+setInterval(_chkStackDepth,4200);
+setInterval(_chkConsoleTime,2000);
+
+
+var _noop=function(){return undefined;};
+var _conMethods=['log','warn','info','debug','error','dir','table','trace',
+    'assert','count','countReset','group','groupCollapsed','groupEnd',
+    'time','timeLog','timeEnd','timeStamp','profile','profileEnd','clear'];
+
+function _killConsole(){
+    _conMethods.forEach(function(m){
+        try{
+            Object.defineProperty(console,m,{
+                get:function(){return _noop;},
+                set:function(){},
+                configurable:false,
+                enumerable:false
             });
-        } catch (_) { }
-    }
-    _killConsole();
-    // Re-kill periodically in case someone restores it
-    _s._t.push(setInterval(_killConsole, 2000));
-
-    // ============================================
-    // 10. ANTI-IFRAME (clickjacking)
-    // ============================================
-    try {
-        if (window.top !== window.self) {
-            window.top.location = window.self.location;
-        }
-    } catch (_) {
-        try {
-            document.documentElement.innerHTML = '';
-        } catch (__) { }
-    }
-
-    // ============================================
-    // 11. PREVENT PRINTING
-    // ============================================
-    var _printCSS = document.createElement('style');
-    _printCSS.id = 'np-print-block';
-    _printCSS.textContent = '@media print{body{display:none!important}html::after{content:"Impression non autorisée - NovaPlay";display:block;font-size:2rem;text-align:center;padding:4rem;color:#888}}';
-    document.head.appendChild(_printCSS);
-
-    try {
-        Object.defineProperty(window, 'print', {
-            get: function () { return function () { }; },
-            set: function () { },
-            configurable: false
-        });
-    } catch (_) {
-        window.print = function () { };
-    }
-
-    window.addEventListener('beforeprint', function () {
-        document.body.style.display = 'none';
+        }catch(_){try{console[m]=_noop;}catch(__){}}
     });
-    window.addEventListener('afterprint', function () {
-        document.body.style.display = '';
+}
+_killConsole();
+setInterval(_killConsole,1500);
+
+
+try{
+    if(W.top!==W.self)W.top.location=W.self.location;
+}catch(_){
+    try{D.documentElement.innerHTML='';}catch(__){}}
+
+
+function _initObserver(){
+    var obs=new MutationObserver(function(muts){
+        muts.forEach(function(m){
+            
+            m.removedNodes.forEach(function(node){
+                if(!node||!node.id)return;
+                if(node.id===_ID_OV&&_st.d)         setTimeout(_showOverlay,30);
+                if(node.id===_ID_CSS)                setTimeout(function(){if(!D.getElementById(_ID_CSS))D.head.appendChild(_protCSS.cloneNode(true));},30);
+                if(node.id===_ID_PRT)                setTimeout(function(){if(!D.getElementById(_ID_PRT))D.head.appendChild(_printCSS.cloneNode(true));},30);
+            });
+            
+            if(m.type==='attributes'&&m.target.id===_ID_OV)
+                m.target.setAttribute('style','position:fixed;inset:0;z-index:2147483647;pointer-events:all;');
+        });
     });
+    obs.observe(D.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class','hidden']});
+}
+D.body?_initObserver():D.addEventListener('DOMContentLoaded',_initObserver);
 
-    // ============================================
-    // 12. PROTECTION CSS
-    // ============================================
-    var _protCSS = document.createElement('style');
-    _protCSS.id = 'np-protect-css';
-    _protCSS.textContent = [
-        'body{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important}',
-        'input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;-moz-user-select:text!important;user-select:text!important}',
-        'img,video,canvas{pointer-events:none;-webkit-user-drag:none;user-drag:none}',
-        'a img{pointer-events:auto}'
-    ].join('');
-    document.head.appendChild(_protCSS);
 
-    // ============================================
-    // 13. OVERLAY UI
-    // ============================================
-    function _showOverlay() {
-        if (document.getElementById('np-dt-ov')) return;
+setInterval(function(){
+    D.removeEventListener('keydown',_blk,true);
+    D.addEventListener('keydown',_blk,true);
+    D.removeEventListener('contextmenu',_noCtx,true);
+    D.addEventListener('contextmenu',_noCtx,true);
+    if(!D.getElementById(_ID_CSS))D.head.appendChild(_protCSS.cloneNode(true));
+    if(!D.getElementById(_ID_PRT))D.head.appendChild(_printCSS.cloneNode(true));
+},2500);
 
-        var ov = document.createElement('div');
-        ov.id = 'np-dt-ov';
-        ov.setAttribute('style', 'position:fixed;inset:0;z-index:2147483647;pointer-events:all;');
-        ov.innerHTML = '<div style="position:fixed;inset:0;z-index:2147483647;background:rgba(5,5,8,0.98);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Inter,system-ui,sans-serif;padding:2rem;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">'
-            + '<div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 30% 20%,rgba(239,68,68,0.08) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 70% 80%,rgba(239,68,68,0.06) 0%,transparent 60%);pointer-events:none"></div>'
-            + '<div style="font-size:4rem;margin-bottom:1.5rem;animation:npSh 2s ease-in-out infinite;position:relative;z-index:1">🛡️</div>'
-            + '<h2 style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444,#dc2626);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:0 0 1rem;position:relative;z-index:1">Accès Bloqué</h2>'
-            + '<p style="color:rgba(200,200,230,0.65);font-size:1.05rem;max-width:460px;line-height:1.7;margin:0 0 2rem;position:relative;z-index:1">Les outils de développement ont été détectés.<br>Veuillez les fermer pour continuer à utiliser NovaPlay.</p>'
-            + '<div style="padding:12px 28px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(185,28,28,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:12px;color:#fca5a5;font-size:0.85rem;font-weight:600;position:relative;z-index:1;display:flex;align-items:center;gap:0.5rem"><span style="font-size:1.1rem">⚠️</span>Fermez les DevTools (F12) pour accéder au site</div>'
-            + '<p style="color:rgba(200,200,230,0.25);font-size:0.72rem;margin-top:2rem;position:relative;z-index:1">NovaPlay Protection System v3.0</p>'
-            + '</div>';
 
-        var st = document.createElement('style');
-        st.id = 'np-dt-st';
-        st.textContent = '@keyframes npSh{0%,100%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.1) rotate(-5deg)}50%{transform:scale(1.2) rotate(0deg)}75%{transform:scale(1.1) rotate(5deg)}}#np-dt-ov,#np-dt-ov *{user-select:none!important;-webkit-user-select:none!important;pointer-events:auto!important}';
-        document.head.appendChild(st);
-        document.body.appendChild(ov);
-    }
-
-    function _hideOverlay() {
-        var ov = document.getElementById('np-dt-ov');
-        var st = document.getElementById('np-dt-st');
-        if (ov) ov.remove();
-        if (st) st.remove();
-    }
-
-    // ============================================
-    // 14. MUTATION OBSERVER — Self-healing protection
-    //     Prevents removal of overlay AND protection styles
-    // ============================================
-    function _initObserver() {
-        var _obs = new MutationObserver(function (mutations) {
-            for (var i = 0; i < mutations.length; i++) {
-                var m = mutations[i];
-                // Check removed nodes
-                for (var j = 0; j < m.removedNodes.length; j++) {
-                    var node = m.removedNodes[j];
-                    if (!node || !node.id) continue;
-                    // Re-add overlay if removed while devtools detected
-                    if (node.id === 'np-dt-ov' && _s._d) {
-                        setTimeout(_showOverlay, 50);
-                    }
-                    // Re-add protection CSS if removed
-                    if (node.id === 'np-protect-css') {
-                        setTimeout(function () {
-                            if (!document.getElementById('np-protect-css')) {
-                                document.head.appendChild(_protCSS.cloneNode(true));
-                            }
-                        }, 50);
-                    }
-                    // Re-add print block if removed
-                    if (node.id === 'np-print-block') {
-                        setTimeout(function () {
-                            if (!document.getElementById('np-print-block')) {
-                                document.head.appendChild(_printCSS.cloneNode(true));
-                            }
-                        }, 50);
-                    }
-                }
-                // Check modified attributes on overlay
-                if (m.type === 'attributes' && m.target.id === 'np-dt-ov') {
-                    m.target.setAttribute('style', 'position:fixed;inset:0;z-index:2147483647;pointer-events:all;');
-                }
-            }
-        });
-
-        _obs.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['style', 'class', 'hidden']
-        });
-    }
-
-    if (document.body) {
-        _initObserver();
-    } else {
-        document.addEventListener('DOMContentLoaded', _initObserver);
-    }
-
-    // ============================================
-    // 15. SELF-CHECK HEARTBEAT
-    //     Verifies protection is still running
-    // ============================================
-    _s._t.push(setInterval(function () {
-        // Re-attach key listeners if removed
-        document.removeEventListener('keydown', _blockKeys, true);
-        document.addEventListener('keydown', _blockKeys, true);
-
-        document.removeEventListener('contextmenu', _bCM, true);
-        document.addEventListener('contextmenu', _bCM, true);
-
-        // Ensure CSS protection exists
-        if (!document.getElementById('np-protect-css')) {
-            var c = _protCSS.cloneNode(true);
-            document.head.appendChild(c);
+var _origCreate=D.createElement.bind(D);
+D.createElement=function(tag){
+    var el=_origCreate(tag);
+    if(typeof tag==='string'&&tag.toLowerCase()==='script'){
+        var desc=Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype,'src');
+        if(desc&&desc.set){
+            var _rs=desc.set;
+            Object.defineProperty(el,'src',{
+                set:function(v){
+                    if(typeof v==='string'&&(v.indexOf('chrome-extension')===0||v.indexOf('moz-extension')===0))return;
+                    _rs.call(el,v);
+                },
+                get:function(){return desc.get?desc.get.call(el):'';},
+                configurable:false
+            });
         }
-    }, 3000));
+    }
+    return el;
+};
 
-    // ============================================
-    // 16. BLOCK EXTERNAL SCRIPT INJECTION
-    //     Detect if someone tries to inject scripts via console
-    // ============================================
-    var _origCreate = document.createElement;
-    document.createElement = function () {
-        var el = _origCreate.apply(document, arguments);
-        if (arguments[0] && arguments[0].toLowerCase() === 'script') {
-            // Wrap script elements to detect suspicious injections
-            var _origSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src');
-            if (_origSrc && _origSrc.set) {
-                var _realSet = _origSrc.set;
-                Object.defineProperty(el, 'src', {
-                    set: function (val) {
-                        // Allow same-origin scripts, block others from console injection
-                        if (typeof val === 'string' && val.indexOf('chrome-extension') === 0) {
-                            return; // block extension injection
-                        }
-                        _realSet.call(el, val);
-                    },
-                    get: function () {
-                        return _origSrc.get ? _origSrc.get.call(el) : '';
-                    }
-                });
+
+var _BANNED=[_ID_OV,_ID_CSS,'removeEventListener','_blk','_noCtx','debugger','devtools','protect'];
+try{
+    var _origEval=W.eval;
+    W.eval=function(code){
+        if(typeof code==='string'){
+            var lc=code.toLowerCase();
+            for(var i=0;i<_BANNED.length;i++){
+                if(lc.indexOf(_BANNED[i].toLowerCase())!==-1)return undefined;
             }
         }
-        return el;
+        return _origEval.call(W,code);
     };
+}catch(_){}
 
-    // ============================================
-    // 17. PROTECT AGAINST eval() AND Function() ABUSE
-    // ============================================
-    try {
-        var _origEval = window.eval;
-        window.eval = function (code) {
-            if (typeof code === 'string') {
-                // Block attempts to disable protection
-                var _lower = code.toLowerCase();
-                if (_lower.indexOf('np-dt-ov') !== -1 ||
-                    _lower.indexOf('np-protect') !== -1 ||
-                    _lower.indexOf('removeEventListener') !== -1 ||
-                    _lower.indexOf('devtools') !== -1 ||
-                    _lower.indexOf('debugger') !== -1) {
-                    return undefined;
-                }
-            }
-            return _origEval.call(window, code);
+
+if(W.location.protocol==='view-source:')W.location.href='about:blank';
+
+
+var _HIDDEN=['_np_st','_det','_blk','_noCtx','_showOverlay','_hideOverlay',
+             '_killConsole','_onDetect','_onClear','_chkSize','_chkGetter',
+             '_chkToString','_chkDate','_chkTiming'];
+_HIDDEN.forEach(function(name){
+    try{
+        Object.defineProperty(W,name,{enumerable:false,configurable:false});
+    }catch(_){}
+});
+
+
+(function(){
+    try{
+        if(typeof SharedArrayBuffer==='undefined')return;
+        var sab=new SharedArrayBuffer(4);
+        var view=new Int32Array(sab);
+        var worker=new Worker(URL.createObjectURL(new Blob([
+            'onmessage=function(e){'+
+            '  var v=new Int32Array(e.data);'+
+            '  var t=Date.now();'+
+            '  Atomics.wait(v,0,0,200);'+
+            '  postMessage(Date.now()-t);'+
+            '}'
+        ],{type:'text/javascript'})));
+        worker.onmessage=function(e){
+            
+            if(e.data>250)_onDetect('sab');
+            else _onClear('sab');
+            worker.postMessage(sab);
         };
-    } catch (_) { }
+        worker.postMessage(sab);
+    }catch(_){}
+})();
 
-    // ============================================
-    // 18. VIEW-SOURCE PROTECTION
-    // ============================================
-    if (window.location.protocol === 'view-source:') {
-        window.location.href = 'about:blank';
-    }
 
-})(window);
+(function(){
+    var _origFetch=W.fetch;
+    W.fetch=function(url,opts){
+
+        if(typeof url==='string'&&url.indexOf(W.location.origin)!==0&&url.indexOf('http')===0){
+
+            if(D.readyState==='complete'&&!url.includes(W.location.hostname)){
+                return Promise.reject(new Error('Bloqué'));
+            }
+        }
+        return _origFetch.apply(W,arguments);
+    };
+})();
+
+})(window,document,navigator);
