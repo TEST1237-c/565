@@ -11,48 +11,371 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="page-accueil">
+<body class="page-accueil" style="display:block;">
 
     <div class="mouse-follower" id="mouseFollower"></div>
     <div class="floating-glow glow-1"></div>
     <div class="floating-glow glow-2"></div>
 
-    <!-- Center Content -->
-    <div class="center-container">
-        <div class="accueil-badge">
-            <span class="accueil-badge-dot"></span>
-            #1 PLATFORM
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero-section" style="min-height:100vh;">
+
+        <!-- Particles -->
+        <div class="hero-particles" id="heroParticles"></div>
+
+        <div class="hero-content">
+            <!-- Badge -->
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                #1 Gaming Platform
+            </div>
+
+            <!-- Title -->
+            <h1 class="hero-title glitch" data-text="NovaPlay" id="animatedTitle">NovaPlay</h1>
+
+            <!-- Subtitle -->
+            <p class="hero-subtitle">
+                <strong>Free</strong> cracked games & <strong>undetected</strong> cheats —
+                updated daily, safe to use.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="hero-actions">
+                <a href="jeux.html" class="hero-btn hero-btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="6" width="20" height="12" rx="2" />
+                        <path d="M6 12h4M8 10v4" />
+                        <circle cx="15" cy="11" r="1" />
+                        <circle cx="18" cy="13" r="1" />
+                    </svg>
+                    Browse Games
+                </a>
+                <a href="cheat.html" class="hero-btn hero-btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="M9 12l2 2 4-4" />
+                    </svg>
+                    View Cheats
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="hero-stats">
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number" id="statGames">300+</span>
+                    <span class="hero-stat-label">Games</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number">100%</span>
+                    <span class="hero-stat-label">Free</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number">24/7</span>
+                    <span class="hero-stat-label">Updated</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number">2</span>
+                    <span class="hero-stat-label">Cheats</span>
+                </div>
+            </div>
         </div>
-        <h1 class="big-title glitch" data-text="NovaPlay" id="animatedTitle">NovaPlay</h1>
-        <p class="subtitle">Cracked games & cheats — free, fast, safe.</p>
-        <nav>
-            <a href="jeux.html" id="navGames">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="6" width="20" height="12" rx="2" />
-                    <path d="M6 12h4M8 10v4" />
-                    <circle cx="15" cy="11" r="1" />
-                    <circle cx="18" cy="13" r="1" />
-                </svg>
-                Cracked Games
+
+        <!-- Scroll indicator -->
+        <div class="hero-scroll-indicator" id="scrollIndicator">
+            <span>Scroll</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="features-section">
+        <div class="section-header" id="featuresHeader">
+            <span class="section-badge">Why NovaPlay</span>
+            <h2 class="section-title">Everything you need, <span class="gradient-text">for free</span></h2>
+            <p class="section-subtitle">No subscriptions. No hidden fees. Just games and cheats.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" id="fc1">
+                <div class="feature-icon icon-shield">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="M9 12l2 2 4-4" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">Safe & Undetected</h3>
+                <p class="feature-desc">All cheats are tested before release. We monitor anti-cheat updates to keep everything undetected.</p>
+            </div>
+
+            <div class="feature-card" id="fc2">
+                <div class="feature-icon icon-update">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">Daily Updates</h3>
+                <p class="feature-desc">New games added every day. Our library keeps growing so you always find what you're looking for.</p>
+            </div>
+
+            <div class="feature-card" id="fc3">
+                <div class="feature-icon icon-free">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <h3 class="feature-title">100% Free</h3>
+                <p class="feature-desc">No premium plans. No paywalls. Every game and cheat on NovaPlay is completely free to access.</p>
+            </div>
+
+            <div class="feature-card" id="fc4">
+                <div class="feature-icon icon-gamepad">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="6" width="20" height="12" rx="2" />
+                        <path d="M6 12h4M8 10v4" />
+                        <circle cx="15" cy="11" r="1" />
+                        <circle cx="18" cy="13" r="1" />
+                    </svg>
+                </div>
+                <h3 class="feature-title">349+ Games</h3>
+                <p class="feature-desc">Solo and multiplayer titles across all genres. From AAA blockbusters to indie gems.</p>
+            </div>
+
+            <div class="feature-card" id="fc5">
+                <div class="feature-icon icon-community">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Active Community</h3>
+                <p class="feature-desc">Join thousands of players on our Discord. Request games, get support and stay updated.</p>
+            </div>
+
+            <div class="feature-card" id="fc6">
+                <div class="feature-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(139,92,246,0.05));border-color:rgba(139,92,246,0.25);color:var(--accent-light)">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Fast Downloads</h3>
+                <p class="feature-desc">Direct links with no waiting time, captchas, or slow mirrors. Get your files instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="howto-section">
+        <div class="section-header" id="howtoHeader">
+            <span class="section-badge">Simple Process</span>
+            <h2 class="section-title">How it <span class="gradient-text">works</span></h2>
+            <p class="section-subtitle">Get up and running in under a minute.</p>
+        </div>
+
+        <div class="howto-steps">
+            <div class="howto-step" id="hs1">
+                <div class="howto-step-number">01</div>
+                <div class="howto-step-content">
+                    <h3>Browse</h3>
+                    <p>Search through our library of 300+ games or cheats using filters.</p>
+                </div>
+            </div>
+
+            <div class="howto-connector"></div>
+
+            <div class="howto-step" id="hs2">
+                <div class="howto-step-number">02</div>
+                <div class="howto-step-content">
+                    <h3>Select</h3>
+                    <p>Pick the game or cheat you want. Check the installation guide if needed.</p>
+                </div>
+            </div>
+
+            <div class="howto-connector"></div>
+
+            <div class="howto-step" id="hs3">
+                <div class="howto-step-number">03</div>
+                <div class="howto-step-content">
+                    <h3>Download</h3>
+                    <p>Click download and follow the instructions. It's that simple.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DISCORD CTA ===== -->
+    <section class="discord-cta-section">
+        <div class="discord-cta-glow"></div>
+        <div class="discord-cta-content" id="discordCta">
+            <div class="discord-cta-icon">
+                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="64" height="64" />
+            </div>
+            <h2 class="discord-cta-title">Join our Discord</h2>
+            <p class="discord-cta-desc">Request games, report issues, get support and chat with the community. Over 400+ members already inside.</p>
+            <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="discord-cta-btn">
+                Join Now — It's Free
             </a>
-            <a href="cheat.html" id="navCheats" class="nav-cheat">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    <path d="M9 12l2 2 4-4" />
-                </svg>
-                Cheats
-            </a>
-        </nav>
-        <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="discord-inline-link">
-            <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
-            Join our Discord
-        </a>
-    </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-logo">NovaPlay</h3>
+                <p class="footer-tagline">The ultimate destination for premium cracked games and undetected cheats. Safe, fast, and always up to date.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jeux.html">Games</a></li>
+                    <li><a href="cheat.html">Cheats</a></li>
+                    <li><a href="https://discord.gg/scUwxCmf4D" target="_blank">Discord</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Join our Discord to request games or report issues.</p>
+                <a href="https://discord.gg/scUwxCmf4D" class="footer-discord-btn" target="_blank" rel="noopener">
+                    <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
+                    JOIN DISCORD
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 NovaPlay. All rights reserved.</p>
+            <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.</div>
+        </div>
+    </footer>
 
     <script src="protect.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Mouse follower
+        (function () {
+            const follower = document.getElementById('mouseFollower');
+            if (!follower) return;
+            let mx = 0, my = 0, fx = 0, fy = 0;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+            (function loop() {
+                fx += (mx - fx) * 0.1;
+                fy += (my - fy) * 0.1;
+                follower.style.left = fx + 'px';
+                follower.style.top = fy + 'px';
+                requestAnimationFrame(loop);
+            })();
+        })();
+
+        // Particles
+        (function () {
+            const container = document.getElementById('heroParticles');
+            if (!container) return;
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                p.style.cssText = `
+                    width:${size}px;height:${size}px;
+                    left:${Math.random() * 100}%;
+                    top:${Math.random() * 100}%;
+                    animation-delay:${Math.random() * 6}s;
+                    animation-duration:${4 + Math.random() * 4}s;
+                `;
+                container.appendChild(p);
+            }
+        })();
+
+        // Scroll hide indicator
+        window.addEventListener('scroll', () => {
+            const ind = document.getElementById('scrollIndicator');
+            if (ind) ind.style.opacity = window.scrollY > 80 ? '0' : '1';
+        }, { passive: true });
+
+        // Intersection Observer for scroll animations
+        (function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            // Section headers
+            ['featuresHeader', 'howtoHeader'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) observer.observe(el);
+            });
+
+            // Feature cards
+            for (let i = 1; i <= 6; i++) {
+                const el = document.getElementById('fc' + i);
+                if (el) {
+                    el.style.transitionDelay = (i * 0.08) + 's';
+                    observer.observe(el);
+                }
+            }
+
+            // How-to steps
+            for (let i = 1; i <= 3; i++) {
+                const el = document.getElementById('hs' + i);
+                if (el) {
+                    el.style.transitionDelay = (i * 0.15) + 's';
+                    observer.observe(el);
+                }
+            }
+
+            // Discord CTA
+            const cta = document.getElementById('discordCta');
+            if (cta) {
+                cta.style.opacity = '0';
+                cta.style.transform = 'translateY(40px)';
+                cta.style.transition = 'all 0.8s cubic-bezier(0.4,0,0.2,1)';
+                observer.observe(cta);
+                // handle it manually since it doesn't have .visible class logic
+                const ctaObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        cta.style.opacity = '1';
+                        cta.style.transform = 'translateY(0)';
+                    }
+                }, { threshold: 0.2 });
+                ctaObserver.observe(cta);
+            }
+        })();
+
+        // Live game count from games.json
+        (async function () {
+            try {
+                const res = await fetch('games.json', { cache: 'no-store' });
+                if (!res.ok) return;
+                const data = await res.json();
+                const count = Array.isArray(data) ? data.length : 0;
+                if (count > 0) {
+                    const el = document.getElementById('statGames');
+                    if (el) el.textContent = count + '+';
+                }
+            } catch (e) {}
+        })();
+    </script>
 </body>
 
 </html>
