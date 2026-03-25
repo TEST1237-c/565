@@ -1,5 +1,5 @@
 // ============================================
-// EFFET QUI SUIT LA SOURIS (commun à toutes les pages)
+// MOUSE FOLLOWER EFFECT (common to all pages)
 // ============================================
 function initMouseFollower() {
     const mouseFollower = document.querySelector('.mouse-follower');
@@ -29,10 +29,10 @@ function initMouseFollower() {
 }
 
 // ============================================
-// NOTIFICATION DISCORD SUPPORT (uniquement sur la page d'accueil)
+// DISCORD NOTIFICATION (home page only)
 // ============================================
 function initDiscordNotification() {
-    // Ne s'afficher que sur la page d'accueil
+    // Only show on the home page
     if (!document.body.classList.contains('page-accueil')) {
         return;
     }
@@ -42,17 +42,17 @@ function initDiscordNotification() {
 
     if (!notification) return;
 
-    // Vérifier si l'utilisateur a déjà fermé la notification dans cette session
+    // Check if user already closed the notification this session
     const notificationClosed = sessionStorage.getItem('discordNotificationClosed');
 
     if (!notificationClosed) {
-        // Afficher la notification après un court délai
+        // Show notification after a short delay
         setTimeout(() => {
             notification.classList.add('show');
         }, 500);
     }
 
-    // Fermer la notification
+    // Close the notification
     if (closeBtn) {
         closeBtn.addEventListener('click', () => {
             notification.classList.remove('show');
@@ -62,10 +62,10 @@ function initDiscordNotification() {
 }
 
 // ============================================
-// EFFET TYPEWRITER POUR LE TITRE (page d'accueil)
+// TYPEWRITER EFFECT FOR TITLE (home page)
 // ============================================
 function initTypewriterEffect() {
-    // Ne s'afficher que sur la page d'accueil
+    // Only show on the home page
     if (!document.body.classList.contains('page-accueil')) {
         return;
     }
@@ -80,29 +80,29 @@ function initTypewriterEffect() {
 
     function typeWriter() {
         if (!isDeleting && currentIndex < text.length) {
-            // Écriture
+            // Typing
             displayText = text.substring(0, currentIndex + 1);
             titleElement.textContent = displayText;
             currentIndex++;
             setTimeout(typeWriter, 150);
         } else if (isDeleting && currentIndex > 0) {
-            // Effacement
+            // Deleting
             displayText = text.substring(0, currentIndex - 1);
             titleElement.textContent = displayText;
             currentIndex--;
             setTimeout(typeWriter, 100);
         } else if (!isDeleting && currentIndex === text.length) {
-            // Pause avant d'effacer
+            // Pause before deleting
             isDeleting = true;
             setTimeout(typeWriter, 2000);
         } else if (isDeleting && currentIndex === 0) {
-            // Pause avant de réécrire
+            // Pause before retyping
             isDeleting = false;
             setTimeout(typeWriter, 500);
         }
     }
 
-    // Démarrer l'animation
+    // Start the animation
     typeWriter();
 }
 
@@ -130,11 +130,10 @@ function initBackToTop() {
 }
 
 // ============================================
-// INITIALISATION
+// INIT
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
     initMouseFollower();
     initDiscordNotification();
     initBackToTop();
 });
-
