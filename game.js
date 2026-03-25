@@ -16,7 +16,7 @@ function generateGameElements(games) {
     const paginatedGames = games.slice(startIndex, endIndex);
 
     if (paginatedGames.length === 0) {
-        gamesGrid.innerHTML = '<p class="coming-soon-message">Aucun jeu trouvé.</p>';
+        gamesGrid.innerHTML = '<p class="coming-soon-message">No games found.</p>';
         return;
     }
 
@@ -70,7 +70,7 @@ function generateGameElements(games) {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
-            Télécharger
+            Download
         `;
 
         titleSub.appendChild(downloadHint);
@@ -89,7 +89,7 @@ function generateGameElements(games) {
                 const modalBg = document.getElementById(game.modalId + '-modal-bg');
                 if (modalBg) {
                     modalBg.style.display = 'flex';
-                    modalBg.offsetHeight; // Force reflow
+                    modalBg.offsetHeight;
                     modalBg.classList.add('show');
                     document.body.style.overflow = 'hidden';
                 }
@@ -100,7 +100,7 @@ function generateGameElements(games) {
     });
 }
 
-// Génère les modales
+// Generate modals
 function generateModals(games) {
     document.querySelectorAll('.modal-bg').forEach(m => m.remove());
 
@@ -172,7 +172,6 @@ function renderPagination(totalItems) {
         updateDisplay();
     };
 
-    // Prev button
     if (currentPage > 1) {
         const prev = document.createElement('button');
         prev.className = 'pagination-btn';
@@ -181,7 +180,6 @@ function renderPagination(totalItems) {
         container.appendChild(prev);
     }
 
-    // Page numbers (smart ellipsis)
     const maxVisible = 7;
     let pages = [];
     if (totalPages <= maxVisible) {
@@ -211,7 +209,6 @@ function renderPagination(totalItems) {
         }
     });
 
-    // Next button
     if (currentPage < totalPages) {
         const next = document.createElement('button');
         next.className = 'pagination-btn';
@@ -227,7 +224,7 @@ function updateDisplay() {
     renderPagination(filteredGames.length);
 }
 
-// Filtres et recherche
+// Filters and search
 function applyFilters() {
     const query = (document.getElementById('gameSearch')?.value || '').trim().toLowerCase();
 
@@ -247,7 +244,7 @@ async function initGamePage() {
     const gamesGrid = document.getElementById('gamesGrid');
     if (!gamesGrid) return;
 
-    gamesGrid.innerHTML = '<p class="games-loading">Chargement des jeux...</p>';
+    gamesGrid.innerHTML = '<p class="games-loading">Loading games...</p>';
 
     const tryFetch = async (path) => {
         try {
@@ -258,7 +255,7 @@ async function initGamePage() {
                 if (games.length > 0) return games;
             }
         } catch (e) {
-            console.warn(`Échec de ${path}:`, e.message);
+            console.warn(`Failed to fetch ${path}:`, e.message);
         }
         return null;
     };
@@ -271,20 +268,18 @@ async function initGamePage() {
     if (allGames.length === 0) {
         gamesGrid.innerHTML = `
             <div class="coming-soon-message">
-                <p>Oups ! Aucun jeu n'a été trouvé.</p>
+                <p>Oops! No games found.</p>
                 <p style="font-size:0.85rem;margin-top:10px;color:var(--text-muted);">
-                    Vérifie que le fichier games.json est présent et accessible.
+                    Make sure the games.json file is present and accessible.
                 </p>
             </div>
         `;
     }
 
-    // Dispatch event for header count
     window.dispatchEvent(new CustomEvent('novaplay:gamesLoaded', {
         detail: { count: allGames.length }
     }));
 
-    // Update stats bar
     const soloCount = allGames.filter(g => g.mode === 'solo').length;
     const multiCount = allGames.filter(g => g.mode === 'multiplayer').length;
 
@@ -298,7 +293,7 @@ async function initGamePage() {
                 current = target;
                 clearInterval(interval);
             }
-            el.textContent = current.toLocaleString('fr-FR');
+            el.textContent = current.toLocaleString('en-US');
         }, 25);
     }
 
@@ -329,4 +324,3 @@ async function initGamePage() {
 if (document.body.classList.contains('page-jeux')) {
     initGamePage();
 }
-
