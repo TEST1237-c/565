@@ -112,6 +112,16 @@
 </head>
 
 <body style="display:block;">
+    <noscript>
+        <div style="position:fixed;inset:0;z-index:2147483647;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Inter,system-ui,sans-serif;padding:2rem;">
+            <div style="font-size:4rem;margin-bottom:1.5rem">&#9888;&#65039;</div>
+            <h2 style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 1rem">JavaScript Required</h2>
+            <p style="color:rgba(200,200,230,0.65);font-size:1rem;max-width:420px;line-height:1.7;margin:0 0 1.5rem">NovaPlay requires JavaScript to function.<br>Please enable it in your browser settings.</p>
+            <div style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">&#128295; Enable JavaScript and refresh the page</div>
+            <p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">&#169; 2026 NovaPlay</p>
+        </div>
+    </noscript>
+
 
     <div class="mouse-follower" id="mouseFollower"></div>
     <div class="floating-glow glow-1"></div>
@@ -132,6 +142,7 @@
         </div>
     </div>
 
+    <script src="protect.js"></script>
     <script src="script.js"></script>
 </body>
 
