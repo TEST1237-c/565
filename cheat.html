@@ -43,8 +43,17 @@
         }
 
         @keyframes pulse-dot {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4); opacity: 0.6; }
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.6;
+            }
         }
 
         .cheat-hero h1 {
@@ -92,7 +101,7 @@
             position: relative;
         }
 
-        .cheat-stat + .cheat-stat::before {
+        .cheat-stat+.cheat-stat::before {
             content: '';
             position: absolute;
             left: 0;
@@ -109,9 +118,17 @@
             color: #fff;
         }
 
-        .cheat-stat-num.red { color: #fca5a5; }
-        .cheat-stat-num.green { color: #86efac; }
-        .cheat-stat-num.yellow { color: #fde68a; }
+        .cheat-stat-num.red {
+            color: #fca5a5;
+        }
+
+        .cheat-stat-num.green {
+            color: #86efac;
+        }
+
+        .cheat-stat-num.yellow {
+            color: #fde68a;
+        }
 
         .cheat-stat-label {
             font-size: 0.72rem;
@@ -258,7 +275,7 @@
         .cheat-card:hover {
             border-color: rgba(239, 68, 68, 0.35);
             transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(239, 68, 68, 0.12), 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 16px 40px rgba(239, 68, 68, 0.12), 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         .cheat-card-thumb {
@@ -283,7 +300,7 @@
         .cheat-card-thumb-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(5,5,8,0.8) 0%, transparent 60%);
+            background: linear-gradient(to top, rgba(5, 5, 8, 0.8) 0%, transparent 60%);
         }
 
         /* Status badge top-right */
@@ -384,7 +401,7 @@
         .cheat-feature-tag {
             font-size: 0.65rem;
             color: var(--text-muted);
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-glass);
             border-radius: 6px;
             padding: 3px 8px;
@@ -431,7 +448,7 @@
 
         /* === COMING SOON CARD === */
         .cheat-card-soon {
-            border: 1px dashed rgba(255,255,255,0.1);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-md);
             display: flex;
             flex-direction: column;
@@ -444,7 +461,7 @@
             font-weight: 500;
             text-align: center;
             min-height: 180px;
-            background: rgba(255,255,255,0.01);
+            background: rgba(255, 255, 255, 0.01);
         }
 
         .cheat-card-soon svg {
@@ -509,15 +526,32 @@
         }
 
         @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Stagger */
-        .cheat-grid .cheat-card:nth-child(1) { animation-delay: 0.05s; }
-        .cheat-grid .cheat-card:nth-child(2) { animation-delay: 0.1s; }
-        .cheat-grid .cheat-card:nth-child(3) { animation-delay: 0.15s; }
-        .cheat-grid .cheat-card:nth-child(4) { animation-delay: 0.2s; }
-        .cheat-grid .cheat-card:nth-child(5) { animation-delay: 0.25s; }
+        .cheat-grid .cheat-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .cheat-grid .cheat-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .cheat-grid .cheat-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .cheat-grid .cheat-card:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        .cheat-grid .cheat-card:nth-child(5) {
+            animation-delay: 0.25s;
+        }
 
         /* === HEADER NAV LINK === */
         .header-nav-link {
@@ -549,24 +583,45 @@
 
         /* === RESPONSIVE === */
         @media (max-width: 640px) {
-            .cheat-stats { max-width: 100%; }
-            .cheat-request-banner { flex-direction: column; text-align: center; }
-            .cheat-request-banner .cheat-request-btn { width: 100%; justify-content: center; }
-            .cheat-hero { padding-top: calc(var(--header-height) + 32px); }
+            .cheat-stats {
+                max-width: 100%;
+            }
+
+            .cheat-request-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cheat-request-banner .cheat-request-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .cheat-hero {
+                padding-top: calc(var(--header-height) + 32px);
+            }
         }
 
         /* hide section when filtered out */
-        .cheat-section.hidden { display: none; }
+        .cheat-section.hidden {
+            display: none;
+        }
     </style>
 </head>
 
 <body class="page-jeux page-cheat">
     <noscript>
-        <div style="position:fixed;inset:0;z-index:2147483647;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Inter,system-ui,sans-serif;padding:2rem;">
+        <div
+            style="position:fixed;inset:0;z-index:2147483647;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Inter,system-ui,sans-serif;padding:2rem;">
             <div style="font-size:4rem;margin-bottom:1.5rem">&#9888;&#65039;</div>
-            <h2 style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 1rem">JavaScript Required</h2>
-            <p style="color:rgba(200,200,230,0.65);font-size:1rem;max-width:420px;line-height:1.7;margin:0 0 1.5rem">NovaPlay requires JavaScript to function.<br>Please enable it in your browser settings.</p>
-            <div style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">&#128295; Enable JavaScript and refresh the page</div>
+            <h2
+                style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 1rem">
+                JavaScript Required</h2>
+            <p style="color:rgba(200,200,230,0.65);font-size:1rem;max-width:420px;line-height:1.7;margin:0 0 1.5rem">
+                NovaPlay requires JavaScript to function.<br>Please enable it in your browser settings.</p>
+            <div
+                style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">
+                &#128295; Enable JavaScript and refresh the page</div>
             <p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">&#169; 2026 NovaPlay</p>
         </div>
     </noscript>
@@ -583,31 +638,31 @@
             <a href="index.html" class="header-nav-link">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9 22 9 12 15 12 15 22"/>
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
                 </svg>
                 Home
             </a>
             <a href="jeux.html" class="header-nav-link">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="6" width="20" height="12" rx="2"/>
-                    <path d="M6 12h4M8 10v4"/>
-                    <circle cx="15" cy="11" r="1"/>
-                    <circle cx="18" cy="13" r="1"/>
+                    <rect x="2" y="6" width="20" height="12" rx="2" />
+                    <path d="M6 12h4M8 10v4" />
+                    <circle cx="15" cy="11" r="1" />
+                    <circle cx="18" cy="13" r="1" />
                 </svg>
                 Games
             </a>
             <a href="cheat.html" class="header-nav-link active-page">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <path d="M9 12l2 2 4-4"/>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
                 </svg>
                 Cheats
             </a>
             <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="header-discord">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18"/>
+                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
                 Discord
             </a>
         </div>
@@ -620,16 +675,17 @@
             All cheats undetected
         </div>
         <h1>Cheats</h1>
-        <p class="cheat-hero-sub">Undetected cheats for your favorite games. Updated regularly and tested before release.</p>
+        <p class="cheat-hero-sub">Undetected cheats for your favorite games. Updated regularly and tested before
+            release.</p>
 
         <!-- Stats -->
         <div class="cheat-stats">
             <div class="cheat-stat">
-                <span class="cheat-stat-num red">3</span>
+                <span class="cheat-stat-num red">4</span>
                 <span class="cheat-stat-label">Cheats</span>
             </div>
             <div class="cheat-stat">
-                <span class="cheat-stat-num green">3</span>
+                <span class="cheat-stat-num green">4</span>
                 <span class="cheat-stat-label">Undetected</span>
             </div>
             <div class="cheat-stat">
@@ -662,22 +718,23 @@
                 <p>Join our Discord and request any game cheat. Our team reviews requests every week.</p>
             </div>
             <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="cheat-request-btn">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18"/>
+                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
                 Request on Discord
             </a>
         </div>
 
         <!-- CS2 SECTION -->
-        <div class="cheat-section" data-section-tags="fps external">
+        <div class="cheat-section" data-section-tags="fps external internal">
             <div class="cheat-section-header">
                 <div class="cheat-section-icon">🎯</div>
                 <span class="cheat-section-title">Counter-Strike 2</span>
-                <span class="cheat-section-count">1 cheat</span>
+                <span class="cheat-section-count">2 cheats</span>
             </div>
             <div class="cheat-grid">
                 <a href="https://www.clictune.com/mssj" target="_blank" rel="noopener" class="cheat-card">
                     <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/BERNwlM.jpeg" alt="CS2 External Cheat" width="616" height="353" loading="lazy">
+                        <img src="https://i.imgur.com/BERNwlM.jpeg" alt="CS2 External Cheat" width="616" height="353"
+                            loading="lazy">
                         <div class="cheat-card-thumb-overlay"></div>
                         <span class="cheat-status-badge undetected">
                             <span class="status-dot"></span>
@@ -695,14 +752,60 @@
                         </div>
                         <div class="cheat-card-meta">
                             <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
                                 </svg>
                                 Up to date
                             </span>
                             <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                Download
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.clictune.com/muYN" target="_blank" rel="noopener" class="cheat-card">
+                    <div class="cheat-card-thumb">
+                        <img src="https://i.imgur.com/BERNwlM.jpeg" alt="CS2 Internal Cheat" width="616" height="353"
+                            loading="lazy">
+                        <div class="cheat-card-thumb-overlay"></div>
+                        <span class="cheat-status-badge undetected">
+                            <span class="status-dot"></span>
+                            Undetected
+                        </span>
+                        <span class="cheat-type-badge internal">Internal</span>
+                    </div>
+                    <div class="cheat-card-body">
+                        <div class="cheat-card-title">Nova CS2 Internal</div>
+                        <div class="cheat-card-features">
+                            <span class="cheat-feature-tag">Aimbot</span>
+                            <span class="cheat-feature-tag">ESP</span>
+                            <span class="cheat-feature-tag">Other</span>
+
+                        </div>
+                        <div class="cheat-card-meta">
+                            <span class="cheat-card-updated">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
+                                </svg>
+                                Up to date
+                            </span>
+                            <span class="cheat-card-download">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
                                 Download
                             </span>
@@ -711,8 +814,11 @@
                 </a>
 
                 <div class="cheat-card-soon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
                     </svg>
                     More CS2 cheats coming soon
                 </div>
@@ -729,7 +835,8 @@
             <div class="cheat-grid">
                 <a href="#" id="amnesia-card-link" class="cheat-card">
                     <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/4cLrLrg.png" alt="GTA 5 Online Amnesia Cheat" width="616" height="353" loading="lazy">
+                        <img src="https://i.imgur.com/4cLrLrg.png" alt="GTA 5 Online Amnesia Cheat" width="616"
+                            height="353" loading="lazy">
                         <div class="cheat-card-thumb-overlay"></div>
                         <span class="cheat-status-badge undetected">
                             <span class="status-dot"></span>
@@ -748,14 +855,19 @@
                         </div>
                         <div class="cheat-card-meta">
                             <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
                                 </svg>
                                 Up to date
                             </span>
                             <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
                                 Download
                             </span>
@@ -777,7 +889,8 @@
             <div class="cheat-grid">
                 <a href="https://www.clictune.com/mt9X" target="_blank" rel="noopener" class="cheat-card">
                     <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/kzX30po.jpeg" alt="Combat Master Cheat" width="616" height="353" loading="lazy">
+                        <img src="https://i.imgur.com/kzX30po.jpeg" alt="Combat Master Cheat" width="616" height="353"
+                            loading="lazy">
                         <div class="cheat-card-thumb-overlay"></div>
                         <span class="cheat-status-badge undetected">
                             <span class="status-dot"></span>
@@ -795,14 +908,19 @@
                         </div>
                         <div class="cheat-card-meta">
                             <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
                                 </svg>
                                 Up to date
                             </span>
                             <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
                                 Download
                             </span>
@@ -831,16 +949,18 @@
                 </div>
                 <div class="footer-section">
                     <h4>Community</h4>
-                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Join our Discord to request cheats or report issues.</p>
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Join our Discord to request
+                        cheats or report issues.</p>
                     <a href="https://discord.gg/scUwxCmf4D" class="footer-discord-btn" target="_blank" rel="noopener">
-                        <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16"/>
+                        <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
                         JOIN
                     </a>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>© 2026 NovaPlay. All rights reserved.</p>
-                <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.</div>
+                <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.
+                </div>
             </div>
         </footer>
     </div>
@@ -854,94 +974,140 @@
 
     <!-- AMNESIA MODAL -->
     <div id="amnesia-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="amnesia-modal-title" style="max-width:520px;">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="amnesia-modal-title"
+            style="max-width:520px;">
             <button class="close-btn" id="amnesiaCloseBtn" aria-label="Close">×</button>
-            <h2 id="amnesia-modal-title" style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
+            <h2 id="amnesia-modal-title"
+                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
                 🛠️ Amnesia Cheat — Installation
             </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">GTA 5 Online · Follow every step carefully</p>
+            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">GTA 5 Online · Follow every step
+                carefully</p>
 
             <div style="display:flex;flex-direction:column;gap:14px;">
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">1</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        1</div>
                     <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Create an account</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Go to <a href="https://amnesia-cheats.com" target="_blank" rel="noopener" style="color:#fca5a5;text-decoration:none;font-weight:600;">amnesia-cheats.com</a> and register a new account.</div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Create an account
+                        </div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Go to <a
+                                href="https://amnesia-cheats.com" target="_blank" rel="noopener"
+                                style="color:#fca5a5;text-decoration:none;font-weight:600;">amnesia-cheats.com</a> and
+                            register a new account.</div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">2</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        2</div>
                     <div>
                         <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Log in</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Sign in with the account you just created.</div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Sign in with the account
+                            you just created.</div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">3</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        3</div>
                     <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Go to the Dashboard</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Navigate to your Dashboard after logging in.</div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Go to the Dashboard
+                        </div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Navigate to your
+                            Dashboard after logging in.</div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">4</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        4</div>
                     <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the Loader</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Download the loader from your Dashboard.</div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the Loader
+                        </div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Download the loader from
+                            your Dashboard.</div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">5</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        5</div>
                     <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Run the Loader as Administrator</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Right-click the loader and select <strong style="color:#fff;">Run as administrator</strong>.</div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Run the Loader as
+                            Administrator</div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Right-click the loader
+                            and select <strong style="color:#fff;">Run as administrator</strong>.</div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">6</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        6</div>
                     <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Get your Key &amp; enter it</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Grab your license key from the Dashboard and paste it into the loader.</div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Get your Key &amp;
+                            enter it</div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Grab your license key
+                            from the Dashboard and paste it into the loader.</div>
                     </div>
                 </div>
 
-                <div style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.25);border-radius:10px;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(234,179,8,0.15);border:1px solid rgba(234,179,8,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fde68a;flex-shrink:0;">⚠️</div>
+                <div
+                    style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.25);border-radius:10px;">
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(234,179,8,0.15);border:1px solid rgba(234,179,8,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fde68a;flex-shrink:0;">
+                        ⚠️</div>
                     <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fde68a;margin-bottom:3px;">Disable BattlEye before injecting</div>
-                        <div style="font-size:0.78rem;color:rgba(253,230,138,0.7);line-height:1.5;">Before injecting, make sure to <strong style="color:#fde68a;">disable the BattlEye anti-cheat</strong>. Skip this step and you will get banned.</div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fde68a;margin-bottom:3px;">Disable BattlEye
+                            before injecting</div>
+                        <div style="font-size:0.78rem;color:rgba(253,230,138,0.7);line-height:1.5;">Before injecting,
+                            make sure to <strong style="color:#fde68a;">disable the BattlEye anti-cheat</strong>. Skip
+                            this step and you will get banned.</div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">7</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        7</div>
                     <div>
                         <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Launch GTA 5</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Start the game and wait until you are fully loaded in.</div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Start the game and wait
+                            until you are fully loaded in.</div>
                     </div>
                 </div>
 
                 <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#86efac;flex-shrink:0;">8</div>
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#86efac;flex-shrink:0;">
+                        8</div>
                     <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#86efac;margin-bottom:3px;">Inject &amp; enjoy!</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click <strong style="color:#fff;">Inject</strong> in the loader. You're good to go. Have fun! 🎮</div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#86efac;margin-bottom:3px;">Inject &amp;
+                            enjoy!</div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click <strong
+                                style="color:#fff;">Inject</strong> in the loader. You're good to go. Have fun! 🎮</div>
                     </div>
                 </div>
 
             </div>
 
             <a href="https://amnesia-cheats.com" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-               onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-               onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
+                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
+                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
                 Go to amnesia-cheats.com
             </a>
         </div>
@@ -949,8 +1115,8 @@
 
     <script>
         (function () {
-            const card    = document.getElementById('amnesia-card-link');
-            const bg      = document.getElementById('amnesia-modal-bg');
+            const card = document.getElementById('amnesia-card-link');
+            const bg = document.getElementById('amnesia-modal-bg');
             const closeBtn = document.getElementById('amnesiaCloseBtn');
             if (!card || !bg) return;
 
