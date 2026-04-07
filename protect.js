@@ -40,14 +40,14 @@ function _blk(e){
     var k=e.keyCode||e.which;
     if(_BK[k]){e.preventDefault();e.stopImmediatePropagation();return false;}
     if(e.ctrlKey&&!e.shiftKey&&_BC[k]){
-        if(k===67&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'))return;
+        if(k===67&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||(e.target.closest&&e.target.closest('code'))))return;
         e.preventDefault();e.stopImmediatePropagation();return false;
     }
     if(e.ctrlKey&&e.shiftKey&&_BCS[k]){
         e.preventDefault();e.stopImmediatePropagation();return false;
     }
     // Ctrl+A hors input
-    if(e.ctrlKey&&k===65&&e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA'){
+    if(e.ctrlKey&&k===65&&e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA'&&!(e.target.closest&&e.target.closest('code'))){
         e.preventDefault();e.stopImmediatePropagation();return false;
     }
 }
@@ -55,7 +55,7 @@ D.addEventListener('keydown',_blk,true);
 W.addEventListener('keydown',_blk,true);
 
 
-function _isInput(t){return t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable);}
+function _isInput(t){return t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable||(t.closest&&t.closest('code')));}
 D.addEventListener('selectstart',function(e){if(!_isInput(e.target))e.preventDefault();},true);
 D.addEventListener('dragstart',  function(e){e.preventDefault();},true);
 D.addEventListener('copy',       function(e){if(!_isInput(e.target))e.preventDefault();},true);
@@ -70,7 +70,7 @@ function _mkCSS(id,txt){
 }
 var _protCSS = _mkCSS(_ID_CSS,
     'body{-webkit-user-select:none!important;-moz-user-select:none!important;user-select:none!important}'+
-    'input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-select:text!important}'+
+    'code,input,textarea,[contenteditable="true"]{-webkit-user-select:text!important;user-select:text!important}'+
     'img,video,canvas{pointer-events:none;-webkit-user-drag:none;user-drag:none}'+
     'a img{pointer-events:auto}'
 );
