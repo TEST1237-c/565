@@ -979,7 +979,7 @@
                 <span class="cheat-section-count">1 cheat</span>
             </div>
             <div class="cheat-grid">
-                <a href="https://www.clictune.com/mAin" onclick="alert('This menu is in testing so the cheat will surely be detectable. Use process hacker to inject it for now.');" target="_blank" rel="noopener" class="cheat-card">
+                <a href="#" id="bloodstrike-card-link" class="cheat-card">
                     <div class="cheat-card-thumb">
                         <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3199170/eeab00314314192f57bbdf91b91f8b871f890ce5/capsule_616x353.jpg?t=1748342194" alt="Bloodstrike Cheat" width="616" height="353"
                             loading="lazy">
@@ -1203,11 +1203,101 @@
         </div>
     </div>
 
+    <!-- BLOODSTRIKE MODAL -->
+    <div id="bloodstrike-modal-bg" class="modal-bg" style="display:none;">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bloodstrike-modal-title"
+            style="max-width:520px;">
+            <button class="close-btn" id="bloodstrikeCloseBtn" aria-label="Close">×</button>
+            <h2 id="bloodstrike-modal-title"
+                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
+                🩸 Bloodstrike Cheat — Important Notice
+            </h2>
+            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">Bloodstrike · Instructions for use</p>
+
+            <div style="display:flex;flex-direction:column;gap:14px;">
+
+                <div
+                    style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);border-radius:10px;">
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        ⚠️</div>
+                    <div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fca5a5;margin-bottom:3px;">In Testing / Detectable
+                        </div>
+                        <div style="font-size:0.78rem;color:rgba(252,165,165,0.7);line-height:1.5;">This menu is currently in testing, so the cheat will <strong style="color:#fca5a5;">surely be detectable</strong>. Use it at your own risk!</div>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:14px;align-items:flex-start;">
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        1</div>
+                    <div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the cheat
+                        </div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click the button below to download the cheat files.</div>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:14px;align-items:flex-start;">
+                    <div
+                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
+                        2</div>
+                    <div>
+                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Inject with Process Hacker</div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Since the menu is in testing, you must use <strong style="color:#fff;">Process Hacker</strong> to inject the DLL into the game for the time being.</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="https://www.clictune.com/mAin" target="_blank" rel="noopener"
+                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
+                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
+                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download Bloodstrike Cheat
+            </a>
+        </div>
+    </div>
+
     <script>
         (function () {
             const card = document.getElementById('amnesia-card-link');
             const bg = document.getElementById('amnesia-modal-bg');
             const closeBtn = document.getElementById('amnesiaCloseBtn');
+            if (!card || !bg) return;
+
+            card.addEventListener('click', function (e) {
+                e.preventDefault();
+                bg.style.display = 'flex';
+                bg.offsetHeight;
+                bg.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+
+            function closeModal() {
+                bg.classList.remove('show');
+                setTimeout(function () { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            bg.addEventListener('click', function (e) { if (e.target === bg) closeModal(); });
+            document.addEventListener('keydown', function (e) {
+                if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
+            });
+        })();
+
+        // Bloodstrike Modal
+        (function () {
+            const card = document.getElementById('bloodstrike-card-link');
+            const bg = document.getElementById('bloodstrike-modal-bg');
+            const closeBtn = document.getElementById('bloodstrikeCloseBtn');
             if (!card || !bg) return;
 
             card.addEventListener('click', function (e) {
