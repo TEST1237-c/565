@@ -2109,20 +2109,26 @@
     },
     {
         "title": "Shapez.io",
-        "image": "https:\/\/shared.fastly.steamstatic.com\/store_item_assets\/steam\/apps\/2162800\/e2e202d300e6a22794daf709941c5fcd6ab9dc8b\/capsule_616x353.jpg",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2162800/e2e202d300e6a22794daf709941c5fcd6ab9dc8b/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mskb",
         "mode": "solo"
     },
     {
         "title": "Lake",
-        "image": "https:\/\/shared.fastly.steamstatic.com\/store_item_assets\/steam\/apps\/1118240\/capsule_616x353.jpg",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1118240/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mskc",
         "mode": "solo"
     },
     {
         "title": "RiMS Racing",
-        "image": "https:\/\/shared.fastly.steamstatic.com\/store_item_assets\/steam\/apps\/1346010\/capsule_616x353.jpg",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1346010/capsule_616x353.jpg",
         "link": "https://www.clictune.com/mskd",
+        "mode": "solo"
+    },
+    {
+        "title": "Resident Evil Requiem",
+        "image": "https://shared.steamstatic.com/store_item_assets/steam/apps/3764200/0731e32e73a1311c20a71199f4e4fd78ee9e9411/capsule_616x353.jpg?t=1772587704",
+        "link": "https://www.clictune.com/mAL5",
         "mode": "solo"
     }
 ]
