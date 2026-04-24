@@ -1,7 +1,68 @@
 {
-    "cs2-external": "outdated",
-    "cs2-internal": "undetected",
-    "bloodstrike": "semi-detected",
-    "fivem": "undetected",
-    "amnesia": "undetected"
+    "cs2-external": {
+        "status": "outdated",
+        "title": "Nova CS2 External",
+        "game": "Counter-Strike 2",
+        "gameIcon": "🎯",
+        "image": "https://i.imgur.com/BERNwlM.jpeg",
+        "link": "https://www.clictune.com/mssj",
+        "type": "external",
+        "features": ["Aimbot", "ESP", "Triggerbot", "No Recoil"]
+    },
+    "cs2-internal": {
+        "status": "undetected",
+        "title": "Nova CS2 Internal",
+        "game": "Counter-Strike 2",
+        "gameIcon": "🎯",
+        "image": "https://i.imgur.com/BERNwlM.jpeg",
+        "link": "https://www.clictune.com/mCzZ",
+        "type": "internal",
+        "features": ["Aimbot", "ESP", "Other"]
+    },
+    "bloodstrike": {
+        "status": "semi-detected",
+        "title": "Nova Bloodstrike Internal",
+        "game": "Bloodstrike",
+        "gameIcon": "🩸",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3199170/eeab00314314192f57bbdf91b91f8b871f890ce5/capsule_616x353.jpg?t=1748342194",
+        "link": "#",
+        "type": "internal",
+        "hasModal": true,
+        "modalId": "bloodstrike",
+        "features": ["Aimbot", "ESP", "Testing"]
+    },
+    "fivem": {
+        "status": "undetected",
+        "title": "Nova FiveM External",
+        "game": "FiveM",
+        "gameIcon": "🌐",
+        "image": "https://i.imgur.com/3nDR1pP.png",
+        "link": "#",
+        "type": "external",
+        "hasModal": true,
+        "modalId": "fivem",
+        "features": ["Aimbot", "ESP", "Other"]
+    },
+    "amnesia": {
+        "status": "undetected",
+        "title": "Amnesia Cheat",
+        "game": "GTA 5 Online",
+        "gameIcon": "🏙️",
+        "image": "https://i.imgur.com/4cLrLrg.png",
+        "link": "#",
+        "type": "internal",
+        "hasModal": true,
+        "modalId": "amnesia",
+        "features": ["God Mode", "Money", "Teleport", "Vehicle Spawn", "No Wanted"]
+    },
+    "combat-master": {
+        "status": "undetected",
+        "title": "Nova Internal Combat Master",
+        "game": "Combat Master",
+        "gameIcon": "⚔️",
+        "image": "https://i.imgur.com/kzX30po.jpeg",
+        "link": "https://www.clictune.com/mBjQ",
+        "type": "internal",
+        "features": ["Aimbot", "Wallhack", "UnlockALL", "No Spread"]
+    }
 }
