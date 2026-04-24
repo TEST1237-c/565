@@ -683,7 +683,7 @@
                 </svg>
                 Cheats
             </a>
-            <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="header-discord">
+            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="header-discord">
                 <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
                 Discord
             </a>
@@ -739,7 +739,7 @@
                 <h3>Missing a cheat?</h3>
                 <p>Join our Discord and request any game cheat. Our team reviews requests every week.</p>
             </div>
-            <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener" class="cheat-request-btn">
+            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="cheat-request-btn">
                 <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
                 Request on Discord
             </a>
@@ -747,7 +747,7 @@
 
         <div id="cheatSectionsContainer"></div>
 
-                <!-- Footer -->
+        <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-content">
                 <div class="footer-section">
@@ -760,14 +760,14 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="jeux.html">Games</a></li>
                         <li><a href="cheat.html">Cheats</a></li>
-                        <li><a href="https://discord.gg/scUwxCmf4D" target="_blank">Discord</a></li>
+                        <li><a href="https://discord.gg/nYK36E5D2X" target="_blank">Discord</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Community</h4>
                     <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Join our Discord to request
                         cheats or report issues.</p>
-                    <a href="https://discord.gg/scUwxCmf4D" class="footer-discord-btn" target="_blank" rel="noopener">
+                    <a href="https://discord.gg/nYK36E5D2X" class="footer-discord-btn" target="_blank" rel="noopener">
                         <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
                         JOIN
                     </a>
@@ -1050,75 +1050,75 @@
     </div>
 
     <script>
-(async function() {
-    const container = document.getElementById('cheatSectionsContainer');
-    const statTotalEl = document.getElementById('statTotalCheats');
-    const statUndetectedEl = document.getElementById('statUndetected');
-    const statGamesEl = document.getElementById('statGames');
+        (async function () {
+            const container = document.getElementById('cheatSectionsContainer');
+            const statTotalEl = document.getElementById('statTotalCheats');
+            const statUndetectedEl = document.getElementById('statUndetected');
+            const statGamesEl = document.getElementById('statGames');
 
-    const STATUS_CONFIG = {
-        'undetected':    { label: 'Undetected',          cls: 'undetected' },
-        'semi-detected': { label: 'Semi-Detected',        cls: 'detected'   },
-        'detected':      { label: 'Detected',             cls: 'detected'   },
-        'outdated':      { label: 'Outdated',             cls: 'updating'   }
-    };
-    function statusConf(s) {
-        return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' };
-    }
+            const STATUS_CONFIG = {
+                'undetected': { label: 'Undetected', cls: 'undetected' },
+                'semi-detected': { label: 'Semi-Detected', cls: 'detected' },
+                'detected': { label: 'Detected', cls: 'detected' },
+                'outdated': { label: 'Outdated', cls: 'updating' }
+            };
+            function statusConf(s) {
+                return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' };
+            }
 
-    let cheats = {};
-    const paths = ['/api/cheat-status', 'cheat-status.json', '/cheat-status.json'];
-    for (const p of paths) {
-        try {
-            const r = await fetch(p, { cache: 'no-store' });
-            if (r.ok) { cheats = await r.json(); break; }
-        } catch(e) {}
-    }
+            let cheats = {};
+            const paths = ['/api/cheat-status', 'cheat-status.json', '/cheat-status.json'];
+            for (const p of paths) {
+                try {
+                    const r = await fetch(p, { cache: 'no-store' });
+                    if (r.ok) { cheats = await r.json(); break; }
+                } catch (e) { }
+            }
 
-    if (!cheats || !Object.keys(cheats).length) {
-        if (container) container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
-        return;
-    }
+            if (!cheats || !Object.keys(cheats).length) {
+                if (container) container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
+                return;
+            }
 
-    // Group by game
-    const byGame = {};
-    for (const [id, cheat] of Object.entries(cheats)) {
-        const key = cheat.game || 'Other';
-        if (!byGame[key]) byGame[key] = { icon: cheat.gameIcon || '\uD83C\uDFAE', cheats: [] };
-        byGame[key].cheats.push({ id, ...cheat });
-    }
+            // Group by game
+            const byGame = {};
+            for (const [id, cheat] of Object.entries(cheats)) {
+                const key = cheat.game || 'Other';
+                if (!byGame[key]) byGame[key] = { icon: cheat.gameIcon || '\uD83C\uDFAE', cheats: [] };
+                byGame[key].cheats.push({ id, ...cheat });
+            }
 
-    // Stats
-    const total = Object.keys(cheats).length;
-    const undetectedCount = Object.values(cheats).filter(c => c.status === 'undetected').length;
-    const gamesCount = Object.keys(byGame).length;
-    if (statTotalEl) statTotalEl.textContent = total;
-    if (statUndetectedEl) statUndetectedEl.textContent = undetectedCount;
-    if (statGamesEl) statGamesEl.textContent = gamesCount;
+            // Stats
+            const total = Object.keys(cheats).length;
+            const undetectedCount = Object.values(cheats).filter(c => c.status === 'undetected').length;
+            const gamesCount = Object.keys(byGame).length;
+            if (statTotalEl) statTotalEl.textContent = total;
+            if (statUndetectedEl) statUndetectedEl.textContent = undetectedCount;
+            if (statGamesEl) statGamesEl.textContent = gamesCount;
 
-    // Build sections HTML
-    let html = '';
-    for (const [gameName, group] of Object.entries(byGame)) {
-        const tags = [...new Set(group.cheats.map(c => c.type || 'internal'))].join(' ');
-        const countLabel = group.cheats.length + ' cheat' + (group.cheats.length > 1 ? 's' : '');
+            // Build sections HTML
+            let html = '';
+            for (const [gameName, group] of Object.entries(byGame)) {
+                const tags = [...new Set(group.cheats.map(c => c.type || 'internal'))].join(' ');
+                const countLabel = group.cheats.length + ' cheat' + (group.cheats.length > 1 ? 's' : '');
 
-        let cardsHtml = '';
-        for (const cheat of group.cheats) {
-            const sc = statusConf(cheat.status);
-            const featuresHtml = (cheat.features || []).map(f =>
-                `<span class="cheat-feature-tag">${f}</span>`
-            ).join('');
-            const typeBadgeClass = cheat.type === 'external' ? 'external' : 'internal';
-            const typeLabel = cheat.type === 'external' ? 'External' : 'Internal';
-            const isOutdated = cheat.status === 'outdated';
-            const href = (cheat.hasModal && !isOutdated) ? '#' : (isOutdated ? '#' : (cheat.link || '#'));
-            const targetAttr = (cheat.hasModal || isOutdated) ? '' : 'target="_blank" rel="noopener"';
-            const cardClass = isOutdated
-                ? `cheat-card outdated-card-link`
-                : (cheat.hasModal ? `cheat-card ${cheat.modalId}-card-link` : 'cheat-card');
-            const outdatedDataId = isOutdated ? `data-outdated-id="${cheat.id}"` : '';
+                let cardsHtml = '';
+                for (const cheat of group.cheats) {
+                    const sc = statusConf(cheat.status);
+                    const featuresHtml = (cheat.features || []).map(f =>
+                        `<span class="cheat-feature-tag">${f}</span>`
+                    ).join('');
+                    const typeBadgeClass = cheat.type === 'external' ? 'external' : 'internal';
+                    const typeLabel = cheat.type === 'external' ? 'External' : 'Internal';
+                    const isOutdated = cheat.status === 'outdated';
+                    const href = (cheat.hasModal && !isOutdated) ? '#' : (isOutdated ? '#' : (cheat.link || '#'));
+                    const targetAttr = (cheat.hasModal || isOutdated) ? '' : 'target="_blank" rel="noopener"';
+                    const cardClass = isOutdated
+                        ? `cheat-card outdated-card-link`
+                        : (cheat.hasModal ? `cheat-card ${cheat.modalId}-card-link` : 'cheat-card');
+                    const outdatedDataId = isOutdated ? `data-outdated-id="${cheat.id}"` : '';
 
-            cardsHtml += `
+                    cardsHtml += `
             <a href="${href}" ${targetAttr} class="${cardClass}" id="cheat-${cheat.id}" ${outdatedDataId}>
                 <div class="cheat-card-thumb">
                     <img src="${cheat.image}" alt="${cheat.title}" width="616" height="353" loading="lazy">
@@ -1149,9 +1149,9 @@
                     </div>
                 </div>
             </a>`;
-        }
+                }
 
-        html += `
+                html += `
         <div class="cheat-section" data-section-tags="${tags}">
             <div class="cheat-section-header">
                 <div class="cheat-section-icon">${group.icon}</div>
@@ -1160,63 +1160,63 @@
             </div>
             <div class="cheat-grid">${cardsHtml}</div>
         </div>`;
-    }
+            }
 
-    if (container) container.innerHTML = html;
+            if (container) container.innerHTML = html;
 
-    // Re-attach modal open + close for all modals
-    function initModal(modalId) {
-        const bg = document.getElementById(modalId + '-modal-bg');
-        if (!bg) return;
+            // Re-attach modal open + close for all modals
+            function initModal(modalId) {
+                const bg = document.getElementById(modalId + '-modal-bg');
+                if (!bg) return;
 
-        // Open — via card link
-        document.querySelectorAll('.' + modalId + '-card-link').forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                bg.style.display = 'flex';
-                bg.offsetHeight;
-                bg.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            });
-        });
+                // Open — via card link
+                document.querySelectorAll('.' + modalId + '-card-link').forEach(card => {
+                    card.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        bg.style.display = 'flex';
+                        bg.offsetHeight;
+                        bg.classList.add('show');
+                        document.body.style.overflow = 'hidden';
+                    });
+                });
 
-        // Close — X button, backdrop click, Escape
-        function closeModal() {
-            bg.classList.remove('show');
-            setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-        }
-
-        const closeBtn = bg.querySelector('.close-btn');
-        if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-        bg.addEventListener('click', function(e) { if (e.target === bg) closeModal(); });
-
-        document.addEventListener('keydown', function(e) {
-            if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
-        });
-    }
-
-    // Init all modals that exist in the page
-    ['bloodstrike', 'fivem', 'amnesia'].forEach(initModal);
-
-    // Filter tabs
-    const btns = document.querySelectorAll('.cheat-filter-btn');
-    btns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            btns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            const filter = this.getAttribute('data-filter');
-            document.querySelectorAll('.cheat-section[data-section-tags]').forEach(section => {
-                if (filter === 'all') {
-                    section.classList.remove('hidden');
-                } else {
-                    const tags = section.getAttribute('data-section-tags') || '';
-                    section.classList.toggle('hidden', !tags.includes(filter));
+                // Close — X button, backdrop click, Escape
+                function closeModal() {
+                    bg.classList.remove('show');
+                    setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
                 }
+
+                const closeBtn = bg.querySelector('.close-btn');
+                if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+                bg.addEventListener('click', function (e) { if (e.target === bg) closeModal(); });
+
+                document.addEventListener('keydown', function (e) {
+                    if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
+                });
+            }
+
+            // Init all modals that exist in the page
+            ['bloodstrike', 'fivem', 'amnesia'].forEach(initModal);
+
+            // Filter tabs
+            const btns = document.querySelectorAll('.cheat-filter-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    btns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filter = this.getAttribute('data-filter');
+                    document.querySelectorAll('.cheat-section[data-section-tags]').forEach(section => {
+                        if (filter === 'all') {
+                            section.classList.remove('hidden');
+                        } else {
+                            const tags = section.getAttribute('data-section-tags') || '';
+                            section.classList.toggle('hidden', !tags.includes(filter));
+                        }
+                    });
+                });
             });
-        });
-    });
-})();
+        })();
     </script>
 
     <script src="protect.js"></script>
@@ -1287,21 +1287,23 @@
 
             <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
 
-            <h2 style="font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;color:#fde68a;margin-bottom:8px;letter-spacing:0.04em;">
+            <h2
+                style="font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;color:#fde68a;margin-bottom:8px;letter-spacing:0.04em;">
                 Cheat Outdated
             </h2>
 
-            <p style="font-size:0.82rem;color:rgba(253,230,138,0.7);line-height:1.7;margin-bottom:24px;max-width:340px;margin-left:auto;margin-right:auto;">
-                This cheat is currently <strong style="color:#fde68a;">not available for download</strong>. 
-                The developers may be working on an update, the project may have been 
-                <strong style="color:#fde68a;">temporarily put on hold</strong>, or it may have been 
+            <p
+                style="font-size:0.82rem;color:rgba(253,230,138,0.7);line-height:1.7;margin-bottom:24px;max-width:340px;margin-left:auto;margin-right:auto;">
+                This cheat is currently <strong style="color:#fde68a;">not available for download</strong>.
+                The developers may be working on an update, the project may have been
+                <strong style="color:#fde68a;">temporarily put on hold</strong>, or it may have been
                 <strong style="color:#fde68a;">abandoned</strong>. Check back later or request an update on our Discord.
             </p>
 
             <div style="display:flex;flex-direction:column;gap:10px;">
-                <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener"
+                <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener"
                     style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 24px;background:linear-gradient(135deg,#5865F2,#7c3aed);border-radius:var(--radius-md);color:#fff;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(99,102,241,0.3);">
-                    <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16"/>
+                    <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
                     Request an Update on Discord
                 </a>
                 <button id="outdatedDismissBtn"
@@ -1317,60 +1319,60 @@
     </div>
 
     <script>
-    // Generic modal close helper
-    function initStaticModal(modalBgId, closeBtnId) {
-        const bg = document.getElementById(modalBgId);
-        const closeBtn = document.getElementById(closeBtnId);
-        if (!bg) return;
-        function closeModal() {
-            bg.classList.remove('show');
-            setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
+        // Generic modal close helper
+        function initStaticModal(modalBgId, closeBtnId) {
+            const bg = document.getElementById(modalBgId);
+            const closeBtn = document.getElementById(closeBtnId);
+            if (!bg) return;
+            function closeModal() {
+                bg.classList.remove('show');
+                setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
+            }
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            bg.addEventListener('click', function (e) { if (e.target === bg) closeModal(); });
+            document.addEventListener('keydown', function (e) {
+                if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
+            });
         }
-        if (closeBtn) closeBtn.addEventListener('click', closeModal);
-        bg.addEventListener('click', function(e) { if (e.target === bg) closeModal(); });
-        document.addEventListener('keydown', function(e) {
-            if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
-        });
-    }
-    initStaticModal('bloodstrike-modal-bg', 'bloodstrikeCloseBtn');
-    initStaticModal('amnesia-modal-bg',     'amnesiaCloseBtn');
-    initStaticModal('fivem-modal-bg',       'fivemCloseBtn');
+        initStaticModal('bloodstrike-modal-bg', 'bloodstrikeCloseBtn');
+        initStaticModal('amnesia-modal-bg', 'amnesiaCloseBtn');
+        initStaticModal('fivem-modal-bg', 'fivemCloseBtn');
     </script>
 
     <script>
-    // Outdated modal logic
-    (function() {
-        const bg = document.getElementById('outdated-modal-bg');
-        const closeBtn = document.getElementById('outdatedCloseBtn');
-        const dismissBtn = document.getElementById('outdatedDismissBtn');
-        if (!bg) return;
+        // Outdated modal logic
+        (function () {
+            const bg = document.getElementById('outdated-modal-bg');
+            const closeBtn = document.getElementById('outdatedCloseBtn');
+            const dismissBtn = document.getElementById('outdatedDismissBtn');
+            if (!bg) return;
 
-        function openOutdated() {
-            bg.style.display = 'flex';
-            bg.offsetHeight;
-            bg.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeOutdated() {
-            bg.classList.remove('show');
-            setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-        }
-
-        document.addEventListener('click', function(e) {
-            const card = e.target.closest('.outdated-card-link');
-            if (card) {
-                e.preventDefault();
-                openOutdated();
+            function openOutdated() {
+                bg.style.display = 'flex';
+                bg.offsetHeight;
+                bg.classList.add('show');
+                document.body.style.overflow = 'hidden';
             }
-        });
+            function closeOutdated() {
+                bg.classList.remove('show');
+                setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
+            }
 
-        if (closeBtn) closeBtn.addEventListener('click', closeOutdated);
-        if (dismissBtn) dismissBtn.addEventListener('click', closeOutdated);
-        bg.addEventListener('click', function(e) { if (e.target === bg) closeOutdated(); });
-        document.addEventListener('keydown', function(e) {
-            if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeOutdated();
-        });
-    })();
+            document.addEventListener('click', function (e) {
+                const card = e.target.closest('.outdated-card-link');
+                if (card) {
+                    e.preventDefault();
+                    openOutdated();
+                }
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', closeOutdated);
+            if (dismissBtn) dismissBtn.addEventListener('click', closeOutdated);
+            bg.addEventListener('click', function (e) { if (e.target === bg) closeOutdated(); });
+            document.addEventListener('keydown', function (e) {
+                if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeOutdated();
+            });
+        })();
     </script>
 
 </body>
