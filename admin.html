@@ -435,13 +435,57 @@
                     <div class="panel-hdr">
                         <div class="panel-hdr-title"><span class="ph-icon">🛡️</span>Cheat Statuses</div>
                     </div>
-                    <div class="panel-body" id="cheatsContainer">
-                        <div class="games-empty"><div class="em-icon">⏳</div>Loading…</div>
+                    <div class="panel-body">
+                        <div class="games-table" id="cheatsContainer">
+                            <div class="games-empty"><div class="em-icon">⏳</div>Loading…</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </main>
+    </div>
+
+    <!-- =================== EDIT CHEAT MODAL =================== -->
+    <div class="modal-overlay" id="editCheatModalOverlay">
+        <div class="edit-modal">
+            <div class="modal-head">
+                <div class="modal-head-title">✏️ Edit cheat</div>
+                <button class="modal-close-btn" onclick="closeEditCheatModal()">×</button>
+            </div>
+            <div class="modal-content">
+                <form id="editCheatForm">
+                    <input type="hidden" id="editCheatId">
+                    <div class="form-grid">
+                        <div class="form-field span2">
+                            <label>Title *</label>
+                            <input type="text" id="ecTitle" placeholder="Cheat title" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Download link</label>
+                            <input type="text" id="ecLink" placeholder="https://..." required>
+                        </div>
+                        <div class="form-field">
+                            <label>Status *</label>
+                            <select id="ecStatus">
+                                <option value="undetected">Undetected (Undetectable)</option>
+                                <option value="semi-detected">Semi-Detected (Semi detectable)</option>
+                                <option value="detected">Detected (Detectable)</option>
+                                <option value="outdated">Pu à jour (Waiting for update)</option>
+                            </select>
+                        </div>
+                        <div class="form-field span2">
+                            <label>Features (comma separated)</label>
+                            <input type="text" id="ecFeatures" placeholder="Aimbot, ESP, Wallhack">
+                        </div>
+                    </div>
+                    <div class="form-actions" style="margin-top:1.25rem">
+                        <button type="submit" class="btn-submit">💾 Save</button>
+                        <button type="button" class="btn-ghost" onclick="closeEditCheatModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- =================== EDIT MODAL =================== -->
@@ -758,13 +802,6 @@
 
         /* ========== LOAD CHEATS ========== */
         let cheatStatuses = {};
-        const CHEAT_NAMES = {
-            "cs2-external": "Nova CS2 External",
-            "cs2-internal": "Nova CS2 Internal",
-            "bloodstrike": "Bloodstrike Menu",
-            "fivem": "FiveM External",
-            "amnesia": "Amnesia Menu"
-        };
 
         async function loadCheatStatuses() {
             try {
@@ -785,20 +822,21 @@
             const container = document.getElementById('cheatsContainer');
             if (!container) return;
             
-            if (Object.keys(CHEAT_NAMES).length === 0) {
+            if (Object.keys(cheatStatuses).length === 0) {
                 container.innerHTML = '<div class="games-empty">No cheats found.</div>';
                 return;
             }
 
-            let html = '<div class="games-table">';
-            for (const [id, name] of Object.entries(CHEAT_NAMES)) {
-                const status = cheatStatuses[id] || 'undetected';
+            let html = '';
+            for (const [id, cheat] of Object.entries(cheatStatuses)) {
+                const name = cheat.title || id;
+                const status = cheat.status || 'undetected';
                 html += `
                     <div class="game-row">
                         <div class="game-info">
                             <div class="g-title">${escHtml(name)}</div>
                             <div class="g-meta" style="margin-top: 8px;">
-                                <select class="cheat-status-select" data-id="${id}" style="padding: 4px 8px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-size: 0.8rem;">
+                                <select class="cheat-status-select" data-id="${id}" style="padding: 4px 8px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-size: 0.8rem;" onchange="saveCheatStatus('${id}')">
                                     <option value="undetected" ${status === 'undetected' ? 'selected' : ''}>Undetected (Undetectable)</option>
                                     <option value="semi-detected" ${status === 'semi-detected' ? 'selected' : ''}>Semi-Detected (Semi detectable)</option>
                                     <option value="detected" ${status === 'detected' ? 'selected' : ''}>Detected (Detectable)</option>
@@ -807,12 +845,12 @@
                             </div>
                         </div>
                         <div class="game-row-actions">
-                            <button class="btn-submit" style="padding: .4rem .8rem; font-size: .75rem;" onclick="saveCheatStatus('${id}')">Save</button>
+                            <button class="act-btn edit" title="Edit" onclick="openEditCheatModal('${id}')">✏️</button>
+                            <button class="act-btn del" title="Delete" onclick="deleteCheat('${id}')">🗑️</button>
                         </div>
                     </div>
                 `;
             }
-            html += '</div>';
             container.innerHTML = html;
         }
 
@@ -835,12 +873,87 @@
                 const data = await res.json();
                 if (res.ok) {
                     toast('Cheat status updated successfully!', 'success');
-                    cheatStatuses[id] = newStatus;
+                    if (cheatStatuses[id]) cheatStatuses[id].status = newStatus;
                 } else {
                     toast(data.error || 'Failed to update cheat status', 'error');
                 }
             } catch (err) {
                 toast('Network error', 'error');
+            }
+        }
+
+        /* ========== EDIT CHEAT ========== */
+        function openEditCheatModal(id) {
+            const cheat = cheatStatuses[id];
+            if (!cheat) return;
+            document.getElementById('editCheatId').value = id;
+            document.getElementById('ecTitle').value = cheat.title || '';
+            document.getElementById('ecLink').value = cheat.link || '';
+            document.getElementById('ecStatus').value = cheat.status || 'undetected';
+            document.getElementById('ecFeatures').value = Array.isArray(cheat.features) ? cheat.features.join(', ') : (cheat.features || '');
+            document.getElementById('editCheatModalOverlay').classList.add('active');
+        }
+
+        function closeEditCheatModal() {
+            document.getElementById('editCheatModalOverlay').classList.remove('active');
+        }
+
+        document.getElementById('editCheatModalOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeEditCheatModal();
+        });
+
+        document.getElementById('editCheatForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const id = document.getElementById('editCheatId').value;
+            const featuresStr = document.getElementById('ecFeatures').value;
+            const updatedCheat = {
+                title: document.getElementById('ecTitle').value.trim(),
+                link: document.getElementById('ecLink').value.trim(),
+                status: document.getElementById('ecStatus').value,
+                features: featuresStr ? featuresStr.split(',').map(s => s.trim()).filter(s => s) : []
+            };
+            const adminPassword = getPass();
+            const btn = this.querySelector('[type=submit]');
+            btn.textContent = '⏳ Saving…'; btn.disabled = true;
+            try {
+                const res = await fetch('/api/update-cheat', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminPassword, cheatId: id, cheat: updatedCheat })
+                });
+                const d = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    toast('Cheat updated successfully!', 'success');
+                    closeEditCheatModal();
+                    await loadCheatStatuses();
+                } else {
+                    toast(d.error || 'Error ' + res.status, 'error');
+                }
+            } catch (err) {
+                toast('Network error: ' + err.message, 'error');
+            } finally {
+                btn.textContent = '💾 Save'; btn.disabled = false;
+            }
+        });
+
+        async function deleteCheat(id) {
+            const cheat = cheatStatuses[id];
+            if (!cheat) return;
+            if (!confirm(`Permanently delete cheat "${cheat.title || id}"?`)) return;
+            const adminPassword = getPass();
+            try {
+                const res = await fetch('/api/delete-cheat', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminPassword, cheatId: id })
+                });
+                const d = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    toast(`Cheat "${cheat.title || id}" deleted.`, 'success');
+                    await loadCheatStatuses();
+                } else {
+                    toast(d.error || 'Error ' + res.status, 'error');
+                }
+            } catch (err) {
+                toast('Network error: ' + err.message, 'error');
             }
         }
 
