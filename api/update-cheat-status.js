@@ -53,8 +53,12 @@ module.exports = async function handler(req, res) {
             throw new Error(`GitHub GET: ${getRes.status} ${err}`);
         }
 
+        if (!current[cheatId]) {
+            return res.status(404).json({ error: 'Cheat introuvable' });
+        }
+
         // Mettre à jour le statut
-        current[cheatId] = status;
+        current[cheatId].status = status;
         const content = Buffer.from(JSON.stringify(current, null, 4)).toString('base64');
 
         const putBody = {
