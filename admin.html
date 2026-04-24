@@ -253,6 +253,10 @@
                     <span>Manage games</span>
                     <span class="ni-badge" id="navGameCount">0</span>
                 </button>
+                <button class="nav-item" data-page="manage-cheats" onclick="showAdminPage('manage-cheats')">
+                    <span class="ni-icon">🛡️</span>
+                    <span>Manage cheats</span>
+                </button>
             </nav>
             <div class="sidebar-footer">
                 <a href="index.html" class="btn-back-site">
@@ -413,6 +417,26 @@
                         <div class="games-table" id="manageGamesList">
                             <div class="games-empty"><div class="em-icon">⏳</div>Loading…</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- === MANAGE CHEATS PAGE === -->
+            <div id="page-manage-cheats" class="admin-page-content" style="display:none">
+                <div class="page-hdr">
+                    <div class="page-hdr-left">
+                        <h2>Manage Cheats</h2>
+                        <p>Change the status of cheats</p>
+                    </div>
+                    <button class="btn-submit" style="padding:.65rem 1.25rem;font-size:.82rem;" onclick="loadCheatStatuses()">🔄 Refresh</button>
+                </div>
+
+                <div class="admin-panel">
+                    <div class="panel-hdr">
+                        <div class="panel-hdr-title"><span class="ph-icon">🛡️</span>Cheat Statuses</div>
+                    </div>
+                    <div class="panel-body" id="cheatsContainer">
+                        <div class="games-empty"><div class="em-icon">⏳</div>Loading…</div>
                     </div>
                 </div>
             </div>
@@ -695,6 +719,7 @@
             document.getElementById('loginScreen').classList.remove('active');
             document.getElementById('adminLayout').classList.add('active');
             loadGames();
+            loadCheatStatuses();
         }
 
         document.getElementById('logoutBtn').addEventListener('click', function () {
@@ -729,6 +754,89 @@
             renderManageList();
             renderRecentList();
             document.getElementById('navGameCount').textContent = allGames.length;
+        }
+
+        /* ========== LOAD CHEATS ========== */
+        let cheatStatuses = {};
+        const CHEAT_NAMES = {
+            "cs2-external": "Nova CS2 External",
+            "cs2-internal": "Nova CS2 Internal",
+            "bloodstrike": "Bloodstrike Menu",
+            "fivem": "FiveM External",
+            "amnesia": "Amnesia Menu"
+        };
+
+        async function loadCheatStatuses() {
+            try {
+                const res = await fetch('/api/cheat-status', { cache: 'no-store' });
+                if (res.ok) {
+                    cheatStatuses = await res.json();
+                    renderCheatList();
+                }
+            } catch (e) { console.error("Error loading cheat statuses", e); }
+        }
+
+        function renderCheatList() {
+            const container = document.getElementById('cheatsContainer');
+            if (!container) return;
+            
+            if (Object.keys(CHEAT_NAMES).length === 0) {
+                container.innerHTML = '<div class="games-empty">No cheats found.</div>';
+                return;
+            }
+
+            let html = '<div class="games-table">';
+            for (const [id, name] of Object.entries(CHEAT_NAMES)) {
+                const status = cheatStatuses[id] || 'undetected';
+                html += `
+                    <div class="game-row">
+                        <div class="game-info">
+                            <div class="g-title">${escHtml(name)}</div>
+                            <div class="g-meta" style="margin-top: 8px;">
+                                <select class="cheat-status-select" data-id="${id}" style="padding: 4px 8px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-size: 0.8rem;">
+                                    <option value="undetected" ${status === 'undetected' ? 'selected' : ''}>Undetected (Undetectable)</option>
+                                    <option value="semi-detected" ${status === 'semi-detected' ? 'selected' : ''}>Semi-Detected (Semi detectable)</option>
+                                    <option value="detected" ${status === 'detected' ? 'selected' : ''}>Detected (Detectable)</option>
+                                    <option value="outdated" ${status === 'outdated' ? 'selected' : ''}>Pu à jour (Waiting for update)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="game-row-actions">
+                            <button class="btn-submit" style="padding: .4rem .8rem; font-size: .75rem;" onclick="saveCheatStatus('${id}')">Save</button>
+                        </div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function saveCheatStatus(id) {
+            const select = document.querySelector(`.cheat-status-select[data-id="${id}"]`);
+            if (!select) return;
+            
+            const newStatus = select.value;
+            try {
+                const res = await fetch('/api/update-cheat-status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        adminPassword: getPass(),
+                        cheatId: id,
+                        status: newStatus
+                    })
+                });
+                
+                const data = await res.json();
+                if (res.ok) {
+                    toast('Cheat status updated successfully!', 'success');
+                    cheatStatuses[id] = newStatus;
+                } else {
+                    toast(data.error || 'Failed to update cheat status', 'error');
+                }
+            } catch (err) {
+                toast('Network error', 'error');
+            }
         }
 
         function updateStats() {
