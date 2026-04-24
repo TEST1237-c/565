@@ -1,4 +1,4 @@
-// GET /api/cheat-status — renvoie les statuts des cheats (depuis GitHub raw)
+// GET /api/cheat-statuses — renvoie les statuts des cheats (depuis GitHub raw)
 module.exports = async function handler(req, res) {
     if (req.method !== 'GET') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -19,7 +19,7 @@ module.exports = async function handler(req, res) {
             throw new Error(`GitHub ${response.status}`);
         }
         const data = await response.json();
-        res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate');
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
         return res.status(200).json(data);
     } catch (e) {
         console.error('api/cheat-status:', e.message);
