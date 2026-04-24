@@ -731,7 +731,7 @@
                 <span class="cheat-section-count">2 cheats</span>
             </div>
             <div class="cheat-grid">
-                <a href="https://www.clictune.com/mssj" target="_blank" rel="noopener" class="cheat-card">
+                <a href="https://www.clictune.com/mssj" target="_blank" rel="noopener" class="cheat-card" id="cheat-cs2-external">
                     <div class="cheat-card-thumb">
                         <img src="https://i.imgur.com/BERNwlM.jpeg" alt="CS2 External Cheat" width="616" height="353"
                             loading="lazy">
@@ -772,7 +772,7 @@
                     </div>
                 </a>
 
-                <a href="https://www.clictune.com/mCzZ" target="_blank" rel="noopener" class="cheat-card">
+                <a href="https://www.clictune.com/mCzZ" target="_blank" rel="noopener" class="cheat-card" id="cheat-cs2-internal">
                     <div class="cheat-card-thumb">
                         <img src="https://i.imgur.com/BERNwlM.jpeg" alt="CS2 Internal Cheat" width="616" height="353"
                             loading="lazy">
@@ -823,7 +823,7 @@
                 <span class="cheat-section-count">1 cheat</span>
             </div>
             <div class="cheat-grid">
-                <a href="#" id="amnesia-card-link" class="cheat-card">
+                <a href="#" id="cheat-amnesia" class="cheat-card amnesia-card-link">
                     <div class="cheat-card-thumb">
                         <img src="https://i.imgur.com/4cLrLrg.png" alt="GTA 5 Online Amnesia Cheat" width="616"
                             height="353" loading="lazy">
@@ -929,7 +929,7 @@
                 <span class="cheat-section-count">1 cheat</span>
             </div>
             <div class="cheat-grid">
-                <a href="#" id="fivem-card-link" class="cheat-card">
+                <a href="#" id="cheat-fivem" class="cheat-card fivem-card-link">
                     <div class="cheat-card-thumb">
                         <img src="https://i.imgur.com/3nDR1pP.png" alt="FiveM External Cheat" width="616" height="353"
                             loading="lazy">
@@ -979,7 +979,7 @@
                 <span class="cheat-section-count">1 cheat</span>
             </div>
             <div class="cheat-grid">
-                <a href="#" id="bloodstrike-card-link" class="cheat-card">
+                <a href="#" id="cheat-bloodstrike" class="cheat-card bloodstrike-card-link">
                     <div class="cheat-card-thumb">
                         <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3199170/eeab00314314192f57bbdf91b91f8b871f890ce5/capsule_616x353.jpg?t=1748342194"
                             alt="Bloodstrike Cheat" width="616" height="353" loading="lazy">
@@ -1325,17 +1325,19 @@
 
     <script>
         (function () {
-            const card = document.getElementById('amnesia-card-link');
+            const cards = document.querySelectorAll('.amnesia-card-link');
             const bg = document.getElementById('amnesia-modal-bg');
             const closeBtn = document.getElementById('amnesiaCloseBtn');
-            if (!card || !bg) return;
+            if (!cards.length || !bg) return;
 
-            card.addEventListener('click', function (e) {
-                e.preventDefault();
-                bg.style.display = 'flex';
-                bg.offsetHeight;
-                bg.classList.add('show');
-                document.body.style.overflow = 'hidden';
+            cards.forEach(card => {
+                card.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    bg.style.display = 'flex';
+                    bg.offsetHeight;
+                    bg.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                });
             });
 
             function closeModal() {
@@ -1352,17 +1354,19 @@
 
         // FiveM Modal
         (function () {
-            const card = document.getElementById('fivem-card-link');
+            const cards = document.querySelectorAll('.fivem-card-link');
             const bg = document.getElementById('fivem-modal-bg');
             const closeBtn = document.getElementById('fivemCloseBtn');
-            if (!card || !bg) return;
+            if (!cards.length || !bg) return;
 
-            card.addEventListener('click', function (e) {
-                e.preventDefault();
-                bg.style.display = 'flex';
-                bg.offsetHeight;
-                bg.classList.add('show');
-                document.body.style.overflow = 'hidden';
+            cards.forEach(card => {
+                card.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    bg.style.display = 'flex';
+                    bg.offsetHeight;
+                    bg.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                });
             });
 
             function closeModal() {
@@ -1379,17 +1383,19 @@
 
         // Bloodstrike Modal
         (function () {
-            const card = document.getElementById('bloodstrike-card-link');
+            const cards = document.querySelectorAll('.bloodstrike-card-link');
             const bg = document.getElementById('bloodstrike-modal-bg');
             const closeBtn = document.getElementById('bloodstrikeCloseBtn');
-            if (!card || !bg) return;
+            if (!cards.length || !bg) return;
 
-            card.addEventListener('click', function (e) {
-                e.preventDefault();
-                bg.style.display = 'flex';
-                bg.offsetHeight;
-                bg.classList.add('show');
-                document.body.style.overflow = 'hidden';
+            cards.forEach(card => {
+                card.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    bg.style.display = 'flex';
+                    bg.offsetHeight;
+                    bg.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                });
             });
 
             function closeModal() {
@@ -1402,6 +1408,57 @@
             document.addEventListener('keydown', function (e) {
                 if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
             });
+        })();
+
+        // Load dynamic cheat statuses
+        (async function () {
+            try {
+                const res = await fetch('/api/cheat-status');
+                if (res.ok) {
+                    const statuses = await res.json();
+                    
+                    for (const [id, status] of Object.entries(statuses)) {
+                        const card = document.getElementById('cheat-' + id);
+                        if (!card) continue;
+                        
+                        const badge = card.querySelector('.cheat-status-badge');
+                        if (!badge) continue;
+                        
+                        // Remove all existing status classes
+                        badge.classList.remove('undetected', 'detected', 'updating');
+                        
+                        let text = "";
+                        let colorClass = "";
+                        
+                        switch (status) {
+                            case 'undetected':
+                                text = "Undetected";
+                                colorClass = "undetected";
+                                break;
+                            case 'semi-detected':
+                                text = "Semi-Detected";
+                                colorClass = "detected"; // Use red for semi-detected for safety
+                                break;
+                            case 'detected':
+                                text = "Detected";
+                                colorClass = "detected";
+                                break;
+                            case 'outdated':
+                                text = "Waiting for developer update";
+                                colorClass = "updating";
+                                break;
+                            default:
+                                text = "Unknown";
+                                colorClass = "updating";
+                        }
+                        
+                        badge.classList.add(colorClass);
+                        badge.innerHTML = '<span class="status-dot"></span> ' + text;
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load cheat statuses", err);
+            }
         })();
     </script>
 
