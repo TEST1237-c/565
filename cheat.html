@@ -1110,12 +1110,16 @@
             ).join('');
             const typeBadgeClass = cheat.type === 'external' ? 'external' : 'internal';
             const typeLabel = cheat.type === 'external' ? 'External' : 'Internal';
-            const href = cheat.hasModal ? '#' : (cheat.link || '#');
-            const targetAttr = cheat.hasModal ? '' : 'target="_blank" rel="noopener"';
-            const cardClass = cheat.hasModal ? `cheat-card ${cheat.modalId}-card-link` : 'cheat-card';
+            const isOutdated = cheat.status === 'outdated';
+            const href = (cheat.hasModal && !isOutdated) ? '#' : (isOutdated ? '#' : (cheat.link || '#'));
+            const targetAttr = (cheat.hasModal || isOutdated) ? '' : 'target="_blank" rel="noopener"';
+            const cardClass = isOutdated
+                ? `cheat-card outdated-card-link`
+                : (cheat.hasModal ? `cheat-card ${cheat.modalId}-card-link` : 'cheat-card');
+            const outdatedDataId = isOutdated ? `data-outdated-id="${cheat.id}"` : '';
 
             cardsHtml += `
-            <a href="${href}" ${targetAttr} class="${cardClass}" id="cheat-${cheat.id}">
+            <a href="${href}" ${targetAttr} class="${cardClass}" id="cheat-${cheat.id}" ${outdatedDataId}>
                 <div class="cheat-card-thumb">
                     <img src="${cheat.image}" alt="${cheat.title}" width="616" height="353" loading="lazy">
                     <div class="cheat-card-thumb-overlay"></div>
@@ -1135,10 +1139,7 @@
                             </svg>
                             ${cheat.status === 'outdated' ? 'Outdated' : 'Up to date'}
                         </span>
-                        ${cheat.status === 'outdated' ? `<div class="cheat-outdated-notice">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                            This cheat is currently outdated. The developers may be working on an update, the project may have been abandoned, or it may have been temporarily put on hold.
-                        </div>` : ''}
+
                         <span class="cheat-card-download">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
@@ -1259,6 +1260,79 @@
             });
         })();
     </script>
+
+    <!-- OUTDATED MODAL -->
+    <div id="outdated-modal-bg" class="modal-bg" style="display:none;">
+        <div class="modal" role="dialog" aria-modal="true" style="max-width:460px;text-align:center;">
+            <button class="close-btn" id="outdatedCloseBtn" aria-label="Close">×</button>
+
+            <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
+
+            <h2 style="font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;color:#fde68a;margin-bottom:8px;letter-spacing:0.04em;">
+                Cheat Outdated
+            </h2>
+
+            <p style="font-size:0.82rem;color:rgba(253,230,138,0.7);line-height:1.7;margin-bottom:24px;max-width:340px;margin-left:auto;margin-right:auto;">
+                This cheat is currently <strong style="color:#fde68a;">not available for download</strong>. 
+                The developers may be working on an update, the project may have been 
+                <strong style="color:#fde68a;">temporarily put on hold</strong>, or it may have been 
+                <strong style="color:#fde68a;">abandoned</strong>. Check back later or request an update on our Discord.
+            </p>
+
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                <a href="https://discord.gg/scUwxCmf4D" target="_blank" rel="noopener"
+                    style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 24px;background:linear-gradient(135deg,#5865F2,#7c3aed);border-radius:var(--radius-md);color:#fff;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(99,102,241,0.3);">
+                    <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16"/>
+                    Request an Update on Discord
+                </a>
+                <button id="outdatedDismissBtn"
+                    style="padding:10px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-md);color:var(--text-muted);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;">
+                    Dismiss
+                </button>
+            </div>
+
+            <p style="margin-top:18px;font-size:0.68rem;color:rgba(255,255,255,0.15);">
+                We apologize for the inconvenience.
+            </p>
+        </div>
+    </div>
+
+    <script>
+    // Outdated modal logic
+    (function() {
+        const bg = document.getElementById('outdated-modal-bg');
+        const closeBtn = document.getElementById('outdatedCloseBtn');
+        const dismissBtn = document.getElementById('outdatedDismissBtn');
+        if (!bg) return;
+
+        function openOutdated() {
+            bg.style.display = 'flex';
+            bg.offsetHeight;
+            bg.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeOutdated() {
+            bg.classList.remove('show');
+            setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
+        }
+
+        document.addEventListener('click', function(e) {
+            const card = e.target.closest('.outdated-card-link');
+            if (card) {
+                e.preventDefault();
+                openOutdated();
+            }
+        });
+
+        if (closeBtn) closeBtn.addEventListener('click', closeOutdated);
+        if (dismissBtn) dismissBtn.addEventListener('click', closeOutdated);
+        bg.addEventListener('click', function(e) { if (e.target === bg) closeOutdated(); });
+        document.addEventListener('keydown', function(e) {
+            if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeOutdated();
+        });
+    })();
+    </script>
+
 </body>
 
 </html>
