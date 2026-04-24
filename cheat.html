@@ -1521,7 +1521,11 @@
                         badge.classList.add(colorClass);
                         badge.innerHTML = '<span class="status-dot"></span> ' + text;
                         if (status === 'outdated') {
-                            badge.onclick = () => document.getElementById('outdatedModal').classList.add('show');
+                            badge.onclick = (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                document.getElementById('outdatedModal').classList.add('show');
+                            };
                         } else {
                             badge.onclick = null;
                         }
