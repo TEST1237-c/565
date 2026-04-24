@@ -771,9 +771,14 @@
                 const res = await fetch('/api/cheat-status', { cache: 'no-store' });
                 if (res.ok) {
                     cheatStatuses = await res.json();
-                    renderCheatList();
+                } else {
+                    cheatStatuses = {};
                 }
-            } catch (e) { console.error("Error loading cheat statuses", e); }
+            } catch (e) {
+                cheatStatuses = {};
+                console.error("Error loading cheat statuses", e);
+            }
+            renderCheatList();
         }
 
         function renderCheatList() {
