@@ -606,6 +606,28 @@
         .cheat-section.hidden {
             display: none;
         }
+
+        /* === OUTDATED NOTICE === */
+        .cheat-outdated-notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: rgba(234, 179, 8, 0.06);
+            border: 1px solid rgba(234, 179, 8, 0.22);
+            border-radius: 8px;
+            font-size: 0.72rem;
+            color: rgba(253, 230, 138, 0.75);
+            line-height: 1.55;
+        }
+
+        .cheat-outdated-notice svg {
+            flex-shrink: 0;
+            margin-top: 1px;
+            color: #fde68a;
+            opacity: 0.8;
+        }
     </style>
 </head>
 
@@ -1038,7 +1060,7 @@
         'undetected':    { label: 'Undetected',          cls: 'undetected' },
         'semi-detected': { label: 'Semi-Detected',        cls: 'detected'   },
         'detected':      { label: 'Detected',             cls: 'detected'   },
-        'outdated':      { label: 'Waiting for update',   cls: 'updating'   }
+        'outdated':      { label: 'Outdated',             cls: 'updating'   }
     };
     function statusConf(s) {
         return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' };
@@ -1111,8 +1133,12 @@
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                             </svg>
-                            Up to date
+                            ${cheat.status === 'outdated' ? 'Outdated' : 'Up to date'}
                         </span>
+                        ${cheat.status === 'outdated' ? `<div class="cheat-outdated-notice">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            This cheat is currently outdated. The developers may be working on an update, the project may have been abandoned, or it may have been temporarily put on hold.
+                        </div>` : ''}
                         <span class="cheat-card-download">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
