@@ -210,11 +210,46 @@ app.post("/api/update-cheat-status", async (req, res) => {
 
   try {
     const statuses = await readCheatStatus();
-    statuses[cheatId] = status;
+    if (!statuses[cheatId]) return okJson(res, 404, { error: "Cheat introuvable" });
+    statuses[cheatId].status = status;
     await writeCheatStatus(statuses);
     return okJson(res, 200, { success: true, message: "Statut modifié." });
   } catch (err) {
     console.error("POST /api/update-cheat-status:", err);
+    return okJson(res, 500, { error: "Erreur serveur" });
+  }
+});
+
+app.post("/api/update-cheat", async (req, res) => {
+  if (!checkAdmin(req, res)) return;
+  const { cheatId, cheat } = req.body || {};
+  if (!cheatId || !cheat) return okJson(res, 400, { error: "cheatId et cheat requis" });
+
+  try {
+    const statuses = await readCheatStatus();
+    if (!statuses[cheatId]) return okJson(res, 404, { error: "Cheat introuvable" });
+    statuses[cheatId] = { ...statuses[cheatId], ...cheat };
+    await writeCheatStatus(statuses);
+    return okJson(res, 200, { success: true, message: "Cheat modifié." });
+  } catch (err) {
+    console.error("POST /api/update-cheat:", err);
+    return okJson(res, 500, { error: "Erreur serveur" });
+  }
+});
+
+app.post("/api/delete-cheat", async (req, res) => {
+  if (!checkAdmin(req, res)) return;
+  const { cheatId } = req.body || {};
+  if (!cheatId) return okJson(res, 400, { error: "cheatId requis" });
+
+  try {
+    const statuses = await readCheatStatus();
+    if (!statuses[cheatId]) return okJson(res, 404, { error: "Cheat introuvable" });
+    delete statuses[cheatId];
+    await writeCheatStatus(statuses);
+    return okJson(res, 200, { success: true, message: "Cheat supprimé." });
+  } catch (err) {
+    console.error("POST /api/delete-cheat:", err);
     return okJson(res, 500, { error: "Erreur serveur" });
   }
 });
