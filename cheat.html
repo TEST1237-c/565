@@ -1413,7 +1413,7 @@
         // Load dynamic cheat statuses
         (async function () {
             try {
-                const res = await fetch('/api/cheat-status');
+                const res = await fetch('/api/cheat-status', { cache: 'no-store' });
                 if (res.ok) {
                     const statuses = await res.json();
                     
