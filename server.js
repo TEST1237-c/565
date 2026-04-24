@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 const DATA_FILE = path.join(__dirname, "games.json");
+const CHEAT_DATA_FILE = path.join(__dirname, "cheat-status.json");
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(express.json({ limit: "256kb" }));
@@ -46,6 +47,21 @@ async function readGames() {
 async function writeGames(games) {
   const data = JSON.stringify(games, null, 4) + "\n";
   await fs.writeFile(DATA_FILE, data, "utf8");
+}
+
+async function readCheatStatus() {
+  try {
+    const raw = await fs.readFile(CHEAT_DATA_FILE, "utf8");
+    return JSON.parse(raw);
+  } catch (err) {
+    if (err && (err.code === "ENOENT" || err.code === "ENOTDIR")) return {};
+    throw err;
+  }
+}
+
+async function writeCheatStatus(statusObj) {
+  const data = JSON.stringify(statusObj, null, 4) + "\n";
+  await fs.writeFile(CHEAT_DATA_FILE, data, "utf8");
 }
 
 function requireAdminPasswordSet(res) {
@@ -100,6 +116,16 @@ app.get("/api/games", async (req, res) => {
   } catch (err) {
     console.error("GET /api/games:", err);
     return okJson(res, 500, { error: "Impossible de charger les jeux" });
+  }
+});
+
+app.get("/api/cheat-status", async (req, res) => {
+  try {
+    const status = await readCheatStatus();
+    return okJson(res, 200, status);
+  } catch (err) {
+    console.error("GET /api/cheat-status:", err);
+    return okJson(res, 500, { error: "Impossible de charger les statuts" });
   }
 });
 
@@ -173,6 +199,22 @@ app.post("/api/delete-game", async (req, res) => {
     return okJson(res, 200, { success: true, message: "Jeu supprimé." });
   } catch (err) {
     console.error("POST /api/delete-game:", err);
+    return okJson(res, 500, { error: "Erreur serveur" });
+  }
+});
+
+app.post("/api/update-cheat-status", async (req, res) => {
+  if (!checkAdmin(req, res)) return;
+  const { cheatId, status } = req.body || {};
+  if (!cheatId || !status) return okJson(res, 400, { error: "cheatId et status requis" });
+
+  try {
+    const statuses = await readCheatStatus();
+    statuses[cheatId] = status;
+    await writeCheatStatus(statuses);
+    return okJson(res, 200, { success: true, message: "Statut modifié." });
+  } catch (err) {
+    console.error("POST /api/update-cheat-status:", err);
     return okJson(res, 500, { error: "Erreur serveur" });
   }
 });
