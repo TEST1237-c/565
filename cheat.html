@@ -330,7 +330,73 @@
             background: rgba(234, 179, 8, 0.2);
             border: 1px solid rgba(234, 179, 8, 0.4);
             color: #fde68a;
+            cursor: pointer;
+            transition: background 0.2s;
         }
+        .cheat-status-badge.updating:hover {
+            background: rgba(234, 179, 8, 0.35);
+        }
+
+        /* Outdated modal */
+        #outdatedModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        #outdatedModal.show {
+            display: flex;
+            animation: fadeInModal 0.25s ease;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        .outdated-modal-box {
+            background: linear-gradient(145deg, rgba(25,20,45,0.98), rgba(12,10,22,0.98));
+            border: 1px solid rgba(234,179,8,0.35);
+            border-radius: 20px;
+            padding: 2.5rem 2rem 2rem;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            animation: popIn 0.35s cubic-bezier(.34,1.56,.64,1);
+            box-shadow: 0 0 60px -10px rgba(234,179,8,0.25), 0 30px 60px rgba(0,0,0,0.5);
+        }
+        @keyframes popIn {
+            from { opacity:0; transform:scale(0.88) translateY(-20px); }
+            to   { opacity:1; transform:scale(1) translateY(0); }
+        }
+        .outdated-modal-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 20px 20px 0 0;
+            background: linear-gradient(90deg, transparent, rgba(234,179,8,0.8), transparent);
+        }
+        .outdated-modal-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+        .outdated-modal-title { font-size: 1.2rem; font-weight: 800; color: #fde68a; margin-bottom: 0.75rem; }
+        .outdated-modal-desc { color: rgba(200,200,230,0.65); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .outdated-modal-close {
+            padding: 0.65rem 1.75rem;
+            border: 1px solid rgba(234,179,8,0.4);
+            border-radius: 10px;
+            background: rgba(234,179,8,0.12);
+            color: #fde68a;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+        .outdated-modal-close:hover { background: rgba(234,179,8,0.25); }
 
         .cheat-status-badge.detected {
             background: rgba(239, 68, 68, 0.2);
@@ -1413,7 +1479,7 @@
         // Load dynamic cheat statuses
         (async function () {
             try {
-                const res = await fetch('/api/cheat-status', { cache: 'no-store' });
+                const res = await fetch('/api/cheat-status');
                 if (res.ok) {
                     const statuses = await res.json();
                     
@@ -1444,7 +1510,7 @@
                                 colorClass = "detected";
                                 break;
                             case 'outdated':
-                                text = "Waiting for developer update";
+                                text = "Outdated";
                                 colorClass = "updating";
                                 break;
                             default:
@@ -1454,6 +1520,11 @@
                         
                         badge.classList.add(colorClass);
                         badge.innerHTML = '<span class="status-dot"></span> ' + text;
+                        if (status === 'outdated') {
+                            badge.onclick = () => document.getElementById('outdatedModal').classList.add('show');
+                        } else {
+                            badge.onclick = null;
+                        }
                     }
                 }
             } catch (err) {
@@ -1522,6 +1593,20 @@
             });
         })();
     </script>
+
+    <!-- OUTDATED MODAL -->
+    <div id="outdatedModal">
+        <div class="outdated-modal-box">
+            <span class="outdated-modal-icon">⚠️</span>
+            <div class="outdated-modal-title">This cheat is no longer available</div>
+            <p class="outdated-modal-desc">
+                This cheat is currently <strong>outdated</strong> and has not been updated to work with the latest game version.<br><br>
+                The developer may have stopped supporting this project, or an update is currently in progress. Please check back later.
+            </p>
+            <button class="outdated-modal-close" onclick="document.getElementById('outdatedModal').classList.remove('show')">Got it</button>
+        </div>
+    </div>
+
 </body>
 
 </html>
