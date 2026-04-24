@@ -330,73 +330,7 @@
             background: rgba(234, 179, 8, 0.2);
             border: 1px solid rgba(234, 179, 8, 0.4);
             color: #fde68a;
-            cursor: pointer;
-            transition: background 0.2s;
         }
-        .cheat-status-badge.updating:hover {
-            background: rgba(234, 179, 8, 0.35);
-        }
-
-        /* Outdated modal */
-        #outdatedModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(8px);
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        #outdatedModal.show {
-            display: flex;
-            animation: fadeInModal 0.25s ease;
-        }
-        @keyframes fadeInModal {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-        .outdated-modal-box {
-            background: linear-gradient(145deg, rgba(25,20,45,0.98), rgba(12,10,22,0.98));
-            border: 1px solid rgba(234,179,8,0.35);
-            border-radius: 20px;
-            padding: 2.5rem 2rem 2rem;
-            max-width: 440px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            animation: popIn 0.35s cubic-bezier(.34,1.56,.64,1);
-            box-shadow: 0 0 60px -10px rgba(234,179,8,0.25), 0 30px 60px rgba(0,0,0,0.5);
-        }
-        @keyframes popIn {
-            from { opacity:0; transform:scale(0.88) translateY(-20px); }
-            to   { opacity:1; transform:scale(1) translateY(0); }
-        }
-        .outdated-modal-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            border-radius: 20px 20px 0 0;
-            background: linear-gradient(90deg, transparent, rgba(234,179,8,0.8), transparent);
-        }
-        .outdated-modal-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
-        .outdated-modal-title { font-size: 1.2rem; font-weight: 800; color: #fde68a; margin-bottom: 0.75rem; }
-        .outdated-modal-desc { color: rgba(200,200,230,0.65); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
-        .outdated-modal-close {
-            padding: 0.65rem 1.75rem;
-            border: 1px solid rgba(234,179,8,0.4);
-            border-radius: 10px;
-            background: rgba(234,179,8,0.12);
-            color: #fde68a;
-            font-size: 0.88rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: background 0.2s;
-        }
-        .outdated-modal-close:hover { background: rgba(234,179,8,0.25); }
 
         .cheat-status-badge.detected {
             background: rgba(239, 68, 68, 0.2);
@@ -747,15 +681,15 @@
         <!-- Stats -->
         <div class="cheat-stats">
             <div class="cheat-stat">
-                <span class="cheat-stat-num red">6</span>
+                <span class="cheat-stat-num red" id="statTotalCheats">6</span>
                 <span class="cheat-stat-label">Cheats</span>
             </div>
             <div class="cheat-stat">
-                <span class="cheat-stat-num green">5</span>
+                <span class="cheat-stat-num green" id="statUndetected">5</span>
                 <span class="cheat-stat-label">Undetected</span>
             </div>
             <div class="cheat-stat">
-                <span class="cheat-stat-num yellow">5</span>
+                <span class="cheat-stat-num yellow" id="statGames">5</span>
                 <span class="cheat-stat-label">Games</span>
             </div>
         </div>
@@ -789,305 +723,9 @@
             </a>
         </div>
 
-        <!-- CS2 SECTION -->
-        <div class="cheat-section" data-section-tags="fps external internal">
-            <div class="cheat-section-header">
-                <div class="cheat-section-icon">🎯</div>
-                <span class="cheat-section-title">Counter-Strike 2</span>
-                <span class="cheat-section-count">2 cheats</span>
-            </div>
-            <div class="cheat-grid">
-                <a href="https://www.clictune.com/mssj" target="_blank" rel="noopener" class="cheat-card" id="cheat-cs2-external">
-                    <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/BERNwlM.jpeg" alt="CS2 External Cheat" width="616" height="353"
-                            loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge undetected">
-                            <span class="status-dot"></span>
-                            Undetected
-                        </span>
-                        <span class="cheat-type-badge external">External</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">Nova CS2 External</div>
-                        <div class="cheat-card-features">
-                            <span class="cheat-feature-tag">Aimbot</span>
-                            <span class="cheat-feature-tag">ESP</span>
-                            <span class="cheat-feature-tag">Triggerbot</span>
-                            <span class="cheat-feature-tag">No Recoil</span>
-                        </div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                Up to date
-                            </span>
-                            <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
-                                Download
-                            </span>
-                        </div>
-                    </div>
-                </a>
+        <div id="cheatSectionsContainer"></div>
 
-                <a href="https://www.clictune.com/mCzZ" target="_blank" rel="noopener" class="cheat-card" id="cheat-cs2-internal">
-                    <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/BERNwlM.jpeg" alt="CS2 Internal Cheat" width="616" height="353"
-                            loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge undetected">
-                            <span class="status-dot"></span>
-                            Undetected
-                        </span>
-                        <span class="cheat-type-badge internal">Internal</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">Nova CS2 Internal</div>
-                        <div class="cheat-card-features">
-                            <span class="cheat-feature-tag">Aimbot</span>
-                            <span class="cheat-feature-tag">ESP</span>
-                            <span class="cheat-feature-tag">Other</span>
-
-                        </div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                Up to date
-                            </span>
-                            <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
-                                Download
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!-- GTA 5 ONLINE SECTION -->
-        <div class="cheat-section" data-section-tags="internal">
-            <div class="cheat-section-header">
-                <div class="cheat-section-icon">🏙️</div>
-                <span class="cheat-section-title">GTA 5 Online</span>
-                <span class="cheat-section-count">1 cheat</span>
-            </div>
-            <div class="cheat-grid">
-                <a href="#" id="cheat-amnesia" class="cheat-card amnesia-card-link">
-                    <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/4cLrLrg.png" alt="GTA 5 Online Amnesia Cheat" width="616"
-                            height="353" loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge undetected">
-                            <span class="status-dot"></span>
-                            Undetected
-                        </span>
-                        <span class="cheat-type-badge internal">Internal</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">Amnesia Cheat</div>
-                        <div class="cheat-card-features">
-                            <span class="cheat-feature-tag">God Mode</span>
-                            <span class="cheat-feature-tag">Money</span>
-                            <span class="cheat-feature-tag">Teleport</span>
-                            <span class="cheat-feature-tag">Vehicle Spawn</span>
-                            <span class="cheat-feature-tag">No Wanted</span>
-                        </div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                Up to date
-                            </span>
-                            <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
-                                Download
-                            </span>
-                        </div>
-                    </div>
-                </a>
-
-
-            </div>
-        </div>
-
-        <!-- COMBAT MASTER SECTION -->
-        <div class="cheat-section" data-section-tags="fps internal">
-            <div class="cheat-section-header">
-                <div class="cheat-section-icon">⚔️</div>
-                <span class="cheat-section-title">Combat Master</span>
-                <span class="cheat-section-count">1 cheat</span>
-            </div>
-            <div class="cheat-grid">
-                <a href="https://www.clictune.com/mBjQ" target="_blank" rel="noopener" class="cheat-card">
-                    <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/kzX30po.jpeg" alt="Combat Master Cheat" width="616" height="353"
-                            loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge undetected">
-                            <span class="status-dot"></span>
-                            Undetected
-                        </span>
-                        <span class="cheat-type-badge internal">Internal</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">Nova Internal Combat Master</div>
-                        <div class="cheat-card-features">
-                            <span class="cheat-feature-tag">Aimbot</span>
-                            <span class="cheat-feature-tag">Wallhack</span>
-                            <span class="cheat-feature-tag">UnlockALL</span>
-                            <span class="cheat-feature-tag">No Spread</span>
-                        </div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                Up to date
-                            </span>
-                            <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
-                                Download
-                            </span>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-        </div>
-
-        <!-- FIVEM SECTION -->
-        <div class="cheat-section" data-section-tags="external">
-            <div class="cheat-section-header">
-                <div class="cheat-section-icon">🌐</div>
-                <span class="cheat-section-title">FiveM</span>
-                <span class="cheat-section-count">1 cheat</span>
-            </div>
-            <div class="cheat-grid">
-                <a href="#" id="cheat-fivem" class="cheat-card fivem-card-link">
-                    <div class="cheat-card-thumb">
-                        <img src="https://i.imgur.com/3nDR1pP.png" alt="FiveM External Cheat" width="616" height="353"
-                            loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge undetected">
-                            <span class="status-dot"></span>
-                            Undetected
-                        </span>
-                        <span class="cheat-type-badge external">External</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">Nova FiveM External</div>
-                        <div class="cheat-card-features">
-                            <span class="cheat-feature-tag">Aimbot</span>
-                            <span class="cheat-feature-tag">ESP</span>
-                            <span class="cheat-feature-tag">Other</span>
-                        </div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                Up to date
-                            </span>
-                            <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
-                                Download
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!-- BLOODSTRIKE SECTION -->
-        <div class="cheat-section" data-section-tags="fps internal">
-            <div class="cheat-section-header">
-                <div class="cheat-section-icon">🩸</div>
-                <span class="cheat-section-title">Bloodstrike</span>
-                <span class="cheat-section-count">1 cheat</span>
-            </div>
-            <div class="cheat-grid">
-                <a href="#" id="cheat-bloodstrike" class="cheat-card bloodstrike-card-link">
-                    <div class="cheat-card-thumb">
-                        <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3199170/eeab00314314192f57bbdf91b91f8b871f890ce5/capsule_616x353.jpg?t=1748342194"
-                            alt="Bloodstrike Cheat" width="616" height="353" loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge detected">
-                            <span class="status-dot"></span>
-                            Semi-Detected
-                        </span>
-                        <span class="cheat-type-badge internal">Internal</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">Nova Bloodstrike Internal</div>
-                        <div class="cheat-card-features">
-                            <span class="cheat-feature-tag">Aimbot</span>
-                            <span class="cheat-feature-tag">ESP</span>
-                            <span class="cheat-feature-tag">Testing</span>
-                        </div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                In Testing
-                            </span>
-                            <span class="cheat-card-download">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
-                                Download
-                            </span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!-- Footer -->
+                <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-content">
                 <div class="footer-section">
@@ -1390,151 +1028,149 @@
     </div>
 
     <script>
-        (function () {
-            const cards = document.querySelectorAll('.amnesia-card-link');
-            const bg = document.getElementById('amnesia-modal-bg');
-            const closeBtn = document.getElementById('amnesiaCloseBtn');
-            if (!cards.length || !bg) return;
+(async function() {
+    const container = document.getElementById('cheatSectionsContainer');
+    const statTotalEl = document.getElementById('statTotalCheats');
+    const statUndetectedEl = document.getElementById('statUndetected');
+    const statGamesEl = document.getElementById('statGames');
 
-            cards.forEach(card => {
-                card.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    bg.style.display = 'flex';
-                    bg.offsetHeight;
-                    bg.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                });
-            });
+    const STATUS_CONFIG = {
+        'undetected':    { label: 'Undetected',          cls: 'undetected' },
+        'semi-detected': { label: 'Semi-Detected',        cls: 'detected'   },
+        'detected':      { label: 'Detected',             cls: 'detected'   },
+        'outdated':      { label: 'Waiting for update',   cls: 'updating'   }
+    };
+    function statusConf(s) {
+        return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' };
+    }
 
-            function closeModal() {
-                bg.classList.remove('show');
-                setTimeout(function () { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-            }
+    let cheats = {};
+    const paths = ['/api/cheat-status', 'cheat-status.json', '/cheat-status.json'];
+    for (const p of paths) {
+        try {
+            const r = await fetch(p, { cache: 'no-store' });
+            if (r.ok) { cheats = await r.json(); break; }
+        } catch(e) {}
+    }
 
-            closeBtn.addEventListener('click', closeModal);
-            bg.addEventListener('click', function (e) { if (e.target === bg) closeModal(); });
-            document.addEventListener('keydown', function (e) {
-                if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
-            });
-        })();
+    if (!cheats || !Object.keys(cheats).length) {
+        if (container) container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
+        return;
+    }
 
-        // FiveM Modal
-        (function () {
-            const cards = document.querySelectorAll('.fivem-card-link');
-            const bg = document.getElementById('fivem-modal-bg');
-            const closeBtn = document.getElementById('fivemCloseBtn');
-            if (!cards.length || !bg) return;
+    // Group by game
+    const byGame = {};
+    for (const [id, cheat] of Object.entries(cheats)) {
+        const key = cheat.game || 'Other';
+        if (!byGame[key]) byGame[key] = { icon: cheat.gameIcon || '\uD83C\uDFAE', cheats: [] };
+        byGame[key].cheats.push({ id, ...cheat });
+    }
 
-            cards.forEach(card => {
-                card.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    bg.style.display = 'flex';
-                    bg.offsetHeight;
-                    bg.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                });
-            });
+    // Stats
+    const total = Object.keys(cheats).length;
+    const undetectedCount = Object.values(cheats).filter(c => c.status === 'undetected').length;
+    const gamesCount = Object.keys(byGame).length;
+    if (statTotalEl) statTotalEl.textContent = total;
+    if (statUndetectedEl) statUndetectedEl.textContent = undetectedCount;
+    if (statGamesEl) statGamesEl.textContent = gamesCount;
 
-            function closeModal() {
-                bg.classList.remove('show');
-                setTimeout(function () { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-            }
+    // Build sections HTML
+    let html = '';
+    for (const [gameName, group] of Object.entries(byGame)) {
+        const tags = [...new Set(group.cheats.map(c => c.type || 'internal'))].join(' ');
+        const countLabel = group.cheats.length + ' cheat' + (group.cheats.length > 1 ? 's' : '');
 
-            closeBtn.addEventListener('click', closeModal);
-            bg.addEventListener('click', function (e) { if (e.target === bg) closeModal(); });
-            document.addEventListener('keydown', function (e) {
-                if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
-            });
-        })();
+        let cardsHtml = '';
+        for (const cheat of group.cheats) {
+            const sc = statusConf(cheat.status);
+            const featuresHtml = (cheat.features || []).map(f =>
+                `<span class="cheat-feature-tag">${f}</span>`
+            ).join('');
+            const typeBadgeClass = cheat.type === 'external' ? 'external' : 'internal';
+            const typeLabel = cheat.type === 'external' ? 'External' : 'Internal';
+            const href = cheat.hasModal ? '#' : (cheat.link || '#');
+            const targetAttr = cheat.hasModal ? '' : 'target="_blank" rel="noopener"';
+            const cardClass = cheat.hasModal ? `cheat-card ${cheat.modalId}-card-link` : 'cheat-card';
 
-        // Bloodstrike Modal
-        (function () {
-            const cards = document.querySelectorAll('.bloodstrike-card-link');
-            const bg = document.getElementById('bloodstrike-modal-bg');
-            const closeBtn = document.getElementById('bloodstrikeCloseBtn');
-            if (!cards.length || !bg) return;
+            cardsHtml += `
+            <a href="${href}" ${targetAttr} class="${cardClass}" id="cheat-${cheat.id}">
+                <div class="cheat-card-thumb">
+                    <img src="${cheat.image}" alt="${cheat.title}" width="616" height="353" loading="lazy">
+                    <div class="cheat-card-thumb-overlay"></div>
+                    <span class="cheat-status-badge ${sc.cls}">
+                        <span class="status-dot"></span>
+                        ${sc.label}
+                    </span>
+                    <span class="cheat-type-badge ${typeBadgeClass}">${typeLabel}</span>
+                </div>
+                <div class="cheat-card-body">
+                    <div class="cheat-card-title">${cheat.title}</div>
+                    <div class="cheat-card-features">${featuresHtml}</div>
+                    <div class="cheat-card-meta">
+                        <span class="cheat-card-updated">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            Up to date
+                        </span>
+                        <span class="cheat-card-download">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download
+                        </span>
+                    </div>
+                </div>
+            </a>`;
+        }
 
-            cards.forEach(card => {
-                card.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    bg.style.display = 'flex';
-                    bg.offsetHeight;
-                    bg.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                });
-            });
+        html += `
+        <div class="cheat-section" data-section-tags="${tags}">
+            <div class="cheat-section-header">
+                <div class="cheat-section-icon">${group.icon}</div>
+                <span class="cheat-section-title">${gameName}</span>
+                <span class="cheat-section-count">${countLabel}</span>
+            </div>
+            <div class="cheat-grid">${cardsHtml}</div>
+        </div>`;
+    }
 
-            function closeModal() {
-                bg.classList.remove('show');
-                setTimeout(function () { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-            }
+    if (container) container.innerHTML = html;
 
-            closeBtn.addEventListener('click', closeModal);
-            bg.addEventListener('click', function (e) { if (e.target === bg) closeModal(); });
-            document.addEventListener('keydown', function (e) {
-                if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal();
-            });
-        })();
+    // Re-attach modal clicks
+    document.querySelectorAll('[class*="-card-link"]').forEach(card => {
+        const match = card.className.match(/(\w[\w-]*)-card-link/);
+        if (!match) return;
+        const modalId = match[1];
+        const bg = document.getElementById(modalId + '-modal-bg');
+        if (!bg) return;
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            bg.style.display = 'flex';
+            bg.offsetHeight;
+            bg.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        });
+    });
 
-        // Load dynamic cheat statuses
-        (async function () {
-            try {
-                const res = await fetch('/api/cheat-status');
-                if (res.ok) {
-                    const statuses = await res.json();
-                    
-                    for (const [id, status] of Object.entries(statuses)) {
-                        const card = document.getElementById('cheat-' + id);
-                        if (!card) continue;
-                        
-                        const badge = card.querySelector('.cheat-status-badge');
-                        if (!badge) continue;
-                        
-                        // Remove all existing status classes
-                        badge.classList.remove('undetected', 'detected', 'updating');
-                        
-                        let text = "";
-                        let colorClass = "";
-                        
-                        switch (status) {
-                            case 'undetected':
-                                text = "Undetected";
-                                colorClass = "undetected";
-                                break;
-                            case 'semi-detected':
-                                text = "Semi-Detected";
-                                colorClass = "detected"; // Use red for semi-detected for safety
-                                break;
-                            case 'detected':
-                                text = "Detected";
-                                colorClass = "detected";
-                                break;
-                            case 'outdated':
-                                text = "Outdated";
-                                colorClass = "updating";
-                                break;
-                            default:
-                                text = "Unknown";
-                                colorClass = "updating";
-                        }
-                        
-                        badge.classList.add(colorClass);
-                        badge.innerHTML = '<span class="status-dot"></span> ' + text;
-                        if (status === 'outdated') {
-                            badge.onclick = (e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                document.getElementById('outdatedModal').classList.add('show');
-                            };
-                        } else {
-                            badge.onclick = null;
-                        }
-                    }
+    // Filter tabs
+    const btns = document.querySelectorAll('.cheat-filter-btn');
+    btns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            btns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const filter = this.getAttribute('data-filter');
+            document.querySelectorAll('.cheat-section[data-section-tags]').forEach(section => {
+                if (filter === 'all') {
+                    section.classList.remove('hidden');
+                } else {
+                    const tags = section.getAttribute('data-section-tags') || '';
+                    section.classList.toggle('hidden', !tags.includes(filter));
                 }
-            } catch (err) {
-                console.error("Failed to load cheat statuses", err);
-            }
-        })();
+            });
+        });
+    });
+})();
     </script>
 
     <script src="protect.js"></script>
@@ -1597,20 +1233,6 @@
             });
         })();
     </script>
-
-    <!-- OUTDATED MODAL -->
-    <div id="outdatedModal">
-        <div class="outdated-modal-box">
-            <span class="outdated-modal-icon">⚠️</span>
-            <div class="outdated-modal-title">This cheat is no longer available</div>
-            <p class="outdated-modal-desc">
-                This cheat is currently <strong>outdated</strong> and has not been updated to work with the latest game version.<br><br>
-                The developer may have stopped supporting this project, or an update is currently in progress. Please check back later.
-            </p>
-            <button class="outdated-modal-close" onclick="document.getElementById('outdatedModal').classList.remove('show')">Got it</button>
-        </div>
-    </div>
-
 </body>
 
 </html>
