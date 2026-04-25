@@ -876,19 +876,7 @@
 
         <!-- ===== VIEW 1: GAMES GRID ===== -->
         <div id="gamesView">
-            <div class="search-bar-container" style="margin-bottom: 40px;">
-                <div class="search-bar-wrapper">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" class="search-bar" id="gameSearchInput" placeholder="Search for a game or cheat..." autocomplete="off">
-                </div>
-            </div>
-            <div class="games-view-title" style="display: flex; justify-content: space-between; align-items: center;">
-                <span>Choose a game</span>
-                <span id="gamesCountBadge" style="background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; color: #a78bfa;">Loading...</span>
-            </div>
+            <div class="games-view-title">Choose a game</div>
             <div class="games-pick-grid" id="gamesPickGrid">
                 <p style="color:var(--text-muted);padding:20px;">Loading games...</p>
             </div>
@@ -1264,8 +1252,6 @@
             const statTotalEl = document.getElementById('statTotalCheats');
             const statUndetEl = document.getElementById('statUndetected');
             const statGamesEl = document.getElementById('statGames');
-            const gameSearchInput = document.getElementById('gameSearchInput');
-            const gamesCountBadge = document.getElementById('gamesCountBadge');
 
             // ── Animated Stats ────────────────────────────────────────────────
             function animateValue(obj, start, end, duration) {
@@ -1297,7 +1283,6 @@
 
             if (!cheats || !Object.keys(cheats).length) {
                 gamesGrid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
-                if (gamesCountBadge) gamesCountBadge.textContent = '0 games';
                 return;
             }
 
@@ -1318,29 +1303,7 @@
             animateValue(statTotalEl, 0, total, 2000);
             animateValue(statUndetEl, 0, undetectedCount, 2000);
             animateValue(statGamesEl, 0, gamesCount, 2000);
-            
-            if (gamesCountBadge) gamesCountBadge.textContent = gamesCount + ' games';
 
-            // ── Search functionality ──────────────────────────────────────────
-            if (gameSearchInput) {
-                gameSearchInput.addEventListener('input', (e) => {
-                    const term = e.target.value.toLowerCase();
-                    const cards = gamesGrid.querySelectorAll('.game-pick-card');
-                    let visibleCount = 0;
-                    cards.forEach(card => {
-                        const title = card.querySelector('.game-pick-name').textContent.toLowerCase();
-                        if (title.includes(term)) {
-                            card.style.display = '';
-                            visibleCount++;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                    if (gamesCountBadge) {
-                        gamesCountBadge.textContent = visibleCount + (visibleCount === 1 ? ' game' : ' games');
-                    }
-                });
-            }
 
             // ── Build game pick cards ─────────────────────────────────────────
             gamesGrid.innerHTML = '';
