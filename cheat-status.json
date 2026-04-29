@@ -7,7 +7,12 @@
         "image": "https://i.imgur.com/BERNwlM.jpeg",
         "link": "https://www.clictune.com/mssj",
         "type": "external",
-        "features": ["Aimbot", "ESP", "Triggerbot", "No Recoil"]
+        "features": [
+            "Aimbot",
+            "ESP",
+            "Triggerbot",
+            "No Recoil"
+        ]
     },
     "cs2-internal": {
         "status": "undetected",
@@ -17,7 +22,11 @@
         "image": "https://i.imgur.com/BERNwlM.jpeg",
         "link": "https://www.clictune.com/mCzZ",
         "type": "internal",
-        "features": ["Aimbot", "ESP", "Other"]
+        "features": [
+            "Aimbot",
+            "ESP",
+            "Other"
+        ]
     },
     "bloodstrike": {
         "status": "semi-detected",
@@ -29,7 +38,11 @@
         "type": "internal",
         "hasModal": true,
         "modalId": "bloodstrike",
-        "features": ["Aimbot", "ESP", "Testing"]
+        "features": [
+            "Aimbot",
+            "ESP",
+            "Testing"
+        ]
     },
     "fivem": {
         "status": "undetected",
@@ -41,7 +54,11 @@
         "type": "external",
         "hasModal": true,
         "modalId": "fivem",
-        "features": ["Aimbot", "ESP", "Other"]
+        "features": [
+            "Aimbot",
+            "ESP",
+            "Other"
+        ]
     },
     "amnesia": {
         "status": "undetected",
@@ -53,7 +70,13 @@
         "type": "internal",
         "hasModal": true,
         "modalId": "amnesia",
-        "features": ["God Mode", "Money", "Teleport", "Vehicle Spawn", "No Wanted"]
+        "features": [
+            "God Mode",
+            "Money",
+            "Teleport",
+            "Vehicle Spawn",
+            "No Wanted"
+        ]
     },
     "combat-master": {
         "status": "undetected",
@@ -61,8 +84,13 @@
         "game": "Combat Master",
         "gameIcon": "⚔️",
         "image": "https://i.imgur.com/kzX30po.jpeg",
-        "link": "https://www.clictune.com/mBjQ",
+        "link": "https://www.clictune.com/mDrm",
         "type": "internal",
-        "features": ["Aimbot", "Wallhack", "UnlockALL", "No Spread"]
+        "features": [
+            "Aimbot",
+            "Wallhack",
+            "UnlockALL",
+            "No Spread"
+        ]
     }
 }
