@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPlay - How to Use Loader</title>
+    <meta name="description"
+        content="NovaPlay - Step-by-step guide on how to use our loader. Follow these 9 steps to get started.">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ===== GUIDE PAGE SPECIFIC ===== */
+
+        .guide-hero {
+            padding: calc(var(--header-height) + 48px) var(--spacing-lg) 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .guide-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(109, 40, 217, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: var(--radius-full);
+            padding: 6px 16px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
+        }
+
+        .guide-hero-badge-dot {
+            width: 7px;
+            height: 7px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-dot 1.8s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.6;
+            }
+        }
+
+        .guide-hero h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-light) 40%, var(--accent-violet) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: 0.04em;
+            filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.4));
+        }
+
+        .guide-hero-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 560px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+
+        /* === STEPS CONTAINER === */
+        .guide-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg) 80px;
+        }
+
+        /* === STEP CARD === */
+        .guide-step {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 36px 36px 32px;
+            margin-bottom: 28px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .guide-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .guide-step:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.08);
+        }
+
+        .guide-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-violet), var(--accent-light), transparent);
+            opacity: 0.6;
+        }
+
+        .guide-step-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .guide-step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(109, 40, 217, 0.15));
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            border-radius: var(--radius-sm);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--accent-light);
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+            flex-shrink: 0;
+        }
+
+        .guide-step-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.04em;
+            line-height: 1.4;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .guide-step-body {
+            padding-left: 68px;
+        }
+
+        .guide-step-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+        }
+
+        .guide-step-desc strong {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* === WARNING BOX === */
+        .guide-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 14px 18px;
+            background: rgba(234, 179, 8, 0.06);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            border-radius: var(--radius-sm);
+            margin-bottom: 20px;
+        }
+
+        .guide-warning-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .guide-warning-text {
+            font-size: 0.8rem;
+            color: rgba(253, 230, 138, 0.8);
+            line-height: 1.6;
+        }
+
+        /* === INFO BOX === */
+        .guide-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 14px 18px;
+            background: rgba(6, 182, 212, 0.06);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: var(--radius-sm);
+            margin-bottom: 20px;
+        }
+
+        .guide-info-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .guide-info-text {
+            font-size: 0.8rem;
+            color: rgba(103, 232, 249, 0.8);
+            line-height: 1.6;
+        }
+
+        /* === DOWNLOAD BUTTON === */
+        .guide-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 28px;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-dark));
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .guide-download-btn:hover::before {
+            left: 100%;
+        }
+
+        .guide-download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.5);
+            border-color: var(--accent-light);
+        }
+
+        .guide-download-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .guide-download-btn:hover svg {
+            transform: translateY(2px);
+        }
+
+        /* === STEP CHECKLIST === */
+        .guide-checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+        }
+
+        .guide-checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .guide-checklist li::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            flex-shrink: 0;
+            margin-top: 8px;
+            box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+        }
+
+        /* === CONNECTOR LINE === */
+        .guide-connector {
+            width: 2px;
+            height: 28px;
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.3), transparent);
+            margin: 0 auto;
+            position: relative;
+            top: -14px;
+            margin-bottom: -14px;
+        }
+
+        /* === BADGES === */
+        .step-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            vertical-align: middle;
+        }
+
+        .step-badge.required {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .step-badge.optional {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: var(--accent-light);
+        }
+
+        .step-badge.conditional {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: #fde68a;
+        }
+
+        .kbd-key {
+            display: inline-block;
+            padding: 3px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+            margin: 0 2px;
+        }
+
+        /* === STEP COMPLETE CARD === */
+        .guide-complete {
+            text-align: center;
+            padding: 40px 24px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 5, 8, 0.6));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-lg);
+            margin-top: 40px;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.15);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .guide-complete.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .guide-complete-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            color: #fff;
+        }
+
+        .guide-complete h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .guide-complete p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* === COMING SOON PLACEHOLDER === */
+        .guide-coming-soon {
+            text-align: center;
+            padding: 48px 24px;
+            background: var(--bg-card);
+            border: 1px dashed rgba(139, 92, 246, 0.2);
+            border-radius: var(--radius-lg);
+            margin-top: 12px;
+        }
+
+        .guide-coming-soon-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.4));
+        }
+
+        .guide-coming-soon h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            letter-spacing: 0.08em;
+        }
+
+        .guide-coming-soon p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            max-width: 340px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* === HEADER NAV LINK (duplicated for standalone page) === */
+        .header-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: var(--radius-full);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+
+        .header-nav-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-glass);
+            border-color: var(--border-glass);
+        }
+
+        .header-nav-link.active-page {
+            color: var(--accent-light);
+            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(139, 92, 246, 0.25);
+        }
+
+        /* === LANG TOGGLE === */
+        .lang-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin: 0 12px;
+            cursor: pointer;
+        }
+
+        .lang-switch-input {
+            display: none;
+        }
+
+        .lang-switch-track {
+            width: 68px;
+            height: 32px;
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: var(--radius-full);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .lang-switch:hover .lang-switch-track {
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(139, 92, 246, 0.12);
+        }
+
+        .lang-switch-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-muted);
+            width: 50%;
+            text-align: center;
+            z-index: 2;
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+
+        .lang-switch-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 28px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-light));
+            border-radius: var(--radius-full);
+            z-index: 1;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+        }
+
+        .lang-switch-input:checked ~ .lang-switch-track .lang-switch-thumb {
+            transform: translateX(32px);
+        }
+
+        .lang-switch-input:not(:checked) ~ .lang-switch-track .label-en {
+            color: #fff;
+        }
+
+        .lang-switch-input:checked ~ .lang-switch-track .label-fr {
+            color: #fff;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 640px) {
+            .guide-hero {
+                padding-top: calc(var(--header-height) + 32px);
+            }
+
+            .guide-step {
+                padding: 28px 20px 24px;
+            }
+
+            .guide-step-body {
+                padding-left: 0;
+            }
+
+            .guide-step-header {
+                gap: 14px;
+            }
+
+            .guide-step-number {
+                min-width: 40px;
+                height: 40px;
+                font-size: 0.85rem;
+            }
+
+            .guide-step-title {
+                font-size: 0.92rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="page-jeux page-guide">
+    <noscript>
+        <div
+            style="position:fixed;inset:0;z-index:2147483647;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Inter,system-ui,sans-serif;padding:2rem;">
+            <div style="font-size:4rem;margin-bottom:1.5rem">&#9888;&#65039;</div>
+            <h2
+                style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 1rem">
+                JavaScript Required</h2>
+            <p style="color:rgba(200,200,230,0.65);font-size:1rem;max-width:420px;line-height:1.7;margin:0 0 1.5rem">
+                NovaPlay requires JavaScript to function.<br>Please enable it in your browser settings.</p>
+            <div
+                style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">
+                &#128295; Enable JavaScript and refresh the page</div>
+            <p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">&#169; 2026 NovaPlay</p>
+        </div>
+    </noscript>
+
+    <div class="mouse-follower" id="mouseFollower"></div>
+    <div class="floating-glow glow-1"></div>
+    <div class="floating-glow glow-2"></div>
+
+    <!-- ===== STICKY HEADER ===== -->
+    <header class="site-header" id="siteHeader">
+        <a href="index.html" class="header-logo">NovaPlay</a>
+        <div class="header-right">
+            <label class="lang-switch" for="langCheckbox">
+                <input type="checkbox" id="langCheckbox" class="lang-switch-input">
+                <div class="lang-switch-track">
+                    <span class="lang-switch-label label-en">EN</span>
+                    <span class="lang-switch-label label-fr">FR</span>
+                    <div class="lang-switch-thumb"></div>
+                </div>
+            </label>
+            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="header-discord">
+                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
+                Discord
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <div class="guide-hero">
+        <div class="guide-hero-badge">
+            <span class="guide-hero-badge-dot"></span>
+            <span data-i18n="hero-badge">Step-by-step tutorial</span>
+        </div>
+        <h1 data-i18n="hero-title">How to Use Loader</h1>
+        <p class="guide-hero-sub" data-i18n="hero-sub">
+            Follow these <strong style="color:var(--accent-light)">9 simple steps</strong> to set up and use the
+            NovaPlay loader. Each step is explained in detail below.
+        </p>
+    </div>
+
+
+    <!-- ===== STEPS ===== -->
+    <div class="guide-container">
+
+        <!-- STEP 1 -->
+        <div class="guide-step" id="guideStep1">
+            <div class="guide-step-header">
+                <div class="guide-step-number">01</div>
+                <h2 class="guide-step-title"><span data-i18n="step1-title">Disable Defender & Core Isolation</span> <span
+                        class="step-badge required" data-i18n="badge-req">Required</span></h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step1-desc">
+                    Third-party tools are often blocked by antivirus software. You need to <strong>disable your
+                        antivirus</strong> (real-time protection, cloud-delivered protection) and <strong>Core
+                        Isolation</strong> (Memory Integrity) in Windows Security settings, then <strong>restart your
+                        PC</strong>.
+                </p>
+
+                <a href="https://mega.nz/file/Y7F1HAIR#SGeUTeLBjXvLbMhmbWYH8rX6S_hVMfo0-mZNo4lzw9c" target="_blank"
+                    rel="noopener" class="guide-download-btn" id="downloadDefenderControl">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span data-i18n="step1-btn">Download Defender Control</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 2 -->
+        <div class="guide-step" id="guideStep2">
+            <div class="guide-step-header">
+                <div class="guide-step-number">02</div>
+                <h2 class="guide-step-title"><span data-i18n="step2-title">Visual C++ Redistributable x64</span> <span
+                        class="step-badge required" data-i18n="badge-req">Required</span></h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step2-desc">
+                    Install the official <strong>Microsoft VC++ x64 runtime</strong> — required by many builds.
+                </p>
+
+                <a href="https://aka.ms/vc14/vc_redist.x64.exe" target="_blank" rel="noopener"
+                    class="guide-download-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span data-i18n="step2-btn">Download VC++ x64 (official)</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 3 -->
+        <div class="guide-step" id="guideStep3">
+            <div class="guide-step-header">
+                <div class="guide-step-number">03</div>
+                <h2 class="guide-step-title"><span data-i18n="step3-title">DirectX SDK (June 2010)</span> <span class="step-badge required" data-i18n="badge-req">Required</span>
+                </h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step3-desc">
+                    Install the <strong>June 2010 DirectX SDK</strong> (DXSDK_Jun10) via Microsoft's installer below.
+                </p>
+
+                <a href="https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe"
+                    target="_blank" rel="noopener" class="guide-download-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span data-i18n="step3-btn">Download DirectX SDK (Jun10)</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 4 -->
+        <div class="guide-step" id="guideStep4">
+            <div class="guide-step-header">
+                <div class="guide-step-number">04</div>
+                <h2 class="guide-step-title"><span data-i18n="step4-title">Disable VBS (Virtualization-based Security)</span> <span
+                        class="step-badge required" data-i18n="badge-req">Required</span></h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step4-desc">
+                    Open <strong>gpedit.msc</strong>. Go to <strong>Computer Configuration → Administrative Templates →
+                        System → Device Guard</strong>. Double-click <strong>"Turn On Virtualization Based
+                        Security"</strong>, set it to <strong>Disabled</strong>, then Apply / OK. Restart if prompted.
+                </p>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 5 -->
+        <div class="guide-step" id="guideStep5">
+            <div class="guide-step-header">
+                <div class="guide-step-number">05</div>
+                <h2 class="guide-step-title"><span data-i18n="step5-title">Install RivaTuner Statistics Server</span> <span
+                        class="step-badge required" data-i18n="badge-req">Required</span></h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step5-desc">
+                    Install <strong>RivaTuner Statistics Server</strong> (RTSS) from the official Guru3D package.
+                </p>
+
+                <a href="https://www.guru3d.com/getdownload/2c1b2414f56a6594ffef91236a87c0e976d52e0519b1373846bab016c2f20c7c4d6ce7dfe19a0bc843da8d448bbb670058b0c9ee9a26f5cf49bc39c97da070e6eb314629af3da2d24ab0413917f73b946419b5af447da45cefb517a0840ad3003abff4f9d5fe7828bbbb910ee270b20632035fba6a450da22325b6bc5b6ecf760e59fd443482876d86300a5817e4710def45cda599e22aba42c6e875d9d05325b7e3dfc0e0cdd2a6644dee975800665332b046c1985c08b17f26351546f963850c682266b234b1"
+                    target="_blank" rel="noopener" class="guide-download-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span data-i18n="step5-btn">Download RivaTuner Statistics Server (Guru3D)</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 6 -->
+        <div class="guide-step" id="guideStep6">
+            <div class="guide-step-header">
+                <div class="guide-step-number">06</div>
+                <h2 class="guide-step-title"><span data-i18n="step6-title">Reboot, then Run the Loader</span> <span
+                        class="step-badge required" data-i18n="badge-req">Required</span></h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step6-desc">
+                    <strong>Restart your PC.</strong> After reboot, run the loader from our link, enter the key you
+                    received (<strong>Discord ticket</strong> or <strong>email</strong>).
+                </p>
+
+                <a href="https://mega.nz/file/VnUWXIxQ#cDGgL0dPMm7EwCOfOqceekObUOp3YQiiBNk8mT8-aes" target="_blank"
+                    rel="noopener" class="guide-download-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span data-i18n="step6-btn">Download Loader (Mega)</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 7 -->
+        <div class="guide-step" id="guideStep7">
+            <div class="guide-step-header">
+                <div class="guide-step-number">07</div>
+                <h2 class="guide-step-title"><span data-i18n="step7-title">Hardware Spoofer</span> <span class="step-badge conditional" data-i18n="badge-cond">If HWID Banned</span>
+                </h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step7-desc">
+                    Only required if you have an <strong>active hardware ban</strong>. If you are not HWID banned,
+                    <strong>skip this step</strong>. If you are: open Hardware Spoofer → <strong>"Click to
+                        configure"</strong>, turn off all options (or master switch), click <strong>Save
+                        configuration</strong>, then <strong>Initialize</strong>.
+                </p>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 8 -->
+        <div class="guide-step" id="guideStep8">
+            <div class="guide-step-header">
+                <div class="guide-step-number">08</div>
+                <h2 class="guide-step-title"><span data-i18n="step8-title">Streamer Mode</span> <span class="step-badge optional" data-i18n="badge-opt">Optional</span></h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step8-desc">
+                    After injection, press <span class="kbd-key">Ctrl</span> + <span class="kbd-key">Alt</span> + <span
+                        class="kbd-key">S</span>. This is an optional feature to
+                    <strong>hide the ESP and menu</strong> from screen shares or recordings. If you want the ESP to
+                    remain visible during screen sharing, <strong>do not enable this option</strong>.
+                </p>
+            </div>
+        </div>
+
+        <div class="guide-connector"></div>
+
+        <!-- STEP 9 -->
+        <div class="guide-step" id="guideStep9">
+            <div class="guide-step-header">
+                <div class="guide-step-number">09</div>
+                <h2 class="guide-step-title" data-i18n="step9-title">Launch the Game</h2>
+            </div>
+            <div class="guide-step-body">
+                <p class="guide-step-desc" data-i18n="step9-desc">
+                    Start your game and <strong>enjoy</strong>. 🎮
+                </p>
+            </div>
+        </div>
+
+        <!-- COMPLETION CARD -->
+        <div class="guide-complete" id="guideComplete">
+            <div class="guide-complete-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h2 data-i18n="comp-title">You're All Set!</h2>
+            <p data-i18n="comp-desc">If you face any issues, feel free to open a ticket in our Discord server.</p>
+        </div>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-logo">NovaPlay</h3>
+                <p class="footer-tagline" data-i18n="foot-tagline">The ultimate destination for premium cracked games and undetected cheats.
+                    Safe, fast, and always up to date.</p>
+            </div>
+            <div class="footer-section">
+                <h4 data-i18n="foot-nav">Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="foot-nav-home">Home</a></li>
+                    <li><a href="jeux.html" data-i18n="foot-nav-games">Games</a></li>
+                    <li><a href="cheat.html">Cheats</a></li>
+                    <li><a href="guide.html" data-i18n="foot-nav-guide">Guide</a></li>
+                    <li><a href="https://discord.gg/nYK36E5D2X" target="_blank">Discord</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 data-i18n="foot-comm">Community</h4>
+                <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;" data-i18n="foot-comm-desc">Join our Discord to request games
+                    or report issues.</p>
+                <a href="https://discord.gg/nYK36E5D2X" class="footer-discord-btn" target="_blank" rel="noopener">
+                    <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
+                    <span data-i18n="foot-join">JOIN DISCORD</span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="foot-rights">© 2026 NovaPlay. All rights reserved.</p>
+            <div class="footer-disclaimer" data-i18n="foot-disc">Disclaimer: We do not host any files. All links are from 3rd party sites.
+            </div>
+        </div>
+    </footer>
+
+    <script src="protect.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Language Toggle Logic
+        (function() {
+            const translations = {
+                fr: {
+                    "header-home": "Accueil",
+                    "header-games": "Jeux",
+                    "header-guide": "Guide",
+                    "hero-badge": "Tutoriel étape par étape",
+                    "hero-title": "Comment utiliser le Loader",
+                    "hero-sub": 'Suivez ces <strong style="color:var(--accent-light)">9 étapes simples</strong> pour configurer et utiliser le loader NovaPlay. Chaque étape est expliquée en détail ci-dessous.',
+                    "badge-req": "Requis",
+                    "step1-title": "Désactiver Defender & Isolation Noyau",
+                    "step1-desc": "Les outils tiers sont souvent bloqués par les antivirus. Vous devez <strong>désactiver votre antivirus</strong> (protection en temps réel, protection dans le cloud) et <strong>l'Isolation Noyau</strong> (Intégrité de la mémoire) dans les paramètres de Sécurité Windows, puis <strong>redémarrer votre PC</strong>.",
+                    "step1-btn": "Télécharger Defender Control",
+                    "step2-title": "Visual C++ Redistributable x64",
+                    "step2-desc": "Installez le <strong>runtime officiel Microsoft VC++ x64</strong> — requis par de nombreuses versions.",
+                    "step2-btn": "Télécharger VC++ x64 (officiel)",
+                    "step3-title": "DirectX SDK (Juin 2010)",
+                    "step3-desc": "Installez le <strong>DirectX SDK de Juin 2010</strong> (DXSDK_Jun10) via l'installateur Microsoft ci-dessous.",
+                    "step3-btn": "Télécharger DirectX SDK (Jun10)",
+                    "step4-title": "Désactiver VBS (Sécurité basée sur la virtualisation)",
+                    "step4-desc": "Ouvrez <strong>gpedit.msc</strong>. Allez dans <strong>Configuration ordinateur → Modèles d'administration → Système → Device Guard</strong>. Double-cliquez sur <strong>\"Activer la sécurité basée sur la virtualisation\"</strong>, réglez sur <strong>Désactivé</strong>, puis Appliquer / OK. Redémarrez si on vous le demande.",
+                    "step5-title": "Installer RivaTuner Statistics Server",
+                    "step5-desc": "Installez <strong>RivaTuner Statistics Server</strong> (RTSS) à partir du package officiel de Guru3D.",
+                    "step5-btn": "Télécharger RivaTuner Statistics Server (Guru3D)",
+                    "step6-title": "Redémarrer, puis Lancer le Loader",
+                    "step6-desc": "<strong>Redémarrez votre PC.</strong> Après le redémarrage, lancez le loader depuis notre lien, entrez la clé que vous avez reçue (<strong>ticket Discord</strong> ou <strong>email</strong>).",
+                    "step6-btn": "Télécharger le Loader (Mega)",
+                    "badge-cond": "Si HWID Banni",
+                    "step7-title": "Hardware Spoofer",
+                    "step7-desc": "Requis uniquement si vous avez un <strong>bannissement matériel actif</strong>. Si vous n'êtes pas banni HWID, <strong>ignorez cette étape</strong>. Si vous l'êtes : ouvrez le Hardware Spoofer → <strong>\"Click to configure\"</strong>, désactivez toutes les options (ou l'interrupteur principal), cliquez sur <strong>Save configuration</strong>, puis sur <strong>Initialize</strong>.",
+                    "badge-opt": "Optionnel",
+                    "step8-title": "Mode Streamer",
+                    "step8-desc": 'Après l\'injection, appuyez sur <span class="kbd-key">Ctrl</span> + <span class="kbd-key">Alt</span> + <span class="kbd-key">S</span>. Il s\'agit d\'une fonctionnalité optionnelle pour <strong>cacher l\'ESP et le menu</strong> des partages d\'écran ou des enregistrements. Si vous voulez que l\'ESP reste visible pendant le partage d\'écran, <strong>n\'activez pas cette option</strong>.',
+                    "step9-title": "Lancer le Jeu",
+                    "step9-desc": "Lancez votre jeu et <strong>profitez</strong>. 🎮",
+                    "comp-title": "Tout est prêt !",
+                    "comp-desc": "Si vous rencontrez des problèmes, n'hésitez pas à ouvrir un ticket sur notre serveur Discord.",
+                    "foot-tagline": "La destination ultime pour les jeux premium crackés et les cheats indétectables. Sûr, rapide, et toujours à jour.",
+                    "foot-nav": "Navigation",
+                    "foot-nav-home": "Accueil",
+                    "foot-nav-games": "Jeux",
+                    "foot-nav-guide": "Guide",
+                    "foot-comm": "Communauté",
+                    "foot-comm-desc": "Rejoignez notre Discord pour demander des jeux ou signaler des problèmes.",
+                    "foot-join": "REJOINDRE DISCORD",
+                    "foot-rights": "© 2026 NovaPlay. Tous droits réservés.",
+                    "foot-disc": "Avertissement : Nous n'hébergeons aucun fichier. Tous les liens proviennent de sites tiers."
+                }
+            };
+
+            let currentLang = 'en';
+            const toggleBtn = document.getElementById('langCheckbox');
+
+            if (toggleBtn) {
+                toggleBtn.addEventListener('change', (e) => {
+                    currentLang = e.target.checked ? 'fr' : 'en';
+                    
+                    document.querySelectorAll('[data-i18n]').forEach(el => {
+                        const key = el.getAttribute('data-i18n');
+                        if (currentLang === 'en') {
+                            if (el.dataset.en) el.innerHTML = el.dataset.en;
+                        } else {
+                            if (!el.dataset.en) el.dataset.en = el.innerHTML;
+                            if (translations.fr[key]) el.innerHTML = translations.fr[key];
+                        }
+                    });
+                });
+            }
+        })();
+
+        // Mouse follower
+        (function () {
+            const follower = document.getElementById('mouseFollower');
+            if (!follower) return;
+            let mx = 0, my = 0, fx = 0, fy = 0;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+            (function loop() {
+                fx += (mx - fx) * 0.1;
+                fy += (my - fy) * 0.1;
+                follower.style.left = fx + 'px';
+                follower.style.top = fy + 'px';
+                requestAnimationFrame(loop);
+            })();
+        })();
+
+        // Sticky header scroll effect
+        (function () {
+            const header = document.getElementById('siteHeader');
+            if (!header) return;
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 20);
+            }, { passive: true });
+        })();
+
+        // Intersection Observer for step animations
+        (function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            // Observe all guide steps and complete card
+            document.querySelectorAll('.guide-step, .guide-complete').forEach((step, i) => {
+                step.style.transitionDelay = (i * 0.12) + 's';
+                observer.observe(step);
+            });
+
+            // Auto-trigger step 1 visible on load
+            setTimeout(() => {
+                const s1 = document.getElementById('guideStep1');
+                if (s1) s1.classList.add('visible');
+            }, 300);
+        })();
+
+
+    </script>
+</body>
+
+</html>
