@@ -10,7 +10,7 @@ const helmet = require("helmet");
 const app = express();
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (process.env.NODE_ENV === 'production' ? "" : "admin");
 const DATA_FILE = path.join(__dirname, "games.json");
 const CHEAT_DATA_FILE = path.join(__dirname, "cheat-status.json");
 const MAINTENANCE_FILE = path.join(__dirname, "maintenance.json");
