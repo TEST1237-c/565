@@ -155,6 +155,33 @@ app.get("/api/cheat-status", async (req, res) => {
   }
 });
 
+app.get('/api/maintenance-status', async (req, res) => {
+  try {
+    const maintenance = await readMaintenance();
+    return okJson(res, 200, maintenance);
+  } catch (err) {
+    console.error('GET /api/maintenance-status:', err);
+    return okJson(res, 500, { error: 'Impossible de lire le statut de maintenance' });
+  }
+});
+
+app.post('/api/set-maintenance', async (req, res) => {
+  if (!checkAdmin(req, res)) return;
+  const { enabled, message } = req.body || {};
+  const maintenance = {
+    enabled: enabled === true || String(enabled).toLowerCase() === 'true',
+    message: String(message || '').trim()
+  };
+
+  try {
+    await writeMaintenance(maintenance);
+    return okJson(res, 200, { success: true, maintenance });
+  } catch (err) {
+    console.error('POST /api/set-maintenance:', err);
+    return okJson(res, 500, { error: 'Impossible de mettre à jour le statut de maintenance' });
+  }
+});
+
 app.post("/api/check-admin", (req, res) => {
   if (!requireAdminPasswordSet(res)) return;
   const { password } = req.body || {};
