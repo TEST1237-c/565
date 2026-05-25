@@ -1,4 +1,4 @@
 {
-    "enabled": true,
-    "message": "Maintenance en cours, retour bientôt."
+    "enabled": false,
+    "message": ""
 }
