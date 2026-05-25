@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <script src="maintenance-check.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Y8X - Cheats</title>
     <meta name="description" content="Y8X Cheats - cheats for your favorite games. Undetected & updated.">
@@ -10,13 +10,11 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         /* ===== CHEAT PAGE SPECIFIC ===== */
-
         .cheat-hero {
             padding: calc(var(--header-height) + 48px) var(--spacing-lg) 0;
             text-align: center;
             position: relative;
         }
-
         .cheat-hero-badge {
             display: inline-flex;
             align-items: center;
@@ -33,7 +31,6 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 20px rgba(107, 114, 128, 0.15);
         }
-
         .cheat-hero-badge-dot {
             width: 7px;
             height: 7px;
@@ -42,21 +39,17 @@
             animation: pulse-dot 1.8s ease-in-out infinite;
             box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
         }
-
         @keyframes pulse-dot {
-
             0%,
             100% {
                 transform: scale(1);
                 opacity: 1;
             }
-
             50% {
                 transform: scale(1.4);
                 opacity: 0.6;
             }
         }
-
         .cheat-hero h1 {
             font-size: clamp(2.8rem, 7vw, 5rem);
             font-family: 'Orbitron', sans-serif;
@@ -69,7 +62,6 @@
             letter-spacing: 0.04em;
             filter: drop-shadow(0 0 30px rgba(107, 114, 128, 0.4));
         }
-
         .cheat-hero-sub {
             color: var(--text-muted);
             font-size: 1rem;
@@ -77,7 +69,6 @@
             margin: 0 auto 36px;
             line-height: 1.7;
         }
-
         /* === STATS BAR === */
         .cheat-stats {
             display: flex;
@@ -92,7 +83,6 @@
             margin: 0 auto 48px;
             overflow: hidden;
         }
-
         .cheat-stat {
             flex: 1;
             display: flex;
@@ -102,7 +92,6 @@
             gap: 4px;
             position: relative;
         }
-
         .cheat-stat+.cheat-stat::before {
             content: '';
             position: absolute;
@@ -112,7 +101,6 @@
             width: 1px;
             background: var(--border-glass);
         }
-
         .cheat-stat-num {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
@@ -120,22 +108,18 @@
             color: #fff;
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
-
         .cheat-stat-num.red {
             color: var(--accent-light);
             text-shadow: 0 0 15px rgba(107, 114, 128, 0.4);
         }
-
         .cheat-stat-num.green {
             color: #10b981;
             text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
         }
-
         .cheat-stat-num.yellow {
             color: #9ca3af;
             text-shadow: 0 0 15px rgba(107, 114, 128, 0.4);
         }
-
         .cheat-stat-label {
             font-size: 0.72rem;
             color: var(--text-muted);
@@ -143,14 +127,12 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
-
         /* === MAIN CONTAINER === */
         .cheat-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 var(--spacing-lg) 80px;
         }
-
         /* === REQUEST BANNER === */
         .cheat-request-banner {
             background: linear-gradient(135deg, rgba(107, 114, 128, 0.08), rgba(90, 90, 90, 0.05));
@@ -184,7 +166,6 @@
             position: relative;
             z-index: 1;
         }
-
         .cheat-request-text h3 {
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
@@ -193,13 +174,11 @@
             margin-bottom: 6px;
             letter-spacing: 0.04em;
         }
-
         .cheat-request-text p {
             font-size: 0.85rem;
             color: var(--text-muted);
             line-height: 1.6;
         }
-
         .cheat-request-btn {
             display: inline-flex;
             align-items: center;
@@ -215,17 +194,14 @@
             white-space: nowrap;
             box-shadow: 0 4px 20px rgba(90, 90, 90, 0.3);
         }
-
         .cheat-request-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(90, 90, 90, 0.5);
         }
-
         /* ===========================
            VIEW 1 — GAMES GRID
         =========================== */
         #gamesView {}
-
         .games-view-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.8rem;
@@ -235,13 +211,11 @@
             text-transform: uppercase;
             margin-bottom: 24px;
         }
-
         .games-pick-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 20px;
         }
-
         /* Game card (click to enter) */
         .game-pick-card {
             background: var(--bg-card);
@@ -256,13 +230,11 @@
             animation: fadeUp 0.45s ease forwards;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-
         .game-pick-card:hover {
             border-color: rgba(107, 114, 128, 0.5);
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -8px rgba(107, 114, 128, 0.4);
         }
-
         .game-pick-card::after {
             content: '';
             position: absolute;
@@ -277,14 +249,12 @@
         .game-pick-card:hover::after {
             box-shadow: inset 0 0 20px rgba(107, 114, 128, 0.2);
         }
-
         .game-pick-thumb {
             position: relative;
             aspect-ratio: 16/9;
             overflow: hidden;
             background: rgba(15, 15, 25, 0.8);
         }
-
         .game-pick-thumb img {
             width: 100%;
             height: 100%;
@@ -292,17 +262,14 @@
             transition: transform 0.5s ease;
             pointer-events: none;
         }
-
         .game-pick-card:hover .game-pick-thumb img {
             transform: scale(1.07);
         }
-
         .game-pick-thumb-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(to top, rgba(5, 5, 8, 0.85) 0%, transparent 55%);
         }
-
         .game-pick-count-badge {
             position: absolute;
             top: 10px;
@@ -318,24 +285,20 @@
             text-transform: uppercase;
             backdrop-filter: blur(8px);
         }
-
         .game-pick-body {
             padding: 16px 18px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .game-pick-icon {
             font-size: 1.5rem;
             flex-shrink: 0;
         }
-
         .game-pick-info {
             flex: 1;
             min-width: 0;
         }
-
         .game-pick-name {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.82rem;
@@ -346,24 +309,20 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .game-pick-sub {
             font-size: 0.68rem;
             color: var(--text-muted);
             margin-top: 2px;
         }
-
         .game-pick-arrow {
             flex-shrink: 0;
             color: var(--text-muted);
             transition: color 0.3s, transform 0.3s;
         }
-
         .game-pick-card:hover .game-pick-arrow {
             color: var(--accent-light);
             transform: translateX(4px);
         }
-
         /* Best status indicator stripe */
         .game-pick-card::before {
             content: '';
@@ -375,29 +334,24 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-
         .game-pick-card.best-undetected::before {
             background: linear-gradient(90deg, #22c55e, transparent);
             opacity: 1;
         }
-
         .game-pick-card.best-semi::before {
             background: linear-gradient(90deg, #eab308, transparent);
             opacity: 1;
         }
-
         .game-pick-card.best-outdated::before {
             background: linear-gradient(90deg, #ef4444, transparent);
             opacity: 1;
         }
-
         /* ===========================
            VIEW 2 — CHEATS LIST
         =========================== */
         #cheatsView {
             display: none;
         }
-
         /* Back button */
         .back-bar {
             display: flex;
@@ -405,7 +359,6 @@
             gap: 16px;
             margin-bottom: 32px;
         }
-
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -421,13 +374,11 @@
             transition: all 0.2s;
             font-family: 'Inter', sans-serif;
         }
-
         .back-btn:hover {
             color: #fff;
             border-color: rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.06);
         }
-
         .back-game-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem;
@@ -438,7 +389,6 @@
             align-items: center;
             gap: 10px;
         }
-
         /* Filter tabs (in cheats view) */
         .cheat-filters {
             display: flex;
@@ -447,7 +397,6 @@
             margin-bottom: 36px;
             flex-wrap: wrap;
         }
-
         .cheat-filter-btn {
             display: inline-flex;
             align-items: center;
@@ -463,35 +412,30 @@
             transition: all 0.25s ease;
             font-family: 'Inter', sans-serif;
         }
-
         .cheat-filter-btn:hover {
             border-color: rgba(107, 114, 128, 0.4);
             color: #fff;
             background: rgba(107, 114, 128, 0.1);
             transform: translateY(-2px);
         }
-
         .cheat-filter-btn.active {
             background: linear-gradient(135deg, var(--accent-violet), var(--accent-dark));
             border-color: var(--accent-light);
             color: #fff;
             box-shadow: 0 0 16px rgba(107, 114, 128, 0.3);
         }
-
         .cheat-filter-btn .dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background: currentColor;
         }
-
         /* Cheat cards grid */
         .cheat-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-
         .cheat-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
@@ -508,13 +452,11 @@
             animation: fadeUp 0.45s ease forwards;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-
         .cheat-card:hover {
             border-color: rgba(107, 114, 128, 0.5);
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -8px rgba(107, 114, 128, 0.4);
         }
-
         .cheat-card::after {
             content: '';
             position: absolute;
@@ -529,14 +471,12 @@
         .cheat-card:hover::after {
             box-shadow: inset 0 0 20px rgba(107, 114, 128, 0.2);
         }
-
         .cheat-card-thumb {
             position: relative;
             aspect-ratio: 16/9;
             overflow: hidden;
             background: rgba(15, 15, 25, 0.8);
         }
-
         .cheat-card-thumb img {
             width: 100%;
             height: 100%;
@@ -544,17 +484,14 @@
             transition: transform 0.5s ease;
             pointer-events: none;
         }
-
         .cheat-card:hover .cheat-card-thumb img {
             transform: scale(1.06);
         }
-
         .cheat-card-thumb-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(to top, rgba(5, 5, 8, 0.8) 0%, transparent 60%);
         }
-
         .cheat-status-badge {
             position: absolute;
             top: 10px;
@@ -570,25 +507,21 @@
             letter-spacing: 0.12em;
             backdrop-filter: blur(8px);
         }
-
         .cheat-status-badge.undetected {
             background: rgba(34, 197, 94, 0.2);
             border: 1px solid rgba(34, 197, 94, 0.45);
             color: #86efac;
         }
-
         .cheat-status-badge.updating {
             background: rgba(234, 179, 8, 0.2);
             border: 1px solid rgba(234, 179, 8, 0.4);
             color: #fde68a;
         }
-
         .cheat-status-badge.detected {
             background: rgba(239, 68, 68, 0.2);
             border: 1px solid rgba(239, 68, 68, 0.4);
             color: #fca5a5;
         }
-
         .cheat-status-badge .status-dot {
             width: 5px;
             height: 5px;
@@ -596,7 +529,6 @@
             background: currentColor;
             animation: pulse-dot 2s ease-in-out infinite;
         }
-
         .cheat-type-badge {
             position: absolute;
             top: 10px;
@@ -609,19 +541,16 @@
             letter-spacing: 0.1em;
             backdrop-filter: blur(8px);
         }
-
         .cheat-type-badge.external {
             background: rgba(107, 114, 128, 0.15);
             border: 1px solid rgba(107, 114, 128, 0.35);
             color: #d1d5db;
         }
-
         .cheat-type-badge.internal {
             background: rgba(249, 115, 22, 0.15);
             border: 1px solid rgba(249, 115, 22, 0.35);
             color: #fdba74;
         }
-
         .cheat-card-body {
             padding: 18px;
             flex: 1;
@@ -629,7 +558,6 @@
             flex-direction: column;
             gap: 12px;
         }
-
         .cheat-card-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.9rem;
@@ -637,13 +565,11 @@
             color: #fff;
             letter-spacing: 0.04em;
         }
-
         .cheat-card-features {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
         }
-
         .cheat-feature-tag {
             font-size: 0.65rem;
             color: var(--text-muted);
@@ -653,7 +579,6 @@
             padding: 3px 8px;
             font-weight: 500;
         }
-
         .cheat-card-meta {
             display: flex;
             align-items: center;
@@ -662,7 +587,6 @@
             padding-top: 12px;
             border-top: 1px solid var(--border-glass);
         }
-
         .cheat-card-updated {
             font-size: 0.7rem;
             color: var(--text-muted);
@@ -670,7 +594,6 @@
             align-items: center;
             gap: 5px;
         }
-
         .cheat-card-download {
             display: inline-flex;
             align-items: center;
@@ -684,19 +607,16 @@
             padding: 5px 14px;
             transition: all 0.3s ease;
         }
-
         .cheat-card:hover .cheat-card-download {
             background: linear-gradient(135deg, rgba(107, 114, 128, 0.8), rgba(70, 70, 70, 0.8));
             border-color: rgba(156, 163, 175, 0.5);
             box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
             transform: translateY(-1px);
         }
-
         /* hidden filter */
         .cheat-card.filter-hidden {
             display: none;
         }
-
         /* ANIMATIONS */
         @keyframes fadeUp {
             to {
@@ -704,7 +624,6 @@
                 transform: translateY(0);
             }
         }
-
         /* === HEADER NAV LINK === */
         .header-nav-link {
             display: inline-flex;
@@ -719,19 +638,16 @@
             transition: all 0.25s ease;
             border: 1px solid transparent;
         }
-
         .header-nav-link:hover {
             color: var(--text-primary);
             background: var(--bg-glass);
             border-color: var(--border-glass);
         }
-
         .header-nav-link.active-page {
             color: var(--accent-light);
             background: rgba(107, 114, 128, 0.08);
             border-color: rgba(107, 114, 128, 0.25);
         }
-
         /* === OUTDATED NOTICE === */
         .cheat-outdated-notice {
             display: flex;
@@ -746,34 +662,28 @@
             color: rgba(253, 230, 138, 0.75);
             line-height: 1.55;
         }
-
         /* === RESPONSIVE === */
         @media (max-width: 640px) {
             .cheat-stats {
                 max-width: 100%;
             }
-
             .cheat-request-banner {
                 flex-direction: column;
                 text-align: center;
             }
-
             .cheat-request-banner .cheat-request-btn {
                 width: 100%;
                 justify-content: center;
             }
-
             .cheat-hero {
                 padding-top: calc(var(--header-height) + 32px);
             }
-
             .games-pick-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
         }
     </style>
 </head>
-
 <body class="page-jeux page-cheat">
     <noscript>
         <div
@@ -790,11 +700,9 @@
             <p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">&#169; 2026 Y8X</p>
         </div>
     </noscript>
-
     <div class="mouse-follower" id="mouseFollower"></div>
     <div class="floating-glow glow-1"></div>
     <div class="floating-glow glow-2"></div>
-
     <!-- ===== STICKY HEADER ===== -->
     <header class="site-header" id="siteHeader">
         <a href="index.html" class="header-logo">Y8X</a>
@@ -831,7 +739,6 @@
             </a>
         </div>
     </header>
-
     <!-- ===== HERO ===== -->
     <div class="cheat-hero">
         <div class="cheat-hero-badge">
@@ -841,7 +748,6 @@
         <h1>Cheats</h1>
         <p class="cheat-hero-sub">Undetected cheats for your favorite games. Updated regularly and tested before
             release.</p>
-
         <!-- Stats -->
         <div class="cheat-stats">
             <div class="cheat-stat">
@@ -858,10 +764,8 @@
             </div>
         </div>
     </div>
-
     <!-- ===== MAIN CONTENT ===== -->
     <div class="cheat-container">
-
         <!-- REQUEST BANNER -->
         <div class="cheat-request-banner">
             <div class="cheat-request-text">
@@ -873,7 +777,6 @@
                 Request on Discord
             </a>
         </div>
-
         <!-- ===== VIEW 1: GAMES GRID ===== -->
         <div id="gamesView">
             <div class="games-view-title">Choose a game</div>
@@ -881,7 +784,6 @@
                 <p style="color:var(--text-muted);padding:20px;">Loading games...</p>
             </div>
         </div>
-
         <!-- ===== VIEW 2: CHEATS LIST ===== -->
         <div id="cheatsView">
             <!-- Back bar -->
@@ -898,7 +800,6 @@
                     <span id="backGameName"></span>
                 </div>
             </div>
-
             <!-- Filters -->
             <div class="cheat-filters">
                 <button class="cheat-filter-btn active" data-filter="all">
@@ -911,11 +812,9 @@
                     <span class="dot"></span> Internal
                 </button>
             </div>
-
             <!-- Cheat cards -->
             <div class="cheat-grid" id="cheatsGrid"></div>
         </div>
-
         <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-content">
@@ -949,16 +848,13 @@
             </div>
         </footer>
     </div>
-
     <button id="backToTop" class="back-to-top" aria-label="Back to top">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
             stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
-
     <!-- ===== MODALS ===== -->
-
     <!-- FIVEM MODAL -->
     <div id="fivem-modal-bg" class="modal-bg" style="display:none;">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="fivem-modal-title" style="max-width:520px;">
@@ -1000,7 +896,6 @@
             </a>
         </div>
     </div>
-
     <!-- AMNESIA MODAL -->
     <div id="amnesia-modal-bg" class="modal-bg" style="display:none;">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="amnesia-modal-title"
@@ -1129,7 +1024,6 @@
             </a>
         </div>
     </div>
-
     <!-- BLOODSTRIKE MODAL -->
     <div id="bloodstrike-modal-bg" class="modal-bg" style="display:none;">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bloodstrike-modal-title"
@@ -1195,7 +1089,6 @@
             </a>
         </div>
     </div>
-
     <!-- OUTDATED MODAL -->
     <div id="outdated-modal-bg" class="modal-bg" style="display:none;">
         <div class="modal" role="dialog" aria-modal="true" style="max-width:460px;text-align:center;">
@@ -1226,7 +1119,6 @@
                 inconvenience.</p>
         </div>
     </div>
-
     <!-- WARNING MODAL -->
     <div id="warning-modal-bg" class="modal-bg" style="display:none; z-index: 100000;">
         <div class="modal" role="dialog" aria-modal="true" style="max-width:480px;text-align:center; position: relative;">
@@ -1258,7 +1150,6 @@
             </button>
         </div>
     </div>
-
     <!-- ===== SCRIPTS ===== -->
     <script src="protect.js"></script>
     <script src="script.js"></script>
@@ -1272,7 +1163,6 @@
                 'outdated': { label: 'Outdated', cls: 'updating' }
             };
             function statusConf(s) { return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' }; }
-
             // ── Elements ─────────────────────────────────────────────────────
             const gamesView = document.getElementById('gamesView');
             const cheatsView = document.getElementById('cheatsView');
@@ -1284,7 +1174,6 @@
             const statTotalEl = document.getElementById('statTotalCheats');
             const statUndetEl = document.getElementById('statUndetected');
             const statGamesEl = document.getElementById('statGames');
-
             // ── Animated Stats ────────────────────────────────────────────────
             function animateValue(obj, start, end, duration) {
                 if (!obj) return;
@@ -1302,7 +1191,6 @@
                 };
                 window.requestAnimationFrame(step);
             }
-
             // ── Load data ────────────────────────────────────────────────────
             let cheats = {};
             const paths = ['/api/cheat-status', 'cheat-status.json', '/cheat-status.json'];
@@ -1312,12 +1200,10 @@
                     if (r.ok) { cheats = await r.json(); break; }
                 } catch (e) { }
             }
-
             if (!cheats || !Object.keys(cheats).length) {
                 gamesGrid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
                 return;
             }
-
             // ── Group by game ─────────────────────────────────────────────────
             const byGame = {};
             for (const [id, cheat] of Object.entries(cheats)) {
@@ -1326,7 +1212,6 @@
                 // Use first image as game cover
                 byGame[key].cheats.push({ id, ...cheat });
             }
-
             // ── Stats ─────────────────────────────────────────────────────────
             const total = Object.keys(cheats).length;
             const undetectedCount = Object.values(cheats).filter(c => c.status === 'undetected').length;
@@ -1335,28 +1220,22 @@
             animateValue(statTotalEl, 0, total, 2000);
             animateValue(statUndetEl, 0, undetectedCount, 2000);
             animateValue(statGamesEl, 0, gamesCount, 2000);
-
-
             // ── Build game pick cards ─────────────────────────────────────────
             gamesGrid.innerHTML = '';
             let cardIndex = 0;
-
             for (const [gameName, group] of Object.entries(byGame)) {
                 const count = group.cheats.length;
                 const label = count + ' cheat' + (count > 1 ? 's' : '');
-
                 // Best status of this game
                 const statuses = group.cheats.map(c => c.status);
                 let stripeClass = 'best-outdated';
                 if (statuses.includes('undetected')) stripeClass = 'best-undetected';
                 else if (statuses.includes('semi-detected')) stripeClass = 'best-semi';
-
                 // Best undetected count badge
                 const undetCount = group.cheats.filter(c => c.status === 'undetected').length;
                 const badgeText = undetCount > 0
                     ? undetCount + ' undetected'
                     : (count + ' cheat' + (count > 1 ? 's' : ''));
-
                 const card = document.createElement('div');
                 card.className = `game-pick-card ${stripeClass}`;
                 card.style.animationDelay = (0.05 + cardIndex * 0.07) + 's';
@@ -1377,18 +1256,15 @@
                     </svg>
                 </div>
             `;
-
                 card.addEventListener('click', () => showCheats(gameName, group));
                 gamesGrid.appendChild(card);
                 cardIndex++;
             }
-
             // ── Show cheats view for a game ────────────────────────────────────
             function showCheats(gameName, group) {
                 // Update breadcrumb
                 backGameIcon.textContent = group.icon;
                 backGameName.textContent = gameName;
-
                 // Build cheat cards
                 cheatsGrid.innerHTML = '';
                 group.cheats.forEach((cheat, i) => {
@@ -1399,11 +1275,9 @@
                     const featuresHtml = (cheat.features || []).map(f =>
                         `<span class="cheat-feature-tag">${f}</span>`
                     ).join('');
-
                     let href = cheat.link || '#';
                     let targetAttr = 'target="_blank" rel="noopener"';
                     if (cheat.hasModal || isOutdated) { href = '#'; targetAttr = ''; }
-
                     const card = document.createElement('a');
                     card.className = 'cheat-card';
                     card.href = href;
@@ -1438,7 +1312,6 @@
                         </div>
                     </div>
                 `;
-
                     // Click handler for modals / outdated
                     if (isOutdated) {
                         card.addEventListener('click', e => {
@@ -1451,27 +1324,22 @@
                             openModal(cheat.modalId + '-modal-bg');
                         });
                     }
-
                     cheatsGrid.appendChild(card);
                 });
-
                 // Reset filters
                 document.querySelectorAll('.cheat-filter-btn').forEach(b => b.classList.remove('active'));
                 document.querySelector('.cheat-filter-btn[data-filter="all"]').classList.add('active');
-
                 // Switch views
                 gamesView.style.display = 'none';
                 cheatsView.style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-
             // ── Back button ────────────────────────────────────────────────────
             backBtn.addEventListener('click', () => {
                 cheatsView.style.display = 'none';
                 gamesView.style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
-
             // ── Filter tabs ────────────────────────────────────────────────────
             document.querySelectorAll('.cheat-filter-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
@@ -1488,7 +1356,6 @@
                     });
                 });
             });
-
             // ── Modal helpers ─────────────────────────────────────────────────
             function openModal(id) {
                 const bg = document.getElementById(id);
@@ -1498,13 +1365,11 @@
                 bg.classList.add('show');
                 document.body.style.overflow = 'hidden';
             }
-
             function closeModal(bg) {
                 if (!bg) return;
                 bg.classList.remove('show');
                 setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
             }
-
             ['fivem', 'amnesia', 'bloodstrike', 'outdated'].forEach(id => {
                 const bg = document.getElementById(id + '-modal-bg');
                 if (!bg) return;
@@ -1515,10 +1380,8 @@
                     if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal(bg);
                 });
             });
-
             const dismissBtn = document.getElementById('outdatedDismissBtn');
             if (dismissBtn) dismissBtn.addEventListener('click', () => closeModal(document.getElementById('outdated-modal-bg')));
-
             // ── Warning Modal Logic ────────────────────────────────────────────────
             const warningModalBg = document.getElementById('warning-modal-bg');
             const warningAcceptBtn = document.getElementById('warningAcceptBtn');
@@ -1527,7 +1390,6 @@
             const textEn = document.getElementById('warning-text-en');
             const textFr = document.getElementById('warning-text-fr');
             const titleEl = document.getElementById('warning-title');
-
             if (warningModalBg && !localStorage.getItem('cheatWarningAccepted')) {
                 // Show modal on load
                 setTimeout(() => {
@@ -1537,7 +1399,6 @@
                     document.body.style.overflow = 'hidden';
                 }, 500);
             }
-
             if (warningAcceptBtn) {
                 warningAcceptBtn.addEventListener('click', () => {
                     localStorage.setItem('cheatWarningAccepted', 'true');
@@ -1548,7 +1409,6 @@
                     }, 500);
                 });
             }
-
             if (langEnBtn && langFrBtn) {
                 langEnBtn.addEventListener('click', () => {
                     langEnBtn.style.opacity = '1';
@@ -1558,7 +1418,6 @@
                     warningAcceptBtn.textContent = 'I Understand & Accept';
                     titleEl.textContent = 'Disclaimer & Warning';
                 });
-
                 langFrBtn.addEventListener('click', () => {
                     langFrBtn.style.opacity = '1';
                     langEnBtn.style.opacity = '0.4';
@@ -1568,10 +1427,8 @@
                     titleEl.textContent = 'Avertissement';
                 });
             }
-
         })();
     </script>
-
     <script>
         // Sticky header
         (function () {
@@ -1581,7 +1438,6 @@
                 header.classList.toggle('scrolled', window.scrollY > 20);
             }, { passive: true });
         })();
-
         // Back to top
         (function () {
             const btn = document.getElementById('backToTop');
@@ -1593,5 +1449,4 @@
         })();
     </script>
 </body>
-
 </html>
