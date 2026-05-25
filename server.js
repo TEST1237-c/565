@@ -367,7 +367,6 @@ app.use(async (req, res, next) => {
 app.use(express.static(__dirname));
 
 app.listen(PORT, () => {
-  console.log(`NovaPlay: http://localhost:${PORT}`);
+  console.log(`Y8X: http://localhost:${PORT}`);
   console.log(`API:      http://localhost:${PORT}/api/games`);
 });
-
