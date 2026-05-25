@@ -1,7 +1,24 @@
+require('dotenv').config();
 const fs = require('fs/promises');
 const path = require('path');
 
 const MAINTENANCE_FILE = path.join(__dirname, '..', 'maintenance.json');
+
+async function getRequestBody(req) {
+  if (req.body && Object.keys(req.body).length) return req.body;
+  return new Promise((resolve) => {
+    let body = '';
+    req.on('data', (chunk) => { body += chunk; });
+    req.on('end', () => {
+      try {
+        resolve(body ? JSON.parse(body) : {});
+      } catch {
+        resolve({});
+      }
+    });
+    req.on('error', () => resolve({}));
+  });
+}
 
 async function writeMaintenance(state) {
   const payload = {
@@ -22,7 +39,7 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'ADMIN_PASSWORD non configuré' });
   }
 
-  const { adminPassword, enabled, message } = req.body || {};
+  const { adminPassword, enabled, message } = await getRequestBody(req) || {};
   if (String(adminPassword || '') !== expected) {
     return res.status(401).json({ error: 'Mot de passe admin incorrect' });
   }
