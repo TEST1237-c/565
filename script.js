@@ -1,9 +1,25 @@
 // ============================================
 // MAINTENANCE CHECK (all pages except admin)
 // ============================================
+
+// 🔑 Change this secret to whatever you want
+const BYPASS_SECRET = 'novaplay-owner-2026';
+
 async function checkMaintenance() {
     const isAdmin = window.location.pathname.includes('admin');
     if (isAdmin) return;
+
+    // Check URL param: ?bypass=novaplay-owner-2026
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('bypass') === BYPASS_SECRET) {
+        sessionStorage.setItem('maintenance-bypass', BYPASS_SECRET);
+        // Clean the URL without reloading
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState(null, '', cleanUrl);
+    }
+
+    // If bypass is stored in session, skip maintenance
+    if (sessionStorage.getItem('maintenance-bypass') === BYPASS_SECRET) return;
 
     try {
         const res = await fetch('/api/maintenance-status', { cache: 'no-store' });
