@@ -1,15 +1,8 @@
 {
     "cleanUrls": true,
     "trailingSlash": false,
-    "redirects": [
-        { "source": "/", "destination": "/maintenance.html", "permanent": false },
-        { "source": "/index", "destination": "/maintenance.html", "permanent": false },
-        { "source": "/jeux", "destination": "/maintenance.html", "permanent": false },
-        { "source": "/cheat", "destination": "/maintenance.html", "permanent": false },
-        { "source": "/guide", "destination": "/maintenance.html", "permanent": false }
-    ],
     "routes": [
         { "handle": "filesystem" },
-        { "src": "/(.*)", "dest": "/maintenance.html" }
+        { "src": "/(.*)", "dest": "/404.html" }
     ]
 }
