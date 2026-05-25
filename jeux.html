@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <script src="maintenance-check.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Y8X - Cracked Games</title>
     <meta name="description" content="Y8X - Browse and download cracked games. Safe, fast, always up to date.">
@@ -357,22 +358,7 @@
     <script src="game.js"></script>
     <script src="script.js"></script>
 
-    <!-- MAINTENANCE LOGIC -->
     <script>
-        (function () {
-            var SECRET = 'NOVAPLAYTEST1234560OPTEST';
-            var MAINTENANCE = false;
-            var params = new URLSearchParams(window.location.search);
-            if (params.get('bypass') === SECRET) {
-                localStorage.setItem('novaplay_bypass', SECRET);
-                history.replaceState(null, '', window.location.pathname);
-            }
-            var hasAccess = localStorage.getItem('novaplay_bypass') === SECRET;
-            if (MAINTENANCE && !hasAccess) {
-                document.getElementById('maintenance-overlay').classList.add('active');
-            }
-        })();
-
         // Mouse follower
         (function () {
             const follower = document.getElementById('mouseFollower');
