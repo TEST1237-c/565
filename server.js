@@ -13,10 +13,36 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 const DATA_FILE = path.join(__dirname, "games.json");
 const CHEAT_DATA_FILE = path.join(__dirname, "cheat-status.json");
+const MAINTENANCE_FILE = path.join(__dirname, "maintenance.json");
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(express.json({ limit: "256kb" }));
 app.use(express.urlencoded({ extended: false }));
+
+async function readMaintenance() {
+  try {
+    const raw = await fs.readFile(MAINTENANCE_FILE, "utf8");
+    const data = JSON.parse(raw);
+    return {
+      enabled: Boolean(data.enabled),
+      message: String(data.message || "").trim()
+    };
+  } catch (err) {
+    if (err && (err.code === "ENOENT" || err.code === "ENOTDIR")) {
+      return { enabled: false, message: "" };
+    }
+    throw err;
+  }
+}
+
+async function writeMaintenance(state) {
+  const payload = {
+    enabled: Boolean(state.enabled),
+    message: String(state.message || "").trim()
+  };
+  const data = JSON.stringify(payload, null, 4) + "\n";
+  await fs.writeFile(MAINTENANCE_FILE, data, "utf8");
+}
 
 function okJson(res, status, payload) {
   res.status(status);
@@ -252,6 +278,60 @@ app.post("/api/delete-cheat", async (req, res) => {
     console.error("POST /api/delete-cheat:", err);
     return okJson(res, 500, { error: "Erreur serveur" });
   }
+});
+
+app.get('/api/maintenance-status', async (req, res) => {
+  try {
+    const maintenance = await readMaintenance();
+    return okJson(res, 200, maintenance);
+  } catch (err) {
+    console.error('GET /api/maintenance-status:', err);
+    return okJson(res, 500, { error: 'Impossible de lire le statut de maintenance' });
+  }
+});
+
+app.post('/api/set-maintenance', async (req, res) => {
+  if (!checkAdmin(req, res)) return;
+  const { enabled, message } = req.body || {};
+  const maintenance = {
+    enabled: enabled === true || String(enabled).toLowerCase() === 'true',
+    message: String(message || '').trim()
+  };
+
+  try {
+    await writeMaintenance(maintenance);
+    return okJson(res, 200, { success: true, maintenance });
+  } catch (err) {
+    console.error('POST /api/set-maintenance:', err);
+    return okJson(res, 500, { error: 'Impossible de mettre à jour le statut de maintenance' });
+  }
+});
+
+app.use(async (req, res, next) => {
+  const requestPath = req.path || req.url || '';
+  const assetExt = /\.(css|js|png|jpg|jpeg|svg|ico|json|woff2?|ttf|map)$/i;
+  if (
+    requestPath.startsWith('/api') ||
+    requestPath === '/admin.html' ||
+    requestPath === '/maintenance.html' ||
+    assetExt.test(requestPath)
+  ) {
+    return next();
+  }
+
+  try {
+    const maintenance = await readMaintenance();
+    if (maintenance.enabled) {
+      if (req.method === 'GET' && req.accepts('html')) {
+        return res.status(503).sendFile(path.join(__dirname, 'maintenance.html'));
+      }
+      return okJson(res, 503, { error: 'Maintenance en cours' });
+    }
+  } catch (err) {
+    console.error('maintenance middleware:', err);
+  }
+
+  next();
 });
 
 // ==========================
