@@ -75,7 +75,7 @@ var _protCSS = _mkCSS(_ID_CSS,
     'a img{pointer-events:auto}'
 );
 var _printCSS = _mkCSS(_ID_PRT,
-    '@media print{body{display:none!important}html::after{content:"Non autorisé — NovaPlay";display:block;font-size:2rem;text-align:center;padding:4rem}}'
+    '@media print{body{display:none!important}html::after{content:"Non autorisé — Y8X";display:block;font-size:2rem;text-align:center;padding:4rem}}'
 );
 
 
@@ -101,7 +101,7 @@ function _showOverlay(){
         +'Les outils de développement ont été détectés.<br>Fermez-les pour continuer.</p>'
         +'<div style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);'
         +'border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">⚠️ Fermez les DevTools (F12)</div>'
-        +'<p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">NovaPlay Protection v4.0</p>'
+        +'<p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">Y8X Protection v4.0</p>'
         +'</div>';
     var st=D.createElement('style');
     st.textContent='@keyframes npPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}';
