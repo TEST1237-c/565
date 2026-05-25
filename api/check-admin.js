@@ -5,7 +5,7 @@ module.exports = async function handler(req, res) {
     }
 
     const { password } = req.body || {};
-    const expected = process.env.ADMIN_PASSWORD;
+    const expected = process.env.ADMIN_PASSWORD || (process.env.NODE_ENV === 'production' ? '' : 'admin');
 
     if (!expected) {
         return res.status(500).json({ error: 'ADMIN_PASSWORD non configuré' });
