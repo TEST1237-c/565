@@ -1067,14 +1067,20 @@ async function toggleMaintenanceMode() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ adminPassword: getPass(), enabled: newEnabled, message: newEnabled ? 'Maintenance en cours, retour bientôt.' : '' })
         });
-        const data = await res.json().catch(() => ({}));
+        let data = {};
+        try {
+            data = await res.json();
+        } catch (parseErr) {
+            const text = await res.text().catch(() => '');
+            data = { error: text || `HTTP ${res.status}` };
+        }
         if (res.ok) {
             maintenanceStatus = data.maintenance || { enabled: newEnabled, message: newEnabled ? 'Maintenance en cours, retour bientôt.' : '' };
             renderMaintenanceStatus();
             toast(newEnabled ? 'Mode maintenance activé.' : 'Mode maintenance désactivé.', 'success');
         } else {
             button.disabled = false;
-            toast(data.error || 'Erreur lors de la mise à jour', 'error');
+            toast(data.error || `Erreur ${res.status}`, 'error');
         }
     } catch (err) {
         button.disabled = false;
