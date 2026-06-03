@@ -92,5 +92,22 @@
             "UnlockALL",
             "No Spread"
         ]
+    },
+    "schedule1": {
+        "status": "undetected",
+        "title": "Nova Schedule 1 Cheat",
+        "game": "Schedule 1",
+        "gameIcon": "💊",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3164500/header.jpg?t=1773974661",
+        "link": "#",
+        "type": "internal",
+        "hasModal": true,
+        "modalId": "schedule1",
+        "features": [
+            "Infinite Money",
+            "No Police",
+            "Speed Hack",
+            "Teleport"
+        ]
     }
 }
