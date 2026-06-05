@@ -29,7 +29,7 @@
         ]
     },
     "bloodstrike": {
-        "status": "semi-detected",
+        "status": "undetected",
         "title": "Nova Bloodstrike Internal",
         "game": "Bloodstrike",
         "gameIcon": "🩸",
