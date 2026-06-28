@@ -93,6 +93,20 @@
             "No Spread"
         ]
     },
+    "roblox": {
+        "status": "updating",
+        "title": "Script",
+        "game": "Roblox",
+        "gameIcon": "🎮",
+        "image": "https://i.ytimg.com/vi/zowmaH7hc5Q/hqdefault.jpg",
+        "link": "#",
+        "type": "internal",
+        "features": [
+            "Infinite Jump",
+            "Speed",
+            "Teleport"
+        ]
+    },
     "schedule1": {
         "status": "undetected",
         "title": "Y8X Schedule 1",
