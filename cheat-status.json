@@ -95,12 +95,12 @@
     },
     "roblox": {
         "status": "updating",
-        "title": "Script",
+        "title": "UnlockALL Rivals",
         "game": "Roblox",
         "gameIcon": "🎮",
         "image": "https://i.ytimg.com/vi/zowmaH7hc5Q/hqdefault.jpg",
         "link": "#",
-        "type": "internal",
+        "type": "script",
         "features": [
             "Infinite Jump",
             "Speed",
