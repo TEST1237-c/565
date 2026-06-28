@@ -323,72 +323,48 @@
             color: var(--accent-light);
             transform: translateX(4px);
         }
-        /* Best status indicator stripe */
-        .game-pick-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .game-pick-card.best-undetected::before {
-            background: linear-gradient(90deg, #22c55e, transparent);
-            opacity: 1;
-        }
-        .game-pick-card.best-semi::before {
-            background: linear-gradient(90deg, #eab308, transparent);
-            opacity: 1;
-        }
-        .game-pick-card.best-outdated::before {
-            background: linear-gradient(90deg, #ef4444, transparent);
-            opacity: 1;
-        }
         /* ===========================
-           VIEW 2 — CHEATS LIST
+           GAME GROUP HEADER
         =========================== */
-        #cheatsView {
-            display: none;
-        }
-        /* Back button */
-        .back-bar {
+        .cheat-game-header {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 32px;
+            gap: 12px;
+            padding: 32px 0 16px;
+            margin-top: 8px;
+            border-bottom: 1px solid var(--border-glass);
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 0.4s ease forwards;
         }
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 18px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-full);
-            color: var(--text-muted);
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
+        .cheat-game-header:first-of-type {
+            padding-top: 0;
         }
-        .back-btn:hover {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.06);
+        .cheat-game-header-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
         }
-        .back-game-title {
+        .cheat-game-header-name {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #fff;
             letter-spacing: 0.04em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            flex: 1;
         }
+        .cheat-game-header-count {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-full);
+            padding: 4px 12px;
+            letter-spacing: 0.06em;
+        }
+        /* ===========================
+           CHEATS LIST
+        =========================== */
         /* Filter tabs (in cheats view) */
         .cheat-filters {
             display: flex;
@@ -777,29 +753,8 @@
                 Request on Discord
             </a>
         </div>
-        <!-- ===== VIEW 1: GAMES GRID ===== -->
-        <div id="gamesView">
-            <div class="games-view-title">Choose a game</div>
-            <div class="games-pick-grid" id="gamesPickGrid">
-                <p style="color:var(--text-muted);padding:20px;">Loading games...</p>
-            </div>
-        </div>
-        <!-- ===== VIEW 2: CHEATS LIST ===== -->
+        <!-- ===== ALL CHEATS VIEW ===== -->
         <div id="cheatsView">
-            <!-- Back bar -->
-            <div class="back-bar">
-                <button class="back-btn" id="backBtn">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6" />
-                    </svg>
-                    All games
-                </button>
-                <div class="back-game-title" id="backGameTitle">
-                    <span id="backGameIcon"></span>
-                    <span id="backGameName"></span>
-                </div>
-            </div>
             <!-- Filters -->
             <div class="cheat-filters">
                 <button class="cheat-filter-btn active" data-filter="all">
@@ -812,8 +767,8 @@
                     <span class="dot"></span> Internal
                 </button>
             </div>
-            <!-- Cheat cards -->
-            <div class="cheat-grid" id="cheatsGrid"></div>
+            <!-- Cheat groups -->
+            <div id="cheatsContainer"></div>
         </div>
         <!-- Footer -->
         <footer class="site-footer">
@@ -1211,13 +1166,8 @@
             };
             function statusConf(s) { return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' }; }
             // ── Elements ─────────────────────────────────────────────────────
-            const gamesView = document.getElementById('gamesView');
             const cheatsView = document.getElementById('cheatsView');
-            const gamesGrid = document.getElementById('gamesPickGrid');
-            const cheatsGrid = document.getElementById('cheatsGrid');
-            const backBtn = document.getElementById('backBtn');
-            const backGameIcon = document.getElementById('backGameIcon');
-            const backGameName = document.getElementById('backGameName');
+            const cheatsContainer = document.getElementById('cheatsContainer');
             const statTotalEl = document.getElementById('statTotalCheats');
             const statUndetEl = document.getElementById('statUndetected');
             const statGamesEl = document.getElementById('statGames');
@@ -1248,7 +1198,7 @@
                 } catch (e) { }
             }
             if (!cheats || !Object.keys(cheats).length) {
-                gamesGrid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
+                cheatsContainer.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
                 return;
             }
             // ── Group by game ─────────────────────────────────────────────────
@@ -1256,7 +1206,6 @@
             for (const [id, cheat] of Object.entries(cheats)) {
                 const key = cheat.game || 'Other';
                 if (!byGame[key]) byGame[key] = { icon: cheat.gameIcon || '🎮', image: cheat.image, cheats: [] };
-                // Use first image as game cover
                 byGame[key].cheats.push({ id, ...cheat });
             }
             // ── Stats ─────────────────────────────────────────────────────────
@@ -1267,53 +1216,26 @@
             animateValue(statTotalEl, 0, total, 2000);
             animateValue(statUndetEl, 0, undetectedCount, 2000);
             animateValue(statGamesEl, 0, gamesCount, 2000);
-            // ── Build game pick cards ─────────────────────────────────────────
-            gamesGrid.innerHTML = '';
-            let cardIndex = 0;
-            for (const [gameName, group] of Object.entries(byGame)) {
-                const count = group.cheats.length;
-                const label = count + ' cheat' + (count > 1 ? 's' : '');
-                // Best status of this game
-                const statuses = group.cheats.map(c => c.status);
-                let stripeClass = 'best-outdated';
-                if (statuses.includes('undetected')) stripeClass = 'best-undetected';
-                else if (statuses.includes('semi-detected')) stripeClass = 'best-semi';
-                // Best undetected count badge
-                const undetCount = group.cheats.filter(c => c.status === 'undetected').length;
-                const badgeText = undetCount > 0
-                    ? undetCount + ' undetected'
-                    : (count + ' cheat' + (count > 1 ? 's' : ''));
-                const card = document.createElement('div');
-                card.className = `game-pick-card ${stripeClass}`;
-                card.style.animationDelay = (0.05 + cardIndex * 0.07) + 's';
-                card.innerHTML = `
-                <div class="game-pick-thumb">
-                    <img src="${group.image || ''}" alt="${gameName}" width="616" height="353" loading="lazy">
-                    <div class="game-pick-thumb-overlay"></div>
-
-                </div>
-                <div class="game-pick-body">
-                    <div class="game-pick-icon">${group.icon}</div>
-                    <div class="game-pick-info">
-                        <div class="game-pick-name">${gameName}</div>
-                        <div class="game-pick-sub">${label}</div>
-                    </div>
-                    <svg class="game-pick-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
-                </div>
-            `;
-                card.addEventListener('click', () => showCheats(gameName, group));
-                gamesGrid.appendChild(card);
-                cardIndex++;
-            }
-            // ── Show cheats view for a game ────────────────────────────────────
-            function showCheats(gameName, group) {
-                // Update breadcrumb
-                backGameIcon.textContent = group.icon;
-                backGameName.textContent = gameName;
-                // Build cheat cards
-                cheatsGrid.innerHTML = '';
+            // ── Build grouped cheat cards ─────────────────────────────────────
+            cheatsContainer.innerHTML = '';
+            let totalIndex = 0;
+            const gameEntries = Object.entries(byGame);
+            gameEntries.forEach(([gameName, group], gi) => {
+                // Game group header
+                const header = document.createElement('div');
+                header.className = 'cheat-game-header';
+                header.style.animationDelay = (0.05 + totalIndex * 0.07) + 's';
+                header.innerHTML = `
+                    <div class="cheat-game-header-icon">${group.icon}</div>
+                    <div class="cheat-game-header-name">${gameName}</div>
+                    <div class="cheat-game-header-count">${group.cheats.length} cheat${group.cheats.length > 1 ? 's' : ''}</div>
+                `;
+                cheatsContainer.appendChild(header);
+                totalIndex++;
+                // Cheat cards for this game
+                const grid = document.createElement('div');
+                grid.className = 'cheat-grid';
+                grid.setAttribute('data-game', gameName);
                 group.cheats.forEach((cheat, i) => {
                     const sc = statusConf(cheat.status);
                     const isOutdated = cheat.status === 'outdated';
@@ -1329,7 +1251,7 @@
                     card.className = 'cheat-card';
                     card.href = href;
                     if (targetAttr) { card.target = '_blank'; card.rel = 'noopener'; }
-                    card.style.animationDelay = (0.05 + i * 0.08) + 's';
+                    card.style.animationDelay = (0.05 + totalIndex * 0.08) + 's';
                     card.innerHTML = `
                     <div class="cheat-card-thumb">
                         <img src="${cheat.image}" alt="${cheat.title}" width="616" height="353" loading="lazy">
@@ -1359,7 +1281,6 @@
                         </div>
                     </div>
                 `;
-                    // Click handler for modals / outdated
                     if (isOutdated) {
                         card.addEventListener('click', e => {
                             e.preventDefault();
@@ -1371,21 +1292,10 @@
                             openModal(cheat.modalId + '-modal-bg');
                         });
                     }
-                    cheatsGrid.appendChild(card);
+                    grid.appendChild(card);
+                    totalIndex++;
                 });
-                // Reset filters
-                document.querySelectorAll('.cheat-filter-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector('.cheat-filter-btn[data-filter="all"]').classList.add('active');
-                // Switch views
-                gamesView.style.display = 'none';
-                cheatsView.style.display = 'block';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            // ── Back button ────────────────────────────────────────────────────
-            backBtn.addEventListener('click', () => {
-                cheatsView.style.display = 'none';
-                gamesView.style.display = 'block';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                cheatsContainer.appendChild(grid);
             });
             // ── Filter tabs ────────────────────────────────────────────────────
             document.querySelectorAll('.cheat-filter-btn').forEach(btn => {
@@ -1393,12 +1303,22 @@
                     document.querySelectorAll('.cheat-filter-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     const filter = this.getAttribute('data-filter');
-                    document.querySelectorAll('#cheatsGrid .cheat-card').forEach(card => {
+                    document.querySelectorAll('#cheatsContainer .cheat-card').forEach(card => {
                         if (filter === 'all') {
                             card.classList.remove('filter-hidden');
                         } else {
                             const type = card.querySelector('.cheat-type-badge')?.classList.contains(filter) ? filter : 'other';
                             card.classList.toggle('filter-hidden', type !== filter);
+                        }
+                    });
+                    // Hide game groups if all their cheats are hidden
+                    document.querySelectorAll('#cheatsContainer .cheat-grid').forEach(grid => {
+                        const visible = grid.querySelectorAll('.cheat-card:not(.filter-hidden)').length;
+                        const prev = grid.previousElementSibling;
+                        const hide = visible === 0;
+                        grid.style.display = hide ? 'none' : '';
+                        if (prev && prev.classList.contains('cheat-game-header')) {
+                            prev.style.display = hide ? 'none' : '';
                         }
                     });
                 });
@@ -1417,7 +1337,7 @@
                 bg.classList.remove('show');
                 setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
             }
-            ['fivem', 'amnesia', 'bloodstrike', 'outdated'].forEach(id => {
+            ['fivem', 'amnesia', 'bloodstrike', 'schedule1', 'outdated'].forEach(id => {
                 const bg = document.getElementById(id + '-modal-bg');
                 if (!bg) return;
                 const closeBtn = bg.querySelector('.close-btn');
