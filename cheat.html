@@ -698,6 +698,17 @@
         </div>
         <!-- ===== ALL CHEATS VIEW ===== -->
         <div id="cheatsView">
+            <!-- Search Bar -->
+            <div class="search-bar-container">
+                <div class="search-bar-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    <input type="text" class="search-bar" id="cheatSearch" placeholder="Search for a game...">
+                </div>
+            </div>
             <!-- Filters -->
             <div class="cheat-filters">
                 <button class="cheat-filter-btn active" data-filter="all">
@@ -1240,32 +1251,38 @@
                 });
                 cheatsContainer.appendChild(grid);
             });
-            // ── Filter tabs ────────────────────────────────────────────────────
+            // ── Search + Filter ──────────────────────────────────────────────
+            function applyCheatFilter() {
+                const filter = document.querySelector('.cheat-filter-btn.active')?.getAttribute('data-filter') || 'all';
+                const query = (document.getElementById('cheatSearch')?.value || '').trim().toLowerCase();
+                document.querySelectorAll('#cheatsContainer .cheat-card').forEach(card => {
+                    const gameGroup = card.closest('.cheat-grid');
+                    const gameName = gameGroup?.getAttribute('data-game')?.toLowerCase() || '';
+                    const matchesSearch = !query || gameName.includes(query);
+                    const matchesFilter = filter === 'all' || card.querySelector('.cheat-type-badge')?.classList.contains(filter);
+                    card.classList.toggle('filter-hidden', !(matchesSearch && matchesFilter));
+                });
+                document.querySelectorAll('#cheatsContainer .cheat-grid').forEach(grid => {
+                    const visible = grid.querySelectorAll('.cheat-card:not(.filter-hidden)').length;
+                    const prev = grid.previousElementSibling;
+                    const hide = visible === 0;
+                    grid.style.display = hide ? 'none' : '';
+                    if (prev && prev.classList.contains('cheat-game-header')) {
+                        prev.style.display = hide ? 'none' : '';
+                    }
+                });
+            }
             document.querySelectorAll('.cheat-filter-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
                     document.querySelectorAll('.cheat-filter-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    const filter = this.getAttribute('data-filter');
-                    document.querySelectorAll('#cheatsContainer .cheat-card').forEach(card => {
-                        if (filter === 'all') {
-                            card.classList.remove('filter-hidden');
-                        } else {
-                            const type = card.querySelector('.cheat-type-badge')?.classList.contains(filter) ? filter : 'other';
-                            card.classList.toggle('filter-hidden', type !== filter);
-                        }
-                    });
-                    // Hide game groups if all their cheats are hidden
-                    document.querySelectorAll('#cheatsContainer .cheat-grid').forEach(grid => {
-                        const visible = grid.querySelectorAll('.cheat-card:not(.filter-hidden)').length;
-                        const prev = grid.previousElementSibling;
-                        const hide = visible === 0;
-                        grid.style.display = hide ? 'none' : '';
-                        if (prev && prev.classList.contains('cheat-game-header')) {
-                            prev.style.display = hide ? 'none' : '';
-                        }
-                    });
+                    applyCheatFilter();
                 });
             });
+            const searchInput = document.getElementById('cheatSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', applyCheatFilter);
+            }
             // ── Modal helpers ─────────────────────────────────────────────────
             function openModal(id) {
                 const bg = document.getElementById(id);
