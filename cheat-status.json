@@ -102,6 +102,8 @@
         "link": "#",
         "type": "script",
         "code": "loadstring(game:HttpGet(\"https://pastefy.app/3F7BBrbQ/raw\"))()",
+        "hasModal": true,
+        "modalId": "roblox-script",
         "features": [
             "UnlockALL"
         ]
