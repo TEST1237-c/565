@@ -101,6 +101,7 @@
         "image": "https://i.ytimg.com/vi/zowmaH7hc5Q/hqdefault.jpg",
         "link": "#",
         "type": "script",
+        "code": "loadstring(game:HttpGet(\"https://pastefy.app/3F7BBrbQ/raw\"))()",
         "features": [
             "Infinite Jump",
             "Speed",
