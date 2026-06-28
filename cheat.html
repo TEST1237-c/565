@@ -475,6 +475,11 @@
             border: 1px solid rgba(249, 115, 22, 0.35);
             color: #fdba74;
         }
+        .cheat-type-badge.script {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            color: #93c5fd;
+        }
         .cheat-card-body {
             padding: 18px;
             flex: 1;
@@ -719,6 +724,9 @@
                 </button>
                 <button class="cheat-filter-btn" data-filter="internal">
                     <span class="dot"></span> Internal
+                </button>
+                <button class="cheat-filter-btn" data-filter="script">
+                    <span class="dot"></span> Script
                 </button>
             </div>
             <!-- Cheat groups -->
@@ -1193,8 +1201,9 @@
                 group.cheats.forEach((cheat, i) => {
                     const sc = statusConf(cheat.status);
                     const isOutdated = cheat.status === 'outdated';
-                    const typeBadgeClass = cheat.type === 'external' ? 'external' : 'internal';
-                    const typeLabel = cheat.type === 'external' ? 'External' : 'Internal';
+                    const typeMap = { 'external': 'External', 'internal': 'Internal', 'script': 'Script' };
+                    const typeBadgeClass = typeMap[cheat.type] ? cheat.type : 'internal';
+                    const typeLabel = typeMap[cheat.type] || 'Internal';
                     const featuresHtml = (cheat.features || []).map(f =>
                         `<span class="cheat-feature-tag">${f}</span>`
                     ).join('');
