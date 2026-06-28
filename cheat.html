@@ -548,6 +548,50 @@
         .cheat-card.filter-hidden {
             display: none;
         }
+        /* === ROBLOX SCRIPT MODAL === */
+        .roblox-code-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(107, 114, 128, 0.25);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .roblox-code-box pre {
+            margin: 0;
+            padding: 18px 20px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.7;
+            user-select: all;
+            background: rgba(0, 0, 0, 0.25);
+        }
+        .roblox-copy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border: none;
+            border-top: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.03em;
+        }
+        .roblox-copy-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .roblox-copy-btn.copied {
+            color: #86efac;
+        }
         /* === HEADER NAV LINK === */
         .header-nav-link {
             display: inline-flex;
@@ -1058,19 +1102,22 @@
     <div id="roblox-script-modal-bg" class="modal-bg" style="display:none;">
         <div class="modal" role="dialog" aria-modal="true" aria-labelledby="roblox-script-modal-title" style="max-width:560px;">
             <button class="close-btn" id="roblox-scriptCloseBtn" aria-label="Close">×</button>
-            <h2 id="roblox-script-modal-title" style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                🎮 UnlockALL Rivals — Script
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:20px;">Roblox · Copy the script below</p>
-            <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(59,130,246,0.3);border-radius:10px;padding:16px;margin-bottom:16px;position:relative;">
-                <pre id="robloxScriptCode" style="margin:0;font-family:monospace;font-size:0.82rem;color:#93c5fd;white-space:pre-wrap;word-break:break-all;line-height:1.6;user-select:all;">loadstring(game:HttpGet("https://pastefy.app/3F7BBrbQ/raw"))()</pre>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                <span style="font-size:1.6rem;">🎮</span>
+                <div>
+                    <h2 id="roblox-script-modal-title" class="modal-title" style="font-size:1rem;">UnlockALL Rivals — Script</h2>
+                    <p style="margin:2px 0 0;font-size:0.75rem;color:var(--text-muted);">Roblox · Copy the script below</p>
+                </div>
             </div>
-            <button id="robloxCopyBtn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 24px;background:linear-gradient(135deg,rgba(59,130,246,0.25),rgba(37,99,235,0.15));border:1px solid rgba(59,130,246,0.4);border-radius:var(--radius-md);color:#93c5fd;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.25s ease;font-family:'Inter',sans-serif;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                </svg>
-                Copy Script
-            </button>
+            <div class="roblox-code-box">
+                <pre id="robloxScriptCode">loadstring(game:HttpGet("https://pastefy.app/3F7BBrbQ/raw"))()</pre>
+                <button class="roblox-copy-btn" id="robloxCopyBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    Copy Script
+                </button>
+            </div>
         </div>
     </div>
     <!-- OUTDATED MODAL -->
@@ -1344,13 +1391,11 @@
                     const code = document.getElementById('robloxScriptCode')?.textContent || '';
                     try {
                         await navigator.clipboard.writeText(code);
+                        this.classList.add('copied');
                         this.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
-                        this.style.borderColor = 'rgba(34,197,94,0.5)';
-                        this.style.color = '#86efac';
                         setTimeout(() => {
+                            this.classList.remove('copied');
                             this.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Script`;
-                            this.style.borderColor = 'rgba(59,130,246,0.4)';
-                            this.style.color = '#93c5fd';
                         }, 2000);
                     } catch {
                         this.textContent = 'Failed to copy';
