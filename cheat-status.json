@@ -15,7 +15,7 @@
         ]
     },
     "cs2-internal": {
-        "status": "undetected",
+        "status": "outdated",
         "title": "Y8X CS2 WEB Internal",
         "game": "Counter-Strike 2",
         "gameIcon": "🎯",
