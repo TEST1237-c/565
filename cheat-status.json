@@ -93,6 +93,18 @@
             "No Spread"
         ]
     },
+        "combat-master": {
+        "status": "undetected",
+        "title": "Y8X UnlockALL Combat Master",
+        "game": "Combat Master",
+        "gameIcon": "⚔️",
+        "image": "https://i.imgur.com/kzX30po.jpeg",
+        "link": "https://www.clictune.com/mZsl",
+        "type": "internal",
+        "features": [
+            "UnlockALL",
+        ]
+    },
     "roblox": {
         "status": "undetected",
         "title": "UnlockALL Rivals",
