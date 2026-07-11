@@ -93,7 +93,7 @@
             "No Spread"
         ]
     },
-        "combat-master-unlock": {
+    "combat-master-unlock": {
         "status": "undetected",
         "title": "Y8X UnlockALL Combat Master",
         "game": "Combat Master",
@@ -102,7 +102,7 @@
         "link": "https://www.clictune.com/mZsl",
         "type": "internal",
         "features": [
-            "UnlockALL",
+            "UnlockALL"
         ]
     },
     "roblox": {
@@ -117,7 +117,7 @@
         "hasModal": true,
         "modalId": "roblox-script",
         "features": [
-            "UnlockALL",
+            "UnlockALL"
         ]
     },
     "schedule1": {
