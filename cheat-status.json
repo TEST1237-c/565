@@ -45,12 +45,12 @@
         ]
     },
     "fivem": {
-        "status": "undetected",
+        "status": "outdated",
         "title": "Nova FiveM External",
         "game": "FiveM",
         "gameIcon": "🌐",
         "image": "https://i.imgur.com/3nDR1pP.png",
-        "link": "#",
+        "link": "https://www.clictune.com/mZxf",
         "type": "external",
         "hasModal": true,
         "modalId": "fivem",
