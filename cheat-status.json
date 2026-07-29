@@ -79,7 +79,7 @@
         ]
     },
     "combat-master": {
-        "status": "undetected",
+        "status": "outdated",
         "title": "Y8X Internal Combat Master",
         "game": "Combat Master",
         "gameIcon": "⚔️",
