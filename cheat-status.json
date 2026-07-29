@@ -94,7 +94,7 @@
         ]
     },
     "combat-master-unlock": {
-        "status": "undetected",
+        "status": "outdated",
         "title": "Y8X UnlockALL Combat Master",
         "game": "Combat Master",
         "gameIcon": "⚔️",
