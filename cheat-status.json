@@ -29,7 +29,7 @@
         ]
     },
     "bloodstrike": {
-        "status": "undetected",
+        "status": "outdated",
         "title": "Y8X Bloodstrike Internal",
         "game": "Bloodstrike",
         "gameIcon": "🩸",
