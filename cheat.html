@@ -2,1461 +2,1019 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="maintenance-check.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y8X - Cheats</title>
-    <meta name="description" content="Y8X Cheats - cheats for your favorite games. Undetected & updated.">
+    <title>Admin — Y8X</title>
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* ===== CHEAT PAGE SPECIFIC ===== */
-        .cheat-hero {
-            padding: calc(var(--header-height) + 48px) var(--spacing-lg) 0;
-            text-align: center;
-            position: relative;
+        :root {
+            --bg:        #05050c;
+            --bg2:       #0b0b18;
+            --bg3:       #111120;
+            --surface:   rgba(255,255,255,0.03);
+            --border:    rgba(255,255,255,0.07);
+            --border2:   rgba(255,255,255,0.12);
+            --violet:    #8b5cf6;
+            --violet2:   #a78bfa;
+            --violet-d:  #6d28d9;
+            --cyan:      #06b6d4;
+            --green:     #22c55e;
+            --red:       #ef4444;
+            --yellow:    #eab308;
+            --text:      #e2e8f0;
+            --text2:     rgba(226,232,240,0.6);
+            --text3:     rgba(226,232,240,0.3);
+            --radius:    12px;
+            --sidebar-w: 260px;
         }
-        .cheat-hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.15), rgba(70, 70, 70, 0.1));
-            border: 1px solid rgba(107, 114, 128, 0.3);
-            border-radius: var(--radius-full);
-            padding: 6px 16px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            color: var(--accent-light);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(107, 114, 128, 0.15);
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        .cheat-hero-badge-dot {
-            width: 7px;
-            height: 7px;
-            background: #10b981;
-            border-radius: 50%;
-            animation: pulse-dot 1.8s ease-in-out infinite;
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
-        }
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.4);
-                opacity: 0.6;
-            }
-        }
-        .cheat-hero h1 {
-            font-size: clamp(2.8rem, 7vw, 5rem);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            background: linear-gradient(135deg, #fff 0%, var(--accent-light) 40%, var(--accent-violet) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0;
-            letter-spacing: 0.04em;
-            filter: drop-shadow(0 0 30px rgba(107, 114, 128, 0.4));
-            animation: cheatGradient 8s ease infinite, fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
-            opacity: 0;
-        }
-        @keyframes cheatGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .cheat-hero .title-underline {
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-violet), var(--accent-light), transparent);
-            border-radius: 999px;
-            margin: 12px auto 20px;
-            animation: underlineExpand 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.6s forwards, underlinePulse 3s ease-in-out 1.8s infinite;
-        }
-        @keyframes underlineExpand {
-            to { width: 100px; }
-        }
-        @keyframes underlinePulse {
-            0%, 100% { transform: scaleX(1); opacity: 0.8; }
-            50% { transform: scaleX(1.3); opacity: 1; }
-        }
-        .cheat-hero-sub {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 480px;
-            margin: 0 auto 36px;
-            line-height: 1.7;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-        }
-        @keyframes fadeSlideDown {
-            0% { opacity: 0; transform: translateY(-16px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        /* === STATS BAR (glassmorphic) === */
-        .cheat-stats {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            background: rgba(255, 255, 255, 0.025);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 0;
-            max-width: 520px;
-            margin: 0 auto 48px;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards;
-        }
-        .cheat-stat {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 18px 20px;
-            gap: 4px;
-            position: relative;
-        }
-        .cheat-stat+.cheat-stat::before {
+
+        /* ========== NOISE OVERLAY ========== */
+        body::before {
             content: '';
-            position: absolute;
-            left: 0;
-            top: 20%;
-            height: 60%;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, var(--border-glass), transparent);
-        }
-        .cheat-stat-num {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-        }
-        .cheat-stat-num.red {
-            background: linear-gradient(135deg, #d1d5db, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .cheat-stat-num.green {
-            background: linear-gradient(135deg, #34d399, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .cheat-stat-num.yellow {
-            background: linear-gradient(135deg, #d1d5db, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .cheat-stat-label {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        /* === MAIN CONTAINER === */
-        .cheat-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-lg) 80px;
-        }
-        /* === REQUEST BANNER === */
-        .cheat-request-banner {
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.08), rgba(90, 90, 90, 0.05));
-            border: 1px solid rgba(107, 114, 128, 0.2);
-            border-radius: var(--radius-lg);
-            padding: 32px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
-            box-shadow: 0 10px 40px -10px rgba(107, 114, 128, 0.15);
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.7s forwards;
-        }
-        .cheat-request-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(107, 114, 128, 0.1) 0%, transparent 50%);
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
             z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* ========== TOAST ========== */
+        #toastContainer {
+            position: fixed; bottom: 2rem; right: 2rem;
+            z-index: 9999; display: flex; flex-direction: column; gap: .65rem;
             pointer-events: none;
         }
-        .cheat-request-banner > * {
+        .toast {
+            display: flex; align-items: center; gap: .75rem;
+            padding: .9rem 1.25rem; border-radius: 14px;
+            backdrop-filter: blur(24px); font-size: .875rem; font-weight: 600;
+            pointer-events: auto;
+            animation: toastIn .4s cubic-bezier(.34,1.56,.64,1) both;
+            min-width: 260px; max-width: 380px;
+            box-shadow: 0 16px 40px rgba(0,0,0,.5);
+        }
+        .toast.success { background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.35); color: #86efac; }
+        .toast.error   { background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.35); color: #fca5a5; }
+        .toast.info    { background: rgba(139,92,246,.12); border: 1px solid rgba(139,92,246,.35); color: #c4b5fd; }
+        .toast .ti { font-size: 1rem; flex-shrink: 0; }
+        .toast.hide { animation: toastOut .3s ease forwards; }
+        @keyframes toastIn  { from { opacity:0; transform:translateX(70px) scale(.9); } to { opacity:1; transform:none; } }
+        @keyframes toastOut { from { opacity:1; } to { opacity:0; transform:translateX(70px); } }
+
+        /* ========== LOGIN ========== */
+        .login-screen { display: none; min-height: 100vh; align-items: center; justify-content: center; padding: 2rem; position: relative; }
+        .login-screen.active { display: flex; }
+        .login-bg-glow {
+            position: fixed; top: 20%; left: 50%; transform: translateX(-50%);
+            width: 500px; height: 500px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .login-card {
+            width: 100%; max-width: 420px;
+            background: linear-gradient(160deg, rgba(20,15,40,.95), rgba(8,8,20,.98));
+            border: 1px solid rgba(139,92,246,.2);
+            border-radius: 24px;
+            padding: 2.75rem 2.5rem 2.25rem;
+            box-shadow: 0 0 0 1px rgba(139,92,246,.08), 0 40px 80px rgba(0,0,0,.6), 0 0 120px -30px rgba(139,92,246,.3);
+            position: relative; overflow: hidden;
+            animation: slideUp .5s cubic-bezier(.4,0,.2,1) both;
+        }
+        .login-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--violet), var(--violet2), transparent);
+        }
+        .login-card::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(139,92,246,.025) 40px),
+                        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(139,92,246,.025) 40px);
+        }
+        @keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+
+        .login-icon-wrap {
+            width: 80px; height: 80px; margin: 0 auto 1.25rem;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            background: rgba(139,92,246,.12);
+            border: 1px solid rgba(139,92,246,.3);
+            box-shadow: 0 0 40px rgba(139,92,246,.25), inset 0 0 20px rgba(139,92,246,.08);
+            transition: all .4s;
+        }
+        .login-card.locked .login-icon-wrap {
+            background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.3);
+            box-shadow: 0 0 40px rgba(239,68,68,.25);
+        }
+        .login-title {
+            font-family: 'Orbitron', monospace; font-size: 1.35rem; font-weight: 900;
+            text-align: center; letter-spacing: .08em;
+            background: linear-gradient(135deg, #fff, var(--violet2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin-bottom: .3rem;
+        }
+        .login-sub { text-align: center; font-size: .8rem; color: var(--text3); margin-bottom: 1.75rem; }
+
+        .attempt-dots { display: flex; justify-content: center; gap: 7px; margin-bottom: 1.5rem; }
+        .attempt-dot {
+            width: 9px; height: 9px; border-radius: 50%;
+            background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+            transition: all .3s;
+        }
+        .attempt-dot.used { background: rgba(239,68,68,.7); border-color: rgba(239,68,68,.9); transform: scale(1.2); }
+        .attempt-dot.last-used { animation: dotPop .4s cubic-bezier(.34,1.56,.64,1); }
+        @keyframes dotPop { 50% { transform: scale(1.8); } }
+
+        .lockout-banner {
+            display: none; background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.25);
+            border-radius: 10px; padding: .9rem 1rem; margin-bottom: 1.25rem;
+            text-align: center; font-size: .85rem; color: #fca5a5;
+        }
+        .lockout-banner.active { display: block; }
+        .lockout-timer { font-family: 'Orbitron', monospace; font-size: 1.5rem; font-weight: 900; color: #f87171; margin-top: .4rem; }
+
+        .field-group { margin-bottom: 1.2rem; position: relative; z-index: 1; }
+        .field-label { display: flex; justify-content: space-between; font-size: .72rem; color: var(--text3); margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+        .field-wrap { position: relative; }
+        .field-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: .95rem; opacity: .45; pointer-events: none; }
+        .field-wrap input {
+            width: 100%; padding: .9rem 3rem .9rem 2.75rem;
+            background: rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 10px; color: #fff; font-size: .95rem; font-family: inherit;
+            outline: none; transition: border-color .2s, box-shadow .2s;
+        }
+        .field-wrap input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(139,92,246,.18); }
+        .field-wrap input.err { border-color: rgba(239,68,68,.5); box-shadow: 0 0 0 3px rgba(239,68,68,.12); }
+        .field-wrap input::placeholder { color: rgba(255,255,255,.2); }
+        .toggle-pass {
+            position: absolute; right: .8rem; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: rgba(255,255,255,.3);
+            font-size: .95rem; padding: .25rem; transition: color .2s;
+        }
+        .toggle-pass:hover { color: rgba(255,255,255,.65); }
+        .field-hint { font-size: .75rem; min-height: 1em; margin-top: .35rem; }
+        .field-hint.err { color: #fca5a5; }
+        .field-hint.ok  { color: #86efac; }
+        @keyframes shake { 0%,100%{transform:translateX(0)} 15%{transform:translateX(-8px)} 30%{transform:translateX(7px)} 45%{transform:translateX(-6px)} 60%{transform:translateX(5px)} 75%{transform:translateX(-3px)} }
+        .shake { animation: shake .5s cubic-bezier(.36,.07,.19,.97) both; }
+
+        .btn-login {
+            width: 100%; padding: 1rem; border: none; border-radius: 12px;
+            background: linear-gradient(135deg, var(--violet), var(--violet-d));
+            color: #fff; font-size: .95rem; font-weight: 700; cursor: pointer;
+            font-family: 'Orbitron', monospace; letter-spacing: .06em;
+            box-shadow: 0 4px 24px rgba(139,92,246,.35);
+            transition: transform .2s, box-shadow .2s, opacity .2s;
+            display: flex; align-items: center; justify-content: center; gap: .6rem;
+            position: relative; z-index: 1; overflow: hidden;
+        }
+        .btn-login::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,.07); opacity: 0; transition: opacity .2s; }
+        .btn-login:hover:not(:disabled)::after { opacity: 1; }
+        .btn-login:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(139,92,246,.5); }
+        .btn-login:disabled { opacity: .5; cursor: not-allowed; }
+        .btn-spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .btn-login.loading .btn-spinner { display: block; }
+        .back-link { display: block; text-align: center; margin-top: 1.25rem; font-size: .8rem; color: var(--text3); position: relative; z-index: 1; }
+        .back-link a { color: var(--violet2); text-decoration: none; transition: color .2s; }
+        .back-link a:hover { color: #fff; }
+
+        /* ========== ADMIN LAYOUT ========== */
+        .admin-layout { display: none; min-height: 100vh; }
+        .admin-layout.active { display: flex; }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: var(--sidebar-w); flex-shrink: 0;
+            background: rgba(8,8,18,.9);
+            border-right: 1px solid var(--border);
+            backdrop-filter: blur(24px);
+            display: flex; flex-direction: column;
+            padding: 1.25rem .875rem;
+            position: sticky; top: 0; height: 100vh;
+            overflow-y: auto; z-index: 10;
+        }
+        .sb-brand {
+            display: flex; align-items: center; gap: .75rem;
+            padding: .5rem .75rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+        .sb-brand-icon {
+            width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--violet), var(--violet-d));
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+            box-shadow: 0 4px 16px rgba(139,92,246,.4);
+        }
+        .sb-brand-name { font-family: 'Orbitron', monospace; font-size: .95rem; font-weight: 900; color: #fff; }
+        .sb-brand-sub { font-size: .68rem; color: var(--text3); margin-top: 1px; }
+        .sb-section-label { font-size: .63rem; color: var(--text3); text-transform: uppercase; letter-spacing: .1em; font-weight: 700; padding: 0 .75rem; margin: .5rem 0 .35rem; }
+        .nav-item {
+            display: flex; align-items: center; gap: .75rem;
+            padding: .7rem .875rem; border-radius: 10px;
+            cursor: pointer; color: var(--text2); font-size: .85rem; font-weight: 500;
+            border: 1px solid transparent; background: none; font-family: inherit;
+            text-decoration: none; width: 100%; text-align: left;
+            transition: all .2s; position: relative;
+        }
+        .nav-item:hover { background: rgba(255,255,255,.04); color: var(--text); }
+        .nav-item.active {
+            background: rgba(139,92,246,.12); color: var(--violet2);
+            border-color: rgba(139,92,246,.2);
+            box-shadow: inset 0 0 20px rgba(139,92,246,.04);
+        }
+        .nav-item.active::before {
+            content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            width: 3px; height: 60%; border-radius: 0 3px 3px 0;
+            background: var(--violet2);
+        }
+        .ni-icon { font-size: 1rem; flex-shrink: 0; }
+        .ni-badge {
+            margin-left: auto; background: rgba(139,92,246,.25); color: var(--violet2);
+            font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+            border: 1px solid rgba(139,92,246,.2);
+        }
+        .sb-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: .4rem; }
+        .btn-sb {
+            display: flex; align-items: center; gap: .6rem;
+            padding: .65rem .875rem; border-radius: 10px;
+            font-size: .82rem; font-weight: 500; cursor: pointer;
+            font-family: inherit; transition: all .2s; width: 100%; text-decoration: none;
+        }
+        .btn-back { border: 1px solid var(--border); background: transparent; color: var(--text2); }
+        .btn-back:hover { background: rgba(255,255,255,.04); color: var(--text); }
+        .btn-logout { border: 1px solid rgba(239,68,68,.18); background: rgba(239,68,68,.06); color: #fca5a5; }
+        .btn-logout:hover { background: rgba(239,68,68,.15); border-color: rgba(239,68,68,.35); }
+
+        /* ========== MAIN ========== */
+        .admin-main { flex: 1; overflow-y: auto; padding: 2rem 2.5rem; min-width: 0; }
+        .admin-page-content { display: none; }
+        .admin-page-content.visible { display: block; animation: fadeIn .3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+        .page-title { font-family: 'Orbitron', monospace; font-size: 1.5rem; font-weight: 900; background: linear-gradient(135deg, #fff, var(--violet2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-sub { color: var(--text3); font-size: .82rem; margin-top: .2rem; }
+
+        /* ========== STAT CARDS ========== */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.25rem 1.4rem;
+            display: flex; align-items: center; gap: 1rem;
+            position: relative; overflow: hidden;
+            transition: transform .25s, box-shadow .25s;
+        }
+        .stat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--sc, var(--violet)); }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.35); }
+        .stat-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; background: var(--si-bg, rgba(139,92,246,.1)); border: 1px solid var(--si-bd, rgba(139,92,246,.2)); }
+        .stat-val { font-family: 'Orbitron', monospace; font-size: 1.7rem; font-weight: 900; color: #fff; line-height: 1; }
+        .stat-lbl { font-size: .72rem; color: var(--text3); margin-top: .2rem; }
+
+        /* ========== PANEL ========== */
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; }
+        .panel-head { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); background: rgba(255,255,255,.015); }
+        .panel-head-title { display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: .9rem; color: var(--text); }
+        .panel-body { padding: 1.5rem; }
+
+        /* ========== FORMS ========== */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-grid .span2 { grid-column: span 2; }
+        @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .form-grid .span2 { grid-column: span 1; } }
+        .form-field { display: flex; flex-direction: column; gap: .4rem; }
+        .form-field label { font-size: .72rem; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+        .form-field input, .form-field select, .form-field textarea {
+            padding: .75rem .95rem; background: rgba(0,0,0,.25);
+            border: 1px solid rgba(255,255,255,.08); border-radius: 10px;
+            color: #fff; font-size: .9rem; font-family: inherit;
+            outline: none; transition: border-color .2s, box-shadow .2s; width: 100%;
+        }
+        .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+        .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,.18); }
+        .form-field textarea { min-height: 90px; resize: vertical; }
+        .form-field select option { background: #1a1530; }
+        .form-field .hint { font-size: .72rem; color: var(--text3); }
+        .toggle-row { display: flex; align-items: center; gap: .75rem; padding: .85rem; background: rgba(255,255,255,.02); border-radius: 10px; border: 1px solid var(--border); cursor: pointer; }
+        .toggle-row input[type=checkbox] { display: none; }
+        .toggle-knob { width: 44px; height: 24px; background: rgba(255,255,255,.08); border-radius: 99px; border: 1px solid rgba(255,255,255,.1); position: relative; flex-shrink: 0; transition: all .25s; }
+        .toggle-knob::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,.4); transition: all .25s; }
+        input:checked + .toggle-knob { background: rgba(139,92,246,.45); border-color: rgba(139,92,246,.5); }
+        input:checked + .toggle-knob::after { transform: translateX(20px); background: var(--violet2); }
+        .toggle-label { font-size: .88rem; color: var(--text2); }
+        .optional-fields { border: 1px dashed rgba(139,92,246,.2); border-radius: 12px; padding: 1rem; margin-top: .75rem; display: none; flex-direction: column; gap: .75rem; }
+        .optional-fields.visible { display: flex; }
+        .form-actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.25rem; align-items: center; }
+
+        /* ========== BUTTONS ========== */
+        .btn-primary {
+            padding: .8rem 2rem; border: none; border-radius: 10px;
+            background: linear-gradient(135deg, var(--violet), var(--violet-d));
+            color: #fff; font-size: .88rem; font-weight: 700; cursor: pointer;
+            font-family: 'Orbitron', monospace; letter-spacing: .05em;
+            box-shadow: 0 4px 20px rgba(139,92,246,.3);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(139,92,246,.5); }
+        .btn-primary.sm { padding: .6rem 1.2rem; font-size: .78rem; }
+        .btn-ghost { padding: .75rem 1.5rem; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: transparent; color: var(--text2); font-size: .85rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: all .2s; }
+        .btn-ghost:hover { background: rgba(255,255,255,.05); color: var(--text); border-color: rgba(255,255,255,.18); }
+
+        /* ========== CHEAT CARDS in admin ========== */
+        .cheats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+        .cheat-admin-card {
+            background: rgba(255,255,255,.02); border: 1px solid var(--border);
+            border-radius: 14px; overflow: hidden; transition: all .25s;
             position: relative;
-            z-index: 1;
         }
-        .cheat-request-text h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 6px;
-            letter-spacing: 0.04em;
+        .cheat-admin-card:hover { border-color: rgba(139,92,246,.25); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+        .cheat-admin-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--card-accent, var(--violet)); }
+        .cheat-thumb-wrap { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+        .cheat-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+        .cheat-admin-card:hover .cheat-thumb-wrap img { transform: scale(1.04); }
+        .cheat-thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,5,12,.85) 0%, transparent 55%); }
+        .cheat-status-pill {
+            position: absolute; top: 10px; right: 10px;
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 4px 10px; border-radius: 99px;
+            font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+            backdrop-filter: blur(10px);
         }
-        .cheat-request-text p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+        .cheat-status-pill.undetected { background: rgba(34,197,94,.2); border: 1px solid rgba(34,197,94,.4); color: #86efac; }
+        .cheat-status-pill.semi-detected { background: rgba(234,179,8,.18); border: 1px solid rgba(234,179,8,.35); color: #fde68a; }
+        .cheat-status-pill.detected { background: rgba(239,68,68,.2); border: 1px solid rgba(239,68,68,.4); color: #fca5a5; }
+        .cheat-status-pill.outdated { background: rgba(100,100,120,.2); border: 1px solid rgba(150,150,180,.3); color: rgba(226,232,240,.5); }
+        .cheat-status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: blink 2s ease-in-out infinite; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+        .cheat-type-pill {
+            position: absolute; top: 10px; left: 10px;
+            padding: 4px 10px; border-radius: 99px;
+            font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+            backdrop-filter: blur(10px);
         }
-        .cheat-request-btn {
-            display: inline-flex;
+        .cheat-type-pill.external { background: rgba(6,182,212,.15); border: 1px solid rgba(6,182,212,.3); color: #67e8f9; }
+        .cheat-type-pill.internal { background: rgba(249,115,22,.12); border: 1px solid rgba(249,115,22,.28); color: #fdba74; }
+        .cheat-card-body { padding: 1rem 1.1rem 1.1rem; }
+        .cheat-card-title { font-family: 'Orbitron', monospace; font-size: .82rem; font-weight: 700; color: #fff; letter-spacing: .04em; margin-bottom: .35rem; }
+        .cheat-card-game { font-size: .72rem; color: var(--text3); margin-bottom: .75rem; }
+        .cheat-features { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: .85rem; }
+        .cheat-feat-tag { font-size: .62rem; color: var(--text3); background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; }
+        .cheat-card-footer { display: flex; align-items: center; gap: .5rem; }
+        .cheat-status-select {
+            flex: 1; padding: .5rem .75rem;
+            background: rgba(0,0,0,.3); border: 1px solid var(--border);
+            border-radius: 8px; color: #fff; font-size: .78rem; font-family: inherit;
+            outline: none; cursor: pointer; transition: border-color .2s;
+        }
+        .cheat-status-select:focus { border-color: var(--violet); }
+        .cheat-status-select option { background: #111120; }
+
+        .maintenance-panel {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
             align-items: center;
-            gap: 9px;
-            padding: 11px 24px;
-            background: linear-gradient(135deg, #4b5563, #374151);
-            border-radius: var(--radius-md);
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            box-shadow: 0 4px 20px rgba(90, 90, 90, 0.3);
+            padding: 1rem 0;
         }
-        .cheat-request-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(90, 90, 90, 0.5);
-        }
-        /* ===========================
-           GAME GROUP HEADER
-        =========================== */
-        .cheat-game-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 28px 0 16px;
-            margin-top: 8px;
-            position: relative;
-            opacity: 0;
-            animation: fadeSlideDown 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-        .cheat-game-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, var(--accent-violet), var(--border-glass) 60%, transparent);
-        }
-        .cheat-game-header:first-of-type {
-            padding-top: 0;
-        }
-        .cheat-game-header-icon {
-            font-size: 1.6rem;
-            flex-shrink: 0;
-        }
-        .cheat-game-header-name {
-            font-family: 'Orbitron', sans-serif;
+        .maintenance-state {
             font-size: 1.1rem;
             font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.04em;
-            flex: 1;
+            margin-bottom: .35rem;
         }
-        .cheat-game-header-count {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-full);
-            padding: 4px 12px;
-            letter-spacing: 0.06em;
+        .maintenance-state.active { color: var(--red); }
+        .maintenance-state.inactive { color: var(--green); }
+        .maintenance-msg { color: var(--text3); line-height: 1.65; }
+        .maintenance-action-btn { min-width: 220px; }
+
+        /* ========== MODAL ========== */
+        .modal-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.active { display: flex; animation: fadeIn .25s ease; }
+        .edit-modal {
+            width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;
+            background: linear-gradient(160deg, rgba(22,18,45,.98), rgba(10,8,20,.99));
+            border: 1px solid rgba(139,92,246,.2); border-radius: 20px;
+            box-shadow: 0 40px 80px rgba(0,0,0,.7), 0 0 60px -20px rgba(139,92,246,.18);
+            position: relative; animation: modalIn .35s cubic-bezier(.34,1.56,.64,1);
         }
-        /* ===========================
-           CHEATS LIST
-        =========================== */
-        .cheat-filters {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 36px;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.6s forwards;
-        }
-        .cheat-filter-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-full);
-            color: var(--text-muted);
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .cheat-filter-btn:hover {
-            border-color: rgba(107, 114, 128, 0.4);
-            color: #fff;
-            background: rgba(107, 114, 128, 0.1);
-            transform: translateY(-2px);
-        }
-        .cheat-filter-btn.active {
-            background: linear-gradient(135deg, var(--accent-violet), var(--accent-dark));
-            border-color: var(--accent-light);
-            color: #fff;
-            box-shadow: 0 0 16px rgba(107, 114, 128, 0.3);
-        }
-        .cheat-filter-btn .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: currentColor;
-        }
-        .cheat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .cheat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: cardIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            will-change: transform;
-        }
-        @keyframes cardIn {
-            0% { opacity: 0; transform: translateY(20px) scale(0.97); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .cheat-card:hover {
-            border-color: rgba(107, 114, 128, 0.5);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -8px rgba(107, 114, 128, 0.4);
-        }
-        .cheat-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.05), transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .cheat-card:hover::before {
-            opacity: 1;
-        }
-        .cheat-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0);
-            transition: box-shadow 0.4s;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .cheat-card:hover::after {
-            box-shadow: inset 0 0 25px rgba(107, 114, 128, 0.15);
-        }
-        .cheat-card-thumb {
-            position: relative;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            background: rgba(15, 15, 25, 0.8);
-        }
-        .cheat-card-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease, filter 0.4s ease;
-            pointer-events: none;
-        }
-        .cheat-card:hover .cheat-card-thumb img {
-            transform: scale(1.08);
-            filter: brightness(0.55);
-        }
-        .cheat-card-thumb-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(5, 5, 8, 0.85) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .cheat-card:hover .cheat-card-thumb-overlay {
-            opacity: 1;
-        }
-        .cheat-status-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 10px;
-            border-radius: var(--radius-full);
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            backdrop-filter: blur(8px);
-            z-index: 2;
-        }
-        .cheat-status-badge.undetected {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid rgba(34, 197, 94, 0.45);
-            color: #86efac;
-        }
-        .cheat-status-badge.updating {
-            background: rgba(234, 179, 8, 0.2);
-            border: 1px solid rgba(234, 179, 8, 0.4);
-            color: #fde68a;
-        }
-        .cheat-status-badge.detected {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            color: #fca5a5;
-        }
-        .cheat-status-badge .status-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: currentColor;
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-        .cheat-type-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 4px 10px;
-            border-radius: var(--radius-full);
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            backdrop-filter: blur(8px);
-            z-index: 2;
-        }
-        .cheat-type-badge.external {
-            background: rgba(107, 114, 128, 0.15);
-            border: 1px solid rgba(107, 114, 128, 0.35);
-            color: #d1d5db;
-        }
-        .cheat-type-badge.internal {
-            background: rgba(249, 115, 22, 0.15);
-            border: 1px solid rgba(249, 115, 22, 0.35);
-            color: #fdba74;
-        }
-        .cheat-type-badge.script {
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            color: #93c5fd;
-        }
-        .cheat-card-body {
-            padding: 18px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            position: relative;
-            z-index: 2;
-        }
-        .cheat-card-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.04em;
-        }
-        .cheat-card-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .cheat-feature-tag {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-glass);
-            border-radius: 6px;
-            padding: 3px 8px;
-            font-weight: 500;
-        }
-        .cheat-card-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: auto;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-glass);
-        }
-        .cheat-card-updated {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .cheat-card-download {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.2), rgba(70, 70, 70, 0.2));
-            border: 1px solid rgba(107, 114, 128, 0.3);
-            border-radius: var(--radius-full);
-            padding: 5px 14px;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .cheat-card:hover .cheat-card-download {
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.8), rgba(70, 70, 70, 0.8));
-            border-color: rgba(156, 163, 175, 0.5);
-            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
-            transform: translateY(-1px);
-        }
-        .cheat-card.filter-hidden {
-            display: none;
-        }
-        /* === ROBLOX SCRIPT MODAL === */
-        .roblox-code-box {
-            background: var(--bg-card);
-            border: 1px solid rgba(107, 114, 128, 0.25);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-        }
-        .roblox-code-box pre {
-            margin: 0;
-            padding: 18px 20px;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            white-space: pre-wrap;
-            word-break: break-all;
-            line-height: 1.7;
-            user-select: all;
-            background: rgba(0, 0, 0, 0.25);
-        }
-        .roblox-copy-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 12px 24px;
-            background: var(--bg-card);
-            border: none;
-            border-top: 1px solid var(--border-glass);
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.03em;
-        }
-        .roblox-copy-btn:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .roblox-copy-btn.copied {
-            color: #86efac;
-        }
-        /* === HEADER NAV LINK === */
-        .header-nav-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            border-radius: var(--radius-full);
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.25s ease;
-            border: 1px solid transparent;
-        }
-        .header-nav-link:hover {
-            color: var(--text-primary);
-            background: var(--bg-glass);
-            border-color: var(--border-glass);
-        }
-        .header-nav-link.active-page {
-            color: var(--accent-light);
-            background: rgba(107, 114, 128, 0.08);
-            border-color: rgba(107, 114, 128, 0.25);
-        }
-        /* === OUTDATED NOTICE === */
-        .cheat-outdated-notice {
-            display: flex;
-            align-items: flex-start;
-            gap: 7px;
-            margin-top: 10px;
-            padding: 10px 12px;
-            background: rgba(234, 179, 8, 0.06);
-            border: 1px solid rgba(234, 179, 8, 0.22);
-            border-radius: 8px;
-            font-size: 0.72rem;
-            color: rgba(253, 230, 138, 0.75);
-            line-height: 1.55;
-        }
-        /* === RESPONSIVE === */
-        @media (max-width: 640px) {
-            .cheat-stats {
-                max-width: 100%;
-            }
-            .cheat-request-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-            .cheat-request-banner .cheat-request-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            .cheat-hero {
-                padding-top: calc(var(--header-height) + 32px);
-            }
-            .cheat-grid {
-                grid-template-columns: 1fr;
-            }
+        .edit-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: 20px 20px 0 0; background: linear-gradient(90deg, transparent, var(--violet), var(--violet2), transparent); }
+        @keyframes modalIn { from { opacity:0; transform:scale(.92) translateY(-20px); } to { opacity:1; transform:none; } }
+        .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 1.75rem; border-bottom: 1px solid var(--border); }
+        .modal-head-title { display: flex; align-items: center; gap: .6rem; font-family: 'Orbitron', monospace; font-size: .95rem; font-weight: 700; }
+        .modal-close { width: 32px; height: 32px; border: none; border-radius: 50%; background: rgba(255,255,255,.07); color: var(--text2); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+        .modal-close:hover { background: rgba(239,68,68,.25); color: #fca5a5; }
+        .modal-body { padding: 1.5rem 1.75rem; display: flex; flex-direction: column; gap: .85rem; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 800px) {
+            .sidebar { width: 60px; padding: 1rem .5rem; }
+            .sb-brand .sb-brand-name, .sb-brand .sb-brand-sub,
+            .nav-item > span:not(.ni-icon), .nav-item .ni-badge,
+            .sb-footer .btn-sb > span:last-child { display: none; }
+            .admin-main { padding: 1.25rem; }
         }
     </style>
 </head>
-<body class="page-jeux page-cheat">
-    <noscript>
-        <div
-            style="position:fixed;inset:0;z-index:2147483647;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Inter,system-ui,sans-serif;padding:2rem;">
-            <div style="font-size:4rem;margin-bottom:1.5rem">&#9888;&#65039;</div>
-            <h2
-                style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 1rem">
-                JavaScript Required</h2>
-            <p style="color:rgba(200,200,230,0.65);font-size:1rem;max-width:420px;line-height:1.7;margin:0 0 1.5rem">
-                Y8X requires JavaScript to function.<br>Please enable it in your browser settings.</p>
-            <div
-                style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">
-                &#128295; Enable JavaScript and refresh the page</div>
-            <p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">&#169; 2026 Y8X</p>
-        </div>
-    </noscript>
-    <div class="mouse-follower" id="mouseFollower"></div>
-    <div class="floating-glow glow-1"></div>
-    <div class="floating-glow glow-2"></div>
-    <!-- ===== STICKY HEADER ===== -->
-    <header class="site-header" id="siteHeader">
-        <a href="index.html" class="header-logo">Y8X</a>
-        <div class="header-right">
-            <a href="index.html" class="header-nav-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-                Home
-            </a>
 
-            <a href="cheat.html" class="header-nav-link active-page">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    <path d="M9 12l2 2 4-4" />
-                </svg>
-                Cheats
+<body>
+<div id="toastContainer"></div>
+<div class="login-bg-glow"></div>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-screen active" id="loginScreen">
+    <div class="login-card" id="loginCard">
+        <div class="login-icon-wrap" id="loginIcon">🔐</div>
+        <div class="login-title">Y8X ADMIN</div>
+        <div class="login-sub">Accès sécurisé au panneau d'administration</div>
+        <div class="attempt-dots" id="attemptDots">
+            <div class="attempt-dot" id="dot0"></div>
+            <div class="attempt-dot" id="dot1"></div>
+            <div class="attempt-dot" id="dot2"></div>
+            <div class="attempt-dot" id="dot3"></div>
+            <div class="attempt-dot" id="dot4"></div>
+        </div>
+
+        <div class="lockout-banner" id="lockoutBanner">
+            <strong>🔒 Trop de tentatives</strong><br>
+            Compte temporairement verrouillé. Réessayez dans :
+            <div class="lockout-timer" id="lockoutTimer">—</div>
+        </div>
+
+        <form id="loginForm" autocomplete="off">
+            <div class="field-group">
+                <div class="field-label">
+                    <span>Mot de passe</span>
+                    <span id="attemptsLabel" style="display:none;color:#fca5a5;font-size:.7rem;"></span>
+                </div>
+                <div class="field-wrap" id="pwWrap">
+                    <span class="field-icon">🔑</span>
+                    <input type="password" id="adminPassword" placeholder="••••••••" autocomplete="current-password" required>
+                    <button type="button" class="toggle-pass" id="togglePass">👁️</button>
+                </div>
+                <div class="field-hint" id="fieldHint"></div>
+            </div>
+            <button type="submit" class="btn-login" id="loginBtn">
+                <div class="btn-spinner" id="loginSpinner"></div>
+                <span id="loginBtnText">Se connecter →</span>
+            </button>
+        </form>
+        <div class="back-link"><a href="index.html">← Retour au site</a></div>
+    </div>
+</div>
+
+<!-- ============ ADMIN LAYOUT ============ -->
+<div class="admin-layout" id="adminLayout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sb-brand">
+            <div class="sb-brand-icon">🛡️</div>
+            <div>
+                <div class="sb-brand-name">Y8X</div>
+                <div class="sb-brand-sub">Admin Panel</div>
+            </div>
+        </div>
+
+        <div class="sb-section-label">Navigation</div>
+        <nav style="display:flex;flex-direction:column;gap:.25rem;flex:1;">
+            <button class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
+                <span class="ni-icon">📊</span><span>Dashboard</span>
+            </button>
+            <button class="nav-item" data-page="manage-cheats" onclick="showPage('manage-cheats')">
+                <span class="ni-icon">🛡️</span><span>Gérer les cheats</span>
+                <span class="ni-badge" id="navCheatCount">0</span>
+            </button>
+        </nav>
+
+        <div class="sb-footer">
+            <a href="index.html" class="btn-sb btn-back">
+                <span>🌐</span><span>Voir le site</span>
             </a>
-            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="header-discord">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
-                Discord
-            </a>
-        </div>
-    </header>
-    <!-- ===== HERO ===== -->
-    <div class="cheat-hero">
-        <div class="cheat-hero-badge">
-            <span class="cheat-hero-badge-dot"></span>
-            All cheats undetected
-        </div>
-        <h1 class="glitch" data-text="Cheats">Cheats</h1>
-        <div class="title-underline"></div>
-        <p class="cheat-hero-sub">Undetected cheats for your favorite games. Updated regularly and tested before
-            release.</p>
-        <!-- Stats -->
-        <div class="cheat-stats">
-            <div class="cheat-stat">
-                <span class="cheat-stat-num red" id="statTotalCheats">—</span>
-                <span class="cheat-stat-label">Cheats</span>
-            </div>
-            <div class="cheat-stat">
-                <span class="cheat-stat-num green" id="statUndetected">—</span>
-                <span class="cheat-stat-label">Undetected</span>
-            </div>
-            <div class="cheat-stat">
-                <span class="cheat-stat-num yellow" id="statGames">—</span>
-                <span class="cheat-stat-label">Games</span>
-            </div>
-        </div>
-    </div>
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="cheat-container">
-        <!-- REQUEST BANNER -->
-        <div class="cheat-request-banner">
-            <div class="cheat-request-text">
-                <h3>Missing a cheat?</h3>
-                <p>Join our Discord and request any game cheat. Our team reviews requests every week.</p>
-            </div>
-            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="cheat-request-btn">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
-                Request on Discord
-            </a>
-        </div>
-        <!-- ===== ALL CHEATS VIEW ===== -->
-        <div id="cheatsView">
-            <!-- Search Bar -->
-            <div class="search-bar-container">
-                <div class="search-bar-wrapper">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8" />
-                        <path d="m21 21-4.35-4.35" />
-                    </svg>
-                    <input type="text" class="search-bar" id="cheatSearch" placeholder="Search for a game...">
-                </div>
-            </div>
-            <!-- Filters -->
-            <div class="cheat-filters">
-                <button class="cheat-filter-btn active" data-filter="all">
-                    <span class="dot"></span> All
-                </button>
-                <button class="cheat-filter-btn" data-filter="external">
-                    <span class="dot"></span> External
-                </button>
-                <button class="cheat-filter-btn" data-filter="internal">
-                    <span class="dot"></span> Internal
-                </button>
-                <button class="cheat-filter-btn" data-filter="script">
-                    <span class="dot"></span> Script
-                </button>
-            </div>
-            <!-- Cheat groups -->
-            <div id="cheatsContainer"></div>
-        </div>
-        <!-- Footer -->
-        <footer class="site-footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 class="footer-logo">Y8X</h3>
-                    <p class="footer-tagline">The best cheats for your favorite games. Updated regularly.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Navigation</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="cheat.html">Cheats</a></li>
-                        <li><a href="https://discord.gg/nYK36E5D2X" target="_blank">Discord</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Community</h4>
-                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Join our Discord to request
-                        cheats or report issues.</p>
-                    <a href="https://discord.gg/nYK36E5D2X" class="footer-discord-btn" target="_blank" rel="noopener">
-                        <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
-                        JOIN
-                    </a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Y8X. All rights reserved.</p>
-                <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.
-                </div>
-            </div>
-        </footer>
-    </div>
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
-        </svg>
-    </button>
-    <!-- ===== MODALS ===== -->
-    <!-- FIVEM MODAL -->
-    <div id="fivem-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="fivem-modal-title" style="max-width:520px;">
-            <button class="close-btn" id="fivemCloseBtn" aria-label="Close">×</button>
-            <h2 id="fivem-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                🌐 Nova FiveM External — Installation
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">FiveM · Enter your activation key
-                below</p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div
-                    style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:rgba(167,139,250,0.07);border:1px solid rgba(167,139,250,0.3);border-radius:10px;">
-                    <div
-                        style="min-width:32px;height:32px;border-radius:50%;background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">
-                        🔑</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#9ca3af;margin-bottom:6px;">Activation Key
-                        </div>
-                        <div style="font-size:0.78rem;color:rgba(156, 163, 175,0.75);line-height:1.5;margin-bottom:10px;">
-                            When the loader asks for a key, enter:</div>
-                        <div
-                            style="background:rgba(0,0,0,0.35);border:1px solid rgba(167,139,250,0.4);border-radius:8px;padding:10px 16px;font-family:monospace;font-size:1rem;font-weight:800;color:#fff;letter-spacing:0.12em;text-align:center;">
-                            NOVAPLAY2026</div>
-                    </div>
-                </div>
-            </div>
-            <a href="https://www.clictune.com/mAF9" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download Nova FiveM External
-            </a>
-        </div>
-    </div>
-    <!-- AMNESIA MODAL -->
-    <div id="amnesia-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="amnesia-modal-title"
-            style="max-width:520px;">
-            <button class="close-btn" id="amnesiaCloseBtn" aria-label="Close">×</button>
-            <h2 id="amnesia-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                🛠️ Amnesia Cheat — Installation
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">GTA 5 Online · Follow every step
-                carefully</p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        1</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Create an account
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Go to <a
-                                href="https://amnesia-cheats.com" target="_blank" rel="noopener"
-                                style="color:#fca5a5;text-decoration:none;font-weight:600;">amnesia-cheats.com</a> and
-                            register a new account.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        2</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Log in</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Sign in with the account
-                            you just created.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        3</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Go to the Dashboard
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Navigate to your
-                            Dashboard after logging in.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        4</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the Loader
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Download the loader from
-                            your Dashboard.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        5</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Run the Loader as
-                            Administrator</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Right-click the loader
-                            and select <strong style="color:#fff;">Run as administrator</strong>.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        6</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Get your Key &amp;
-                            enter it</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Grab your license key
-                            from the Dashboard and paste it into the loader.</div>
-                    </div>
-                </div>
-                <div
-                    style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.25);border-radius:10px;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(234,179,8,0.15);border:1px solid rgba(234,179,8,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fde68a;flex-shrink:0;">
-                        ⚠️</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fde68a;margin-bottom:3px;">Disable BattlEye
-                            before injecting</div>
-                        <div style="font-size:0.78rem;color:rgba(253,230,138,0.7);line-height:1.5;">Before injecting,
-                            make sure to <strong style="color:#fde68a;">disable the BattlEye anti-cheat</strong>. Skip
-                            this step and you will get banned.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        7</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Launch GTA 5</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Start the game and wait
-                            until you are fully loaded in.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#86efac;flex-shrink:0;">
-                        8</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#86efac;margin-bottom:3px;">Inject &amp;
-                            enjoy!</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click <strong
-                                style="color:#fff;">Inject</strong> in the loader. You're good to go. Have fun! 🎮</div>
-                    </div>
-                </div>
-            </div>
-            <a href="https://amnesia-cheats.com" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Go to amnesia-cheats.com
-            </a>
-        </div>
-    </div>
-    <!-- BLOODSTRIKE MODAL -->
-    <div id="bloodstrike-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bloodstrike-modal-title"
-            style="max-width:520px;">
-            <button class="close-btn" id="bloodstrikeCloseBtn" aria-label="Close">×</button>
-            <h2 id="bloodstrike-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                🩸 Bloodstrike Cheat — Important Notice
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">Bloodstrike · Instructions for use
-            </p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div
-                    style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);border-radius:10px;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        ⚠️</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fca5a5;margin-bottom:3px;">In Testing /
-                            Semi-Detected</div>
-                        <div style="font-size:0.78rem;color:rgba(252,165,165,0.7);line-height:1.5;">This menu is
-                            currently in testing, so the cheat will <strong style="color:#fca5a5;">surely be
-                                Semi-Detected</strong>. Use it at your own risk!</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        1</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the cheat
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click the button below
-                            to download the cheat files.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        2</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Steam Launch
-                            Options</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Put this in your Steam
-                            launch options:<br>
-                            <code
-                                style="display:block;margin-top:8px;padding:8px 12px;background:rgba(15,15,20,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-family:monospace;color:#fca5a5;user-select:all;word-break:break-all;">cmd /min /C "set __COMPAT_LAYER=RUNASINVOKER &amp;&amp; start "" %command%"</code>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="https://www.clictune.com/mAvE" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download Bloodstrike Cheat
-            </a>
-        </div>
-    </div>
-    <!-- SCHEDULE 1 MODAL -->
-    <div id="schedule1-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="schedule1-modal-title"
-            style="max-width:520px;">
-            <button class="close-btn" id="schedule1CloseBtn" aria-label="Close">×</button>
-            <h2 id="schedule1-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                💊 Schedule 1 Cheat — Installation
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">Schedule 1 · Follow every step carefully</p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">1</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the cheat</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click the button below to download the cheat files.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">2</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Extract the archive</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Extract all files to a folder of your choice.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">3</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Launch Schedule 1</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Start the game first, then run the cheat loader as Administrator.</div>
-                    </div>
-                </div>
-            </div>
-            <a href="#" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download Schedule 1 Cheat
-            </a>
-        </div>
-    </div>
-    <!-- ROBLOX SCRIPT MODAL -->
-    <div id="roblox-script-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="roblox-script-modal-title" style="max-width:560px;">
-            <button class="close-btn" id="roblox-scriptCloseBtn" aria-label="Close">×</button>
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-                <span style="font-size:1.6rem;">🎮</span>
-                <div>
-                    <h2 id="roblox-script-modal-title" class="modal-title" style="font-size:1rem;">UnlockALL Rivals — Script</h2>
-                    <p style="margin:2px 0 0;font-size:0.75rem;color:var(--text-muted);">Roblox · Copy the script below</p>
-                </div>
-            </div>
-            <div class="roblox-code-box">
-                <pre id="robloxScriptCode">loadstring(game:HttpGet("https://pastefy.app/3F7BBrbQ/raw"))()</pre>
-                <button class="roblox-copy-btn" id="robloxCopyBtn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                    </svg>
-                    Copy Script
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- OUTDATED MODAL -->
-    <div id="outdated-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" style="max-width:460px;text-align:center;">
-            <button class="close-btn" id="outdatedCloseBtn" aria-label="Close">×</button>
-            <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
-            <h2
-                style="font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;color:#fde68a;margin-bottom:8px;letter-spacing:0.04em;">
-                Cheat Outdated</h2>
-            <p
-                style="font-size:0.82rem;color:rgba(253,230,138,0.7);line-height:1.7;margin-bottom:24px;max-width:340px;margin-left:auto;margin-right:auto;">
-                This cheat is currently <strong style="color:#fde68a;">not available for download</strong>. The
-                developers may be working on an update, the project may have been <strong
-                    style="color:#fde68a;">temporarily put on hold</strong>, or it may have been <strong
-                    style="color:#fde68a;">abandoned</strong>. Check back later or request an update on our Discord.
-            </p>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-                <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener"
-                    style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 24px;background:linear-gradient(135deg,#4b5563,#374151);border-radius:var(--radius-md);color:#fff;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(99,102,241,0.3);">
-                    <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
-                    Request an Update on Discord
-                </a>
-                <button id="outdatedDismissBtn"
-                    style="padding:10px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-md);color:var(--text-muted);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;">
-                    Dismiss
-                </button>
-            </div>
-            <p style="margin-top:18px;font-size:0.68rem;color:rgba(255,255,255,0.15);">We apologize for the
-                inconvenience.</p>
-        </div>
-    </div>
-    <!-- WARNING MODAL -->
-    <div id="warning-modal-bg" class="modal-bg" style="display:none; z-index: 100000;">
-        <div class="modal" role="dialog" aria-modal="true" style="max-width:480px;text-align:center; position: relative;">
-            <div style="position: absolute; top: 15px; right: 15px; display: flex; gap: 8px;">
-                <button id="lang-en" style="background:none;border:none;cursor:pointer;font-size:1.2rem;opacity:1;transition:opacity 0.2s;" aria-label="English">🇬🇧</button>
-                <button id="lang-fr" style="background:none;border:none;cursor:pointer;font-size:1.2rem;opacity:0.4;transition:opacity 0.2s;" aria-label="Français">🇫🇷</button>
-            </div>
-            
-            <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
-            
-            <h2 id="warning-title" style="font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:800;color:#ef4444;margin-bottom:12px;letter-spacing:0.04em;">
-                Disclaimer & Warning
-            </h2>
-            
-            <div id="warning-text-en" style="font-size:0.85rem;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:24px;">
-                By using any software provided on this site, you acknowledge that you do so <strong>at your own risk</strong>. 
-                We are <strong>not responsible</strong> if your game account gets banned, suspended, or restricted. 
-                Cheating goes against the terms of service of most games. Please use these tools responsibly.
-            </div>
-            
-            <div id="warning-text-fr" style="font-size:0.85rem;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:24px;display:none;">
-                En utilisant les logiciels fournis sur ce site, vous reconnaissez le faire <strong>à vos propres risques et périls</strong>. 
-                Nous ne sommes <strong>pas responsables</strong> si votre compte de jeu est banni, suspendu ou restreint. 
-                Veuillez assumer les conséquences de l'utilisation de ces outils.
-            </div>
-            
-            <button id="warningAcceptBtn" style="width:100%;padding:12px 24px;background:linear-gradient(135deg,#ef4444,#b91c1c);border-radius:var(--radius-md);color:#fff;font-weight:700;font-size:0.9rem;border:none;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(239,68,68,0.3);">
-                I Understand & Accept
+            <button class="btn-sb btn-logout" id="logoutBtn">
+                <span>🚪</span><span>Déconnexion</span>
             </button>
         </div>
-    </div>
-    <!-- ===== SCRIPTS ===== -->
-    <script src="protect.js"></script>
-    <script src="script.js"></script>
-    <script>
-        (async function () {
-            // ── Config ──────────────────────────────────────────────────────
-            const STATUS_CONFIG = {
-                'undetected': { label: 'Undetected', cls: 'undetected' },
-                'semi-detected': { label: 'Semi-Detected', cls: 'detected' },
-                'detected': { label: 'Detected', cls: 'detected' },
-                'outdated': { label: 'Outdated', cls: 'updating' }
-            };
-            function statusConf(s) { return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' }; }
-            // ── Elements ─────────────────────────────────────────────────────
-            const cheatsView = document.getElementById('cheatsView');
-            const cheatsContainer = document.getElementById('cheatsContainer');
-            const statTotalEl = document.getElementById('statTotalCheats');
-            const statUndetEl = document.getElementById('statUndetected');
-            const statGamesEl = document.getElementById('statGames');
-            // ── Animated Stats ────────────────────────────────────────────────
-            function animateValue(obj, start, end, duration) {
-                if (!obj) return;
-                let startTimestamp = null;
-                const step = (timestamp) => {
-                    if (!startTimestamp) startTimestamp = timestamp;
-                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                    const ease = 1 - Math.pow(1 - progress, 4);
-                    obj.innerHTML = Math.floor(ease * (end - start) + start);
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        obj.innerHTML = end;
-                    }
-                };
-                window.requestAnimationFrame(step);
-            }
-            // ── Load data ────────────────────────────────────────────────────
-            let cheats = {};
-            const paths = ['/api/cheat-status', 'cheat-status.json', '/cheat-status.json'];
-            for (const p of paths) {
-                try {
-                    const r = await fetch(p, { cache: 'no-store' });
-                    if (r.ok) { cheats = await r.json(); break; }
-                } catch (e) { }
-            }
-            if (!cheats || !Object.keys(cheats).length) {
-                cheatsContainer.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
-                return;
-            }
-            // ── Group by game ─────────────────────────────────────────────────
-            const byGame = {};
-            for (const [id, cheat] of Object.entries(cheats)) {
-                const key = cheat.game || 'Other';
-                if (!byGame[key]) byGame[key] = { icon: cheat.gameIcon || '🎮', image: cheat.image, cheats: [] };
-                byGame[key].cheats.push({ id, ...cheat });
-            }
-            // ── Stats ─────────────────────────────────────────────────────────
-            const total = Object.keys(cheats).length;
-            const undetectedCount = Object.values(cheats).filter(c => c.status === 'undetected').length;
-            const gamesCount = Object.keys(byGame).length;
-            
-            animateValue(statTotalEl, 0, total, 2000);
-            animateValue(statUndetEl, 0, undetectedCount, 2000);
-            animateValue(statGamesEl, 0, gamesCount, 2000);
-            // ── Build grouped cheat cards ─────────────────────────────────────
-            cheatsContainer.innerHTML = '';
-            let totalIndex = 0;
-            const gameEntries = Object.entries(byGame);
-            gameEntries.forEach(([gameName, group], gi) => {
-                // Game group header
-                const header = document.createElement('div');
-                header.className = 'cheat-game-header';
-                header.style.animationDelay = (0.05 + totalIndex * 0.07) + 's';
-                header.innerHTML = `
-                    <div class="cheat-game-header-icon">${group.icon}</div>
-                    <div class="cheat-game-header-name">${gameName}</div>
-                    <div class="cheat-game-header-count">${group.cheats.length} cheat${group.cheats.length > 1 ? 's' : ''}</div>
-                `;
-                cheatsContainer.appendChild(header);
-                totalIndex++;
-                // Cheat cards for this game
-                const grid = document.createElement('div');
-                grid.className = 'cheat-grid';
-                grid.setAttribute('data-game', gameName);
-                group.cheats.forEach((cheat, i) => {
-                    const sc = statusConf(cheat.status);
-                    const isOutdated = cheat.status === 'outdated';
-                    const typeMap = { 'external': 'External', 'internal': 'Internal', 'script': 'Script' };
-                    const typeBadgeClass = typeMap[cheat.type] ? cheat.type : 'internal';
-                    const typeLabel = typeMap[cheat.type] || 'Internal';
-                    const featuresHtml = (cheat.features || []).map(f =>
-                        `<span class="cheat-feature-tag">${f}</span>`
-                    ).join('');
-                    let href = cheat.link || '#';
-                    let targetAttr = 'target="_blank" rel="noopener"';
-                    if (cheat.hasModal || isOutdated) { href = '#'; targetAttr = ''; }
-                    const card = document.createElement('a');
-                    card.className = 'cheat-card';
-                    card.href = href;
-                    if (targetAttr) { card.target = '_blank'; card.rel = 'noopener'; }
-                    card.style.animationDelay = (0.05 + totalIndex * 0.08) + 's';
-                    const isScript = cheat.type === 'script';
-                    const metaBtn = isScript
-                        ? `<span class="cheat-card-download"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> View Script</span>`
-                        : `<span class="cheat-card-download"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</span>`;
-                    card.innerHTML = `
-                    <div class="cheat-card-thumb">
-                        <img src="${cheat.image}" alt="${cheat.title}" width="616" height="353" loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge ${sc.cls}">
-                            <span class="status-dot"></span>
-                            ${sc.label}
-                        </span>
-                        <span class="cheat-type-badge ${typeBadgeClass}">${typeLabel}</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">${cheat.title}</div>
-                        <div class="cheat-card-features">${featuresHtml}</div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                                </svg>
-                                ${isOutdated ? 'Outdated' : 'Up to date'}
-                            </span>
-                            ${metaBtn}
+    </aside>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- === DASHBOARD === -->
+        <div id="page-dashboard" class="admin-page-content visible">
+            <div class="page-header">
+                <div>
+                    <div class="page-title">Dashboard</div>
+                    <div class="page-sub">Vue d'ensemble de votre bibliothèque</div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card" style="--sc:#22c55e;--si-bg:rgba(34,197,94,.07);--si-bd:rgba(34,197,94,.16)">
+                    <div class="stat-icon">🛡️</div>
+                    <div><div class="stat-val" id="statCheats">–</div><div class="stat-lbl">Cheats</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#22c55e;--si-bg:rgba(34,197,94,.08);--si-bd:rgba(34,197,94,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">✅</div>
+                    <div><div class="stat-val" id="statUD">–</div><div class="stat-lbl">Undetected</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#eab308;--si-bg:rgba(234,179,8,.08);--si-bd:rgba(234,179,8,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">⚠️</div>
+                    <div><div class="stat-val" id="statSD">–</div><div class="stat-lbl">Semi-Detected</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#ef4444;--si-bg:rgba(239,68,68,.08);--si-bd:rgba(239,68,68,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">🚫</div>
+                    <div><div class="stat-val" id="statDetected">–</div><div class="stat-lbl">Detected</div></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-head">
+                    <div class="panel-head-title"><span>🔧</span> Mode maintenance</div>
+                </div>
+                <div class="panel-body">
+                    <div class="maintenance-panel">
+                        <div>
+                            <div id="maintenanceState" class="maintenance-state inactive">Statut maintenance inconnu</div>
+                            <div id="maintenanceMessage" class="maintenance-msg">Chargement du statut...</div>
                         </div>
+                        <button id="maintenanceToggleBtn" class="btn-primary sm maintenance-action-btn" type="button" onclick="toggleMaintenanceMode()">Chargement…</button>
                     </div>
-                `;
-                    if (isOutdated) {
-                        card.addEventListener('click', e => {
-                            e.preventDefault();
-                            openModal('outdated-modal-bg');
-                        });
-                    } else if (cheat.hasModal && cheat.modalId) {
-                        card.addEventListener('click', e => {
-                            e.preventDefault();
-                            openModal(cheat.modalId + '-modal-bg');
-                        });
-                    }
-                    grid.appendChild(card);
-                    totalIndex++;
-                });
-                cheatsContainer.appendChild(grid);
-            });
-            // ── Search + Filter ──────────────────────────────────────────────
-            function applyCheatFilter() {
-                const filter = document.querySelector('.cheat-filter-btn.active')?.getAttribute('data-filter') || 'all';
-                const query = (document.getElementById('cheatSearch')?.value || '').trim().toLowerCase();
-                document.querySelectorAll('#cheatsContainer .cheat-card').forEach(card => {
-                    const gameGroup = card.closest('.cheat-grid');
-                    const gameName = gameGroup?.getAttribute('data-game')?.toLowerCase() || '';
-                    const matchesSearch = !query || gameName.includes(query);
-                    const matchesFilter = filter === 'all' || card.querySelector('.cheat-type-badge')?.classList.contains(filter);
-                    card.classList.toggle('filter-hidden', !(matchesSearch && matchesFilter));
-                });
-                document.querySelectorAll('#cheatsContainer .cheat-grid').forEach(grid => {
-                    const visible = grid.querySelectorAll('.cheat-card:not(.filter-hidden)').length;
-                    const prev = grid.previousElementSibling;
-                    const hide = visible === 0;
-                    grid.style.display = hide ? 'none' : '';
-                    if (prev && prev.classList.contains('cheat-game-header')) {
-                        prev.style.display = hide ? 'none' : '';
-                    }
-                });
+                </div>
+            </div>
+        </div>
+
+        <!-- === MANAGE CHEATS === -->
+        <div id="page-manage-cheats" class="admin-page-content">
+            <div class="page-header">
+                <div>
+                    <div class="page-title">Gérer les Cheats</div>
+                    <div class="page-sub" id="cheatSubtitle">Modifiez le statut et les informations des cheats</div>
+                </div>
+                <button class="btn-primary sm" onclick="loadCheatStatuses()">🔄 Actualiser</button>
+            </div>
+
+            <!-- Cheat stats bar -->
+            <div class="stats-grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:1.5rem;">
+                <div class="stat-card" style="--sc:#22c55e;--si-bg:rgba(34,197,94,.08);--si-bd:rgba(34,197,94,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">✅</div>
+                    <div><div class="stat-val" id="cheatStatUD">–</div><div class="stat-lbl">Undetected</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#eab308;--si-bg:rgba(234,179,8,.08);--si-bd:rgba(234,179,8,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">⚠️</div>
+                    <div><div class="stat-val" id="cheatStatSD">–</div><div class="stat-lbl">Semi-Detected</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#ef4444;--si-bg:rgba(239,68,68,.08);--si-bd:rgba(239,68,68,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">🚫</div>
+                    <div><div class="stat-val" id="cheatStatD">–</div><div class="stat-lbl">Detected</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#6b7280;--si-bg:rgba(107,114,128,.08);--si-bd:rgba(107,114,128,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">🔄</div>
+                    <div><div class="stat-val" id="cheatStatOD">–</div><div class="stat-lbl">Outdated</div></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-head">
+                    <div class="panel-head-title"><span>🛡️</span> Statuts des Cheats</div>
+                </div>
+                <div class="panel-body">
+                    <div id="cheatsContainer">
+                        <div class="games-empty"><div class="em-ico">⏳</div>Chargement…</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- ============ EDIT CHEAT MODAL ============ -->
+<div class="modal-overlay" id="editCheatModal">
+    <div class="edit-modal">
+        <div class="modal-head">
+            <div class="modal-head-title">✏️ Modifier le cheat</div>
+            <button class="modal-close" onclick="closeEditCheatModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <form id="editCheatForm">
+                <input type="hidden" id="editCheatId">
+                <div class="form-grid">
+                    <div class="form-field span2">
+                        <label>Titre *</label>
+                        <input type="text" id="ecTitle" placeholder="Nom du cheat" required>
+                    </div>
+                    <div class="form-field">
+                        <label>Lien de téléchargement</label>
+                        <input type="text" id="ecLink" placeholder="https://...">
+                    </div>
+                    <div class="form-field">
+                        <label>Statut *</label>
+                        <select id="ecStatus">
+                            <option value="undetected">✅ Undetected</option>
+                            <option value="semi-detected">⚠️ Semi-Detected</option>
+                            <option value="detected">🚫 Detected</option>
+                            <option value="outdated">🔄 Outdated</option>
+                        </select>
+                    </div>
+                    <div class="form-field span2">
+                        <label>Features (séparées par des virgules)</label>
+                        <input type="text" id="ecFeatures" placeholder="Aimbot, ESP, Wallhack">
+                    </div>
+                </div>
+                <div class="form-actions" style="margin-top:1.25rem">
+                    <button type="submit" class="btn-primary">💾 Sauvegarder</button>
+                    <button type="button" class="btn-ghost" onclick="closeEditCheatModal()">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+const LOGIN_KEY = 'adminLoggedIn';
+const PASS_KEY = 'adminPass';
+const SESSION_EXP = 'adminSessionExpires';
+const ATTEMPTS_KEY = 'adminFailedAttempts';
+const LOCKOUT_KEY = 'adminLockoutUntil';
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_MS = 3 * 60 * 1000;
+const SESSION_MS = 4 * 60 * 60 * 1000;
+
+let cheatStatuses = {};
+let maintenanceStatus = { enabled: false, message: '' };
+let lockoutInterval = null;
+
+/* ===== TOAST ===== */
+function toast(msg, type = 'info') {
+    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+    const t = document.createElement('div');
+    t.className = 'toast ' + type;
+    t.innerHTML = `<span class="ti">${icons[type]}</span><span>${msg}</span>`;
+    document.getElementById('toastContainer').appendChild(t);
+    setTimeout(() => { t.classList.add('hide'); setTimeout(() => t.remove(), 300); }, 3500);
+}
+
+/* ===== AUTH ===== */
+function isLoggedIn() {
+    if (sessionStorage.getItem(LOGIN_KEY) !== '1') return false;
+    const exp = parseInt(sessionStorage.getItem(SESSION_EXP) || '0', 10);
+    if (Date.now() > exp) { sessionStorage.clear(); return false; }
+    return true;
+}
+function getPass() { return sessionStorage.getItem(PASS_KEY); }
+function getAttempts() { return parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0', 10); }
+function incAttempts() { const n = getAttempts() + 1; localStorage.setItem(ATTEMPTS_KEY, n); return n; }
+function resetAttempts() { localStorage.removeItem(ATTEMPTS_KEY); localStorage.removeItem(LOCKOUT_KEY); }
+function getLockout() { return parseInt(localStorage.getItem(LOCKOUT_KEY) || '0', 10); }
+function setLockout() { const u = Date.now() + LOCKOUT_MS; localStorage.setItem(LOCKOUT_KEY, u); return u; }
+function isLocked() { return Date.now() < getLockout(); }
+
+function updateDots(used) {
+    for (let i = 0; i < MAX_ATTEMPTS; i++) {
+        const d = document.getElementById('dot' + i);
+        if (!d) continue;
+        d.classList.remove('used', 'last-used');
+        if (i < used) { d.classList.add('used'); if (i === used - 1) d.classList.add('last-used'); }
+    }
+    const lbl = document.getElementById('attemptsLabel');
+    if (used > 0 && used < MAX_ATTEMPTS) {
+        lbl.style.display = ''; lbl.textContent = `${MAX_ATTEMPTS - used} essai${MAX_ATTEMPTS - used > 1 ? 's' : ''} restant`;
+    } else lbl.style.display = 'none';
+}
+
+function startLockoutUI(until) {
+    const card = document.getElementById('loginCard');
+    const banner = document.getElementById('lockoutBanner');
+    const timer = document.getElementById('lockoutTimer');
+    const btn = document.getElementById('loginBtn');
+    const inp = document.getElementById('adminPassword');
+    card.classList.add('locked');
+    banner.classList.add('active');
+    btn.disabled = true; inp.disabled = true;
+    updateDots(MAX_ATTEMPTS);
+    if (lockoutInterval) clearInterval(lockoutInterval);
+    lockoutInterval = setInterval(() => {
+        const rem = Math.max(0, until - Date.now());
+        const m = Math.floor(rem / 60000), s = Math.floor((rem % 60000) / 1000);
+        timer.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        if (rem <= 0) {
+            clearInterval(lockoutInterval); lockoutInterval = null;
+            resetAttempts();
+            card.classList.remove('locked'); banner.classList.remove('active');
+            btn.disabled = false; inp.disabled = false; inp.value = '';
+            setFieldHint('Vous pouvez réessayer.', 'ok'); updateDots(0);
+        }
+    }, 500);
+}
+
+function setFieldHint(msg, cls = '') {
+    const h = document.getElementById('fieldHint');
+    h.textContent = msg; h.className = 'field-hint ' + cls;
+}
+
+function shakeField() {
+    const wrap = document.getElementById('pwWrap');
+    const inp = document.getElementById('adminPassword');
+    wrap.classList.remove('shake'); inp.classList.add('err');
+    void wrap.offsetWidth; wrap.classList.add('shake');
+    setTimeout(() => { wrap.classList.remove('shake'); inp.classList.remove('err'); }, 600);
+}
+
+document.getElementById('togglePass').addEventListener('click', function () {
+    const inp = document.getElementById('adminPassword');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    this.textContent = inp.type === 'password' ? '👁️' : '🙈';
+});
+
+(function init() {
+    updateDots(getAttempts());
+    if (isLocked()) startLockoutUI(getLockout());
+    if (isLoggedIn()) showAdmin();
+})();
+
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (isLocked()) { shakeField(); return; }
+    const pw = document.getElementById('adminPassword').value;
+    setFieldHint('');
+    const btn = document.getElementById('loginBtn');
+    const txt = document.getElementById('loginBtnText');
+    document.getElementById('loginSpinner').style.display = 'block';
+    btn.classList.add('loading'); btn.disabled = true;
+    txt.textContent = 'Connexion…';
+    try {
+        const res = await fetch('/api/check-admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: pw }) });
+        if (res.ok) {
+            resetAttempts(); updateDots(0);
+            sessionStorage.setItem(LOGIN_KEY, '1');
+            sessionStorage.setItem(PASS_KEY, pw);
+            sessionStorage.setItem(SESSION_EXP, String(Date.now() + SESSION_MS));
+            showAdmin();
+            toast('Connecté avec succès ! Bienvenue.', 'success');
+        } else {
+            const d = await res.json().catch(() => ({}));
+            const n = incAttempts(); updateDots(n); shakeField();
+            if (n >= MAX_ATTEMPTS) {
+                const until = setLockout();
+                setFieldHint('Compte verrouillé suite à trop de tentatives.', 'err');
+                startLockoutUI(until);
+                toast('🔒 Trop de tentatives. Verrouillé 3 minutes.', 'error');
+            } else {
+                const rem = MAX_ATTEMPTS - n;
+                setFieldHint(`${d.error || 'Mot de passe incorrect'} (${rem} essai${rem > 1 ? 's' : ''} restant)`, 'err');
+                toast(d.error || 'Mot de passe incorrect', 'error');
             }
-            document.querySelectorAll('.cheat-filter-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    document.querySelectorAll('.cheat-filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    applyCheatFilter();
-                });
-            });
-            const searchInput = document.getElementById('cheatSearch');
-            if (searchInput) {
-                searchInput.addEventListener('input', applyCheatFilter);
-            }
-            // ── Modal helpers ─────────────────────────────────────────────────
-            function openModal(id) {
-                const bg = document.getElementById(id);
-                if (!bg) return;
-                bg.style.display = 'flex';
-                bg.offsetHeight;
-                bg.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            }
-            function closeModal(bg) {
-                if (!bg) return;
-                bg.classList.remove('show');
-                setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-            }
-            ['fivem', 'amnesia', 'bloodstrike', 'schedule1', 'roblox-script', 'outdated'].forEach(id => {
-                const bg = document.getElementById(id + '-modal-bg');
-                if (!bg) return;
-                const closeBtn = bg.querySelector('.close-btn');
-                if (closeBtn) closeBtn.addEventListener('click', () => closeModal(bg));
-                bg.addEventListener('click', e => { if (e.target === bg) closeModal(bg); });
-                document.addEventListener('keydown', e => {
-                    if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal(bg);
-                });
-            });
-            const dismissBtn = document.getElementById('outdatedDismissBtn');
-            if (dismissBtn) dismissBtn.addEventListener('click', () => closeModal(document.getElementById('outdated-modal-bg')));
-            // ── Roblox script copy ────────────────────────────────────────────
-            const robloxCopyBtn = document.getElementById('robloxCopyBtn');
-            if (robloxCopyBtn) {
-                robloxCopyBtn.addEventListener('click', async function () {
-                    const code = document.getElementById('robloxScriptCode')?.textContent || '';
-                    try {
-                        await navigator.clipboard.writeText(code);
-                        this.classList.add('copied');
-                        this.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
-                        setTimeout(() => {
-                            this.classList.remove('copied');
-                            this.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Script`;
-                        }, 2000);
-                    } catch {
-                        this.textContent = 'Failed to copy';
-                    }
-                });
-            }
-            // ── Warning Modal Logic ────────────────────────────────────────────────
-            const warningModalBg = document.getElementById('warning-modal-bg');
-            const warningAcceptBtn = document.getElementById('warningAcceptBtn');
-            const langEnBtn = document.getElementById('lang-en');
-            const langFrBtn = document.getElementById('lang-fr');
-            const textEn = document.getElementById('warning-text-en');
-            const textFr = document.getElementById('warning-text-fr');
-            const titleEl = document.getElementById('warning-title');
-            if (warningModalBg && !localStorage.getItem('cheatWarningAccepted')) {
-                // Show modal on load
-                setTimeout(() => {
-                    warningModalBg.style.display = 'flex';
-                    warningModalBg.offsetHeight; // trigger reflow
-                    warningModalBg.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                }, 500);
-            }
-            if (warningAcceptBtn) {
-                warningAcceptBtn.addEventListener('click', () => {
-                    localStorage.setItem('cheatWarningAccepted', 'true');
-                    warningModalBg.classList.remove('show');
-                    setTimeout(() => { 
-                        warningModalBg.style.display = 'none'; 
-                        document.body.style.overflow = ''; 
-                    }, 500);
-                });
-            }
-            if (langEnBtn && langFrBtn) {
-                langEnBtn.addEventListener('click', () => {
-                    langEnBtn.style.opacity = '1';
-                    langFrBtn.style.opacity = '0.4';
-                    textEn.style.display = 'block';
-                    textFr.style.display = 'none';
-                    warningAcceptBtn.textContent = 'I Understand & Accept';
-                    titleEl.textContent = 'Disclaimer & Warning';
-                });
-                langFrBtn.addEventListener('click', () => {
-                    langFrBtn.style.opacity = '1';
-                    langEnBtn.style.opacity = '0.4';
-                    textFr.style.display = 'block';
-                    textEn.style.display = 'none';
-                    warningAcceptBtn.textContent = 'Je Comprends et J\'accepte';
-                    titleEl.textContent = 'Avertissement';
-                });
-            }
-        })();
-    </script>
-    <script>
-        // Sticky header
-        (function () {
-            const header = document.getElementById('siteHeader');
-            if (!header) return;
-            window.addEventListener('scroll', () => {
-                header.classList.toggle('scrolled', window.scrollY > 20);
-            }, { passive: true });
-        })();
-        // Back to top
-        (function () {
-            const btn = document.getElementById('backToTop');
-            if (!btn) return;
-            window.addEventListener('scroll', () => {
-                btn.classList.toggle('show', window.scrollY > 500);
-            }, { passive: true });
-            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        })();
-    </script>
+        }
+    } catch (err) {
+        setFieldHint('Erreur réseau. Vérifiez votre connexion.', 'err');
+        toast('Erreur réseau : ' + err.message, 'error');
+    } finally {
+        btn.classList.remove('loading'); btn.disabled = false;
+        document.getElementById('loginSpinner').style.display = 'none';
+        txt.textContent = 'Se connecter →';
+    }
+});
+
+function showAdmin() {
+    document.getElementById('loginScreen').classList.remove('active');
+    document.getElementById('adminLayout').classList.add('active');
+    loadCheatStatuses(); loadMaintenanceStatus();
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.clear();
+    document.getElementById('adminLayout').classList.remove('active');
+    document.getElementById('loginScreen').classList.add('active');
+    document.getElementById('adminPassword').value = '';
+    toast('Déconnecté.', 'info');
+});
+
+/* ===== NAVIGATION ===== */
+function showPage(page) {
+    document.querySelectorAll('.admin-page-content').forEach(el => el.classList.remove('visible'));
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById('page-' + page);
+    if (el) { el.classList.add('visible'); }
+    const nav = document.querySelector(`[data-page="${page}"]`);
+    if (nav) nav.classList.add('active');
+}
+
+/* ===== LOAD CHEATS ===== */
+async function loadCheatStatuses() {
+    try {
+        const res = await fetch('/api/cheat-status', { cache: 'no-store' });
+        cheatStatuses = res.ok ? await res.json() : {};
+    } catch { cheatStatuses = {}; }
+    renderCheatList();
+    updateStats();
+    document.getElementById('navCheatCount').textContent = Object.keys(cheatStatuses).length;
+}
+
+async function loadMaintenanceStatus() {
+    try {
+        const res = await fetch('/api/maintenance-status', { cache: 'no-store' });
+        maintenanceStatus = res.ok ? await res.json() : { enabled: false, message: '' };
+    } catch {
+        maintenanceStatus = { enabled: false, message: '' };
+    }
+    renderMaintenanceStatus();
+}
+
+function renderMaintenanceStatus() {
+    const state = document.getElementById('maintenanceState');
+    const message = document.getElementById('maintenanceMessage');
+    const button = document.getElementById('maintenanceToggleBtn');
+    if (!state || !message || !button) return;
+    state.textContent = maintenanceStatus.enabled ? 'Maintenance activée' : 'Maintenance désactivée';
+    state.className = 'maintenance-state ' + (maintenanceStatus.enabled ? 'active' : 'inactive');
+    message.textContent = maintenanceStatus.message || (maintenanceStatus.enabled ? 'Le site est actuellement en maintenance.' : 'Aucune maintenance active.');
+    button.textContent = maintenanceStatus.enabled ? 'Désactiver la maintenance' : 'Activer la maintenance';
+    button.disabled = false;
+}
+
+async function toggleMaintenanceMode() {
+    const button = document.getElementById('maintenanceToggleBtn');
+    if (!button) return;
+    const newEnabled = !maintenanceStatus.enabled;
+    button.disabled = true;
+    try {
+        const res = await fetch('/api/set-maintenance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ adminPassword: getPass(), enabled: newEnabled, message: newEnabled ? 'Maintenance en cours, retour bientôt.' : '' })
+        });
+        let data = {};
+        try {
+            data = await res.json();
+        } catch (parseErr) {
+            const text = await res.text().catch(() => '');
+            data = { error: text || `HTTP ${res.status}` };
+        }
+        if (res.ok) {
+            maintenanceStatus = data.maintenance || { enabled: newEnabled, message: newEnabled ? 'Maintenance en cours, retour bientôt.' : '' };
+            renderMaintenanceStatus();
+            toast(newEnabled ? 'Mode maintenance activé.' : 'Mode maintenance désactivé.', 'success');
+        } else {
+            button.disabled = false;
+            toast(data.error || `Erreur ${res.status}`, 'error');
+        }
+    } catch (err) {
+        button.disabled = false;
+        toast('Erreur réseau', 'error');
+    }
+}
+
+/* ===== STATS ===== */
+function updateStats() {
+    document.getElementById('statCheats').textContent = Object.keys(cheatStatuses).length || '–';
+    const counts = { undetected: 0, 'semi-detected': 0, detected: 0 };
+    Object.values(cheatStatuses).forEach(c => { if (counts[c.status] !== undefined) counts[c.status]++; });
+    document.getElementById('statUD').textContent = counts['undetected'];
+    document.getElementById('statSD').textContent = counts['semi-detected'];
+    document.getElementById('statDetected').textContent = counts['detected'];
+}
+
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+/* ===== CHEATS RENDER ===== */
+function renderCheatList() {
+    const container = document.getElementById('cheatsContainer');
+    if (!container) return;
+    const entries = Object.entries(cheatStatuses);
+    if (!entries.length) {
+        container.innerHTML = '<div class="games-empty"><div class="em-ico">🛡️</div>Aucun cheat trouvé.</div>';
+        return;
+    }
+    // Update cheat stats
+    const counts = { undetected: 0, 'semi-detected': 0, detected: 0, outdated: 0 };
+    entries.forEach(([, c]) => { if (counts[c.status] !== undefined) counts[c.status]++; });
+    document.getElementById('cheatStatUD').textContent = counts['undetected'];
+    document.getElementById('cheatStatSD').textContent = counts['semi-detected'];
+    document.getElementById('cheatStatD').textContent = counts['detected'];
+    document.getElementById('cheatStatOD').textContent = counts['outdated'];
+
+    const STATUS_COLOR = {
+        'undetected':    '#22c55e',
+        'semi-detected': '#eab308',
+        'detected':      '#ef4444',
+        'outdated':      '#6b7280'
+    };
+
+    let html = '<div class="cheats-grid">';
+    for (const [id, cheat] of entries) {
+        const status = cheat.status || 'undetected';
+        const color = STATUS_COLOR[status] || '#8b5cf6';
+        const statusLabel = { 'undetected': 'Undetected', 'semi-detected': 'Semi-Detected', 'detected': 'Detected', 'outdated': 'Outdated' }[status] || status;
+        const typeClass = cheat.type === 'external' ? 'external' : 'internal';
+        const typeLabel = cheat.type === 'external' ? 'External' : 'Internal';
+        const featsHtml = (cheat.features || []).map(f => `<span class="cheat-feat-tag">${escHtml(f)}</span>`).join('');
+        html += `
+        <div class="cheat-admin-card" style="--card-accent:${color}">
+            <div class="cheat-thumb-wrap">
+                ${cheat.image ? `<img src="${escHtml(cheat.image)}" alt="${escHtml(cheat.title || id)}" loading="lazy">` : ''}
+                <div class="cheat-thumb-overlay"></div>
+                <span class="cheat-status-pill ${status}">
+                    <span class="cheat-status-dot"></span>${statusLabel}
+                </span>
+                <span class="cheat-type-pill ${typeClass}">${typeLabel}</span>
+            </div>
+            <div class="cheat-card-body">
+                <div class="cheat-card-title">${escHtml(cheat.title || id)}</div>
+                <div class="cheat-card-game">${escHtml(cheat.game || '')} ${cheat.gameIcon || ''}</div>
+                <div class="cheat-features">${featsHtml}</div>
+                <div class="cheat-card-footer">
+                    <select class="cheat-status-select" data-id="${id}" onchange="saveCheatStatus('${id}')">
+                        <option value="undetected" ${status === 'undetected' ? 'selected' : ''}>✅ Undetected</option>
+                        <option value="semi-detected" ${status === 'semi-detected' ? 'selected' : ''}>⚠️ Semi-Detected</option>
+                        <option value="detected" ${status === 'detected' ? 'selected' : ''}>🚫 Detected</option>
+                        <option value="outdated" ${status === 'outdated' ? 'selected' : ''}>🔄 Outdated</option>
+                    </select>
+                    <button class="act-btn edit" title="Modifier" onclick="openEditCheatModal('${id}')">✏️</button>
+                    <button class="act-btn del" title="Supprimer" onclick="deleteCheat('${id}')">🗑️</button>
+                </div>
+            </div>
+        </div>`;
+    }
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+async function saveCheatStatus(id) {
+    const sel = document.querySelector(`.cheat-status-select[data-id="${id}"]`);
+    if (!sel) return;
+    const newStatus = sel.value;
+    try {
+        const res = await fetch('/api/update-cheat-status', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ adminPassword: getPass(), cheatId: id, status: newStatus })
+        });
+        const d = await res.json().catch(() => ({}));
+        if (res.ok) {
+            toast('Statut mis à jour !', 'success');
+            if (cheatStatuses[id]) cheatStatuses[id].status = newStatus;
+            renderCheatList();
+        } else toast(d.error || 'Erreur', 'error');
+    } catch { toast('Erreur réseau', 'error'); }
+}
+
+function openEditCheatModal(id) {
+    const cheat = cheatStatuses[id];
+    if (!cheat) return;
+    document.getElementById('editCheatId').value = id;
+    document.getElementById('ecTitle').value = cheat.title || '';
+    document.getElementById('ecLink').value = cheat.link || '';
+    document.getElementById('ecStatus').value = cheat.status || 'undetected';
+    document.getElementById('ecFeatures').value = Array.isArray(cheat.features) ? cheat.features.join(', ') : '';
+    document.getElementById('editCheatModal').classList.add('active');
+}
+function closeEditCheatModal() { document.getElementById('editCheatModal').classList.remove('active'); }
+document.getElementById('editCheatModal').addEventListener('click', e => { if (e.target === document.getElementById('editCheatModal')) closeEditCheatModal(); });
+
+document.getElementById('editCheatForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const id = document.getElementById('editCheatId').value;
+    const featsStr = document.getElementById('ecFeatures').value;
+    const updatedCheat = {
+        title: document.getElementById('ecTitle').value.trim(),
+        link: document.getElementById('ecLink').value.trim(),
+        status: document.getElementById('ecStatus').value,
+        features: featsStr ? featsStr.split(',').map(s => s.trim()).filter(Boolean) : []
+    };
+    const btn = this.querySelector('[type=submit]');
+    btn.textContent = '⏳ Sauvegarde…'; btn.disabled = true;
+    try {
+        const res = await fetch('/api/update-cheat', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ adminPassword: getPass(), cheatId: id, cheat: updatedCheat })
+        });
+        const d = await res.json().catch(() => ({}));
+        if (res.ok) { toast('Cheat modifié !', 'success'); closeEditCheatModal(); await loadCheatStatuses(); }
+        else toast(d.error || 'Erreur ' + res.status, 'error');
+    } catch (err) { toast('Erreur réseau : ' + err.message, 'error'); }
+    finally { btn.textContent = '💾 Sauvegarder'; btn.disabled = false; }
+});
+
+async function deleteCheat(id) {
+    const cheat = cheatStatuses[id];
+    if (!cheat || !confirm(`Supprimer définitivement "${cheat.title || id}" ?`)) return;
+    try {
+        const res = await fetch('/api/delete-cheat', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ adminPassword: getPass(), cheatId: id })
+        });
+        const d = await res.json().catch(() => ({}));
+        if (res.ok) { toast(`"${cheat.title || id}" supprimé.`, 'success'); await loadCheatStatuses(); }
+        else toast(d.error || 'Erreur', 'error');
+    } catch { toast('Erreur réseau', 'error'); }
+}
+
+
+</script>
 </body>
 </html>
