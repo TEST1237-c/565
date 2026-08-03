@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <script src="/maintenance-check.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y8X - Cracked Games & Cheats</title>
+    <title>Y8X - Cheats</title>
     <meta name="description"
-        content="Y8X - The ultimate destination for cracked games and premium cheats. Safe, fast, always up to date.">
+        content="Y8X - The ultimate destination for premium undetected cheats. Safe, fast, always up to date.">
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -52,23 +52,13 @@
 
             <!-- Subtitle -->
             <p class="hero-subtitle">
-                <strong>Free</strong> cracked games & <strong>undetected</strong> cheats —
+                <strong>Free</strong> & <strong>undetected</strong> cheats —
                 updated daily, safe to use.
             </p>
 
             <!-- CTA Buttons -->
             <div class="hero-actions">
-                <a href="jeux.html" class="hero-btn hero-btn-primary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="6" width="20" height="12" rx="2" />
-                        <path d="M6 12h4M8 10v4" />
-                        <circle cx="15" cy="11" r="1" />
-                        <circle cx="18" cy="13" r="1" />
-                    </svg>
-                    Browse Games
-                </a>
-                <a href="cheat.html" class="hero-btn hero-btn-secondary">
+                <a href="cheat.html" class="hero-btn hero-btn-primary">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -80,11 +70,6 @@
 
             <!-- Stats -->
             <div class="hero-stats">
-                <div class="hero-stat-item">
-                    <span class="hero-stat-number" id="statGames">300+</span>
-                    <span class="hero-stat-label">Games</span>
-                </div>
-                <div class="hero-stat-divider"></div>
                 <div class="hero-stat-item">
                     <span class="hero-stat-number">100%</span>
                     <span class="hero-stat-label">Free</span>
@@ -144,7 +129,7 @@
                     </svg>
                 </div>
                 <h3 class="feature-title">Daily Updates</h3>
-                <p class="feature-desc">New games added every day. Our library keeps growing so you always find what
+                <p class="feature-desc">New cheats added regularly. Our library keeps growing so you always find what
                     you're looking for.</p>
             </div>
 
@@ -157,23 +142,21 @@
                     </svg>
                 </div>
                 <h3 class="feature-title">100% Free</h3>
-                <p class="feature-desc">No premium plans. No paywalls. Every game and cheat on Y8X is completely
+                <p class="feature-desc">No premium plans. No paywalls. Every cheat on Y8X is completely
                     free to access.</p>
             </div>
 
             <div class="feature-card" id="fc4">
-                <div class="feature-icon icon-gamepad">
+                <div class="feature-icon"
+                    style="background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(139,92,246,0.05));border-color:rgba(139,92,246,0.25);color:var(--accent-light)">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="6" width="20" height="12" rx="2" />
-                        <path d="M6 12h4M8 10v4" />
-                        <circle cx="15" cy="11" r="1" />
-                        <circle cx="18" cy="13" r="1" />
+                        <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline>
                     </svg>
                 </div>
-                <h3 class="feature-title">349+ Games</h3>
-                <p class="feature-desc">Solo and multiplayer titles across all genres. From AAA blockbusters to indie
-                    gems.</p>
+                <h3 class="feature-title">Fast Downloads</h3>
+                <p class="feature-desc">Direct links with no waiting time, captchas, or slow mirrors. Get your files
+                    instantly.</p>
             </div>
 
             <div class="feature-card" id="fc5">
@@ -219,7 +202,7 @@
                 <div class="howto-step-number">01</div>
                 <div class="howto-step-content">
                     <h3>Browse</h3>
-                    <p>Search through our library of 300+ games or cheats using filters.</p>
+                    <p>Search through our library of cheats using filters.</p>
                 </div>
             </div>
 
@@ -229,7 +212,7 @@
                 <div class="howto-step-number">02</div>
                 <div class="howto-step-content">
                     <h3>Select</h3>
-                    <p>Pick the game or cheat you want. Check the installation guide if needed.</p>
+                    <p>Pick the cheat you want. Check the installation guide if needed.</p>
                 </div>
             </div>
 
@@ -266,14 +249,13 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3 class="footer-logo">Y8X</h3>
-                <p class="footer-tagline">The ultimate destination for premium cracked games and undetected cheats.
+                <p class="footer-tagline">The ultimate destination for premium undetected cheats.
                     Safe, fast, and always up to date.</p>
             </div>
             <div class="footer-section">
                 <h4>Navigation</h4>
                 <ul class="footer-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="jeux.html">Games</a></li>
                     <li><a href="cheat.html">Cheats</a></li>
                     <li><a href="https://discord.gg/nYK36E5D2X" target="_blank">Discord</a></li>
                 </ul>
@@ -389,19 +371,7 @@
             }
         })();
 
-        // Live game count from games.json
-        (async function () {
-            try {
-                const res = await fetch('games.json', { cache: 'no-store' });
-                if (!res.ok) return;
-                const data = await res.json();
-                const count = Array.isArray(data) ? data.length : 0;
-                if (count > 0) {
-                    const el = document.getElementById('statGames');
-                    if (el) el.textContent = count + '+';
-                }
-            } catch (e) { }
-        })();
+
     </script>
 </body>
 
