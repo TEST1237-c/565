@@ -329,51 +329,6 @@
         .btn-ghost { padding: .75rem 1.5rem; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: transparent; color: var(--text2); font-size: .85rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: all .2s; }
         .btn-ghost:hover { background: rgba(255,255,255,.05); color: var(--text); border-color: rgba(255,255,255,.18); }
 
-        /* ========== TOOLBAR ========== */
-        .toolbar { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.1rem; }
-        .search-wrap { position: relative; flex: 1; min-width: 180px; }
-        .search-wrap .s-icon { position: absolute; left: .85rem; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: .85rem; pointer-events: none; }
-        .search-input {
-            width: 100%; padding: .65rem 1rem .65rem 2.6rem;
-            background: rgba(0,0,0,.25); border: 1px solid var(--border);
-            border-radius: 10px; color: #fff; font-size: .88rem; font-family: inherit;
-            outline: none; transition: border-color .2s, box-shadow .2s;
-        }
-        .search-input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
-        .search-input::placeholder { color: var(--text3); }
-        .filter-pill { padding: .5rem 1rem; border: 1px solid var(--border); border-radius: 99px; background: rgba(255,255,255,.02); color: var(--text2); font-size: .78rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .2s; }
-        .filter-pill.active { background: rgba(139,92,246,.18); border-color: rgba(139,92,246,.35); color: var(--violet2); }
-        .filter-pill:hover { border-color: rgba(255,255,255,.18); color: var(--text); }
-
-        /* ========== GAME ROWS ========== */
-        .games-table { display: flex; flex-direction: column; gap: .45rem; }
-        .game-row {
-            display: flex; align-items: center; gap: .85rem;
-            padding: .8rem 1rem; border-radius: 12px;
-            background: rgba(255,255,255,.02); border: 1px solid var(--border);
-            transition: all .2s;
-        }
-        .game-row:hover { background: rgba(255,255,255,.04); border-color: var(--border2); }
-        .game-thumb { width: 90px; height: 52px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: rgba(255,255,255,.04); }
-        .game-thumb-ph { width: 90px; height: 52px; border-radius: 8px; flex-shrink: 0; background: rgba(255,255,255,.04); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: rgba(255,255,255,.18); }
-        .game-info { flex: 1; min-width: 0; }
-        .g-title { font-weight: 700; color: var(--text); font-size: .88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .g-meta { display: flex; align-items: center; gap: .4rem; margin-top: .25rem; flex-wrap: wrap; }
-        .g-badge { font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; }
-        .g-badge.solo { background: rgba(6,182,212,.12); border: 1px solid rgba(6,182,212,.25); color: #67e8f9; }
-        .g-badge.multiplayer { background: rgba(139,92,246,.12); border: 1px solid rgba(139,92,246,.25); color: var(--violet2); }
-        .g-badge.modal { background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2); color: #86efac; }
-        .game-actions { display: flex; gap: .35rem; flex-shrink: 0; }
-        .act-btn { width: 32px; height: 32px; border: none; border-radius: 8px; cursor: pointer; font-size: .85rem; display: flex; align-items: center; justify-content: center; transition: all .2s; flex-shrink: 0; }
-        .act-btn.edit { background: rgba(139,92,246,.18); color: var(--violet2); }
-        .act-btn.edit:hover { background: rgba(139,92,246,.35); }
-        .act-btn.vis { background: rgba(234,179,8,.1); color: #fde68a; }
-        .act-btn.vis:hover { background: rgba(234,179,8,.22); }
-        .act-btn.del { background: rgba(239,68,68,.1); color: #fca5a5; }
-        .act-btn.del:hover { background: rgba(239,68,68,.25); }
-        .games-empty { text-align: center; padding: 3rem 1rem; color: var(--text3); font-size: .88rem; }
-        .games-empty .em-ico { font-size: 2.5rem; margin-bottom: .75rem; opacity: .35; }
-
         /* ========== CHEAT CARDS in admin ========== */
         .cheats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
         .cheat-admin-card {
@@ -477,7 +432,7 @@
 <div class="login-screen active" id="loginScreen">
     <div class="login-card" id="loginCard">
         <div class="login-icon-wrap" id="loginIcon">🔐</div>
-        <div class="login-title">NOVAPLAY ADMIN</div>
+        <div class="login-title">Y8X ADMIN</div>
         <div class="login-sub">Accès sécurisé au panneau d'administration</div>
         <div class="attempt-dots" id="attemptDots">
             <div class="attempt-dot" id="dot0"></div>
@@ -521,7 +476,7 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sb-brand">
-            <div class="sb-brand-icon">🎮</div>
+            <div class="sb-brand-icon">🛡️</div>
             <div>
                 <div class="sb-brand-name">Y8X</div>
                 <div class="sb-brand-sub">Admin Panel</div>
@@ -532,13 +487,6 @@
         <nav style="display:flex;flex-direction:column;gap:.25rem;flex:1;">
             <button class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
                 <span class="ni-icon">📊</span><span>Dashboard</span>
-            </button>
-            <button class="nav-item" data-page="add-game" onclick="showPage('add-game')">
-                <span class="ni-icon">➕</span><span>Ajouter un jeu</span>
-            </button>
-            <button class="nav-item" data-page="manage-games" onclick="showPage('manage-games')">
-                <span class="ni-icon">🗂️</span><span>Gérer les jeux</span>
-                <span class="ni-badge" id="navGameCount">0</span>
             </button>
             <button class="nav-item" data-page="manage-cheats" onclick="showPage('manage-cheats')">
                 <span class="ni-icon">🛡️</span><span>Gérer les cheats</span>
@@ -568,21 +516,21 @@
                 </div>
             </div>
             <div class="stats-grid">
-                <div class="stat-card" style="--sc:#8b5cf6;--si-bg:rgba(139,92,246,.1);--si-bd:rgba(139,92,246,.2)">
-                    <div class="stat-icon">🎮</div>
-                    <div><div class="stat-val" id="statTotal">–</div><div class="stat-lbl">Total jeux</div></div>
-                </div>
-                <div class="stat-card" style="--sc:#06b6d4;--si-bg:rgba(6,182,212,.08);--si-bd:rgba(6,182,212,.18)">
-                    <div class="stat-icon">👤</div>
-                    <div><div class="stat-val" id="statSolo">–</div><div class="stat-lbl">Solo</div></div>
-                </div>
-                <div class="stat-card" style="--sc:#a78bfa;--si-bg:rgba(167,139,250,.08);--si-bd:rgba(167,139,250,.18)">
-                    <div class="stat-icon">👥</div>
-                    <div><div class="stat-val" id="statMulti">–</div><div class="stat-lbl">Multijoueur</div></div>
-                </div>
                 <div class="stat-card" style="--sc:#22c55e;--si-bg:rgba(34,197,94,.07);--si-bd:rgba(34,197,94,.16)">
                     <div class="stat-icon">🛡️</div>
                     <div><div class="stat-val" id="statCheats">–</div><div class="stat-lbl">Cheats</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#22c55e;--si-bg:rgba(34,197,94,.08);--si-bd:rgba(34,197,94,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">✅</div>
+                    <div><div class="stat-val" id="statUD">–</div><div class="stat-lbl">Undetected</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#eab308;--si-bg:rgba(234,179,8,.08);--si-bd:rgba(234,179,8,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">⚠️</div>
+                    <div><div class="stat-val" id="statSD">–</div><div class="stat-lbl">Semi-Detected</div></div>
+                </div>
+                <div class="stat-card" style="--sc:#ef4444;--si-bg:rgba(239,68,68,.08);--si-bd:rgba(239,68,68,.18)">
+                    <div class="stat-icon" style="font-size:1rem;">🚫</div>
+                    <div><div class="stat-val" id="statDetected">–</div><div class="stat-lbl">Detected</div></div>
                 </div>
             </div>
             <div class="panel">
@@ -596,108 +544,6 @@
                             <div id="maintenanceMessage" class="maintenance-msg">Chargement du statut...</div>
                         </div>
                         <button id="maintenanceToggleBtn" class="btn-primary sm maintenance-action-btn" type="button" onclick="toggleMaintenanceMode()">Chargement…</button>
-                    </div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-head">
-                    <div class="panel-head-title"><span>🕐</span> Derniers jeux ajoutés</div>
-                </div>
-                <div class="panel-body">
-                    <div class="games-table" id="recentGamesList">
-                        <div class="games-empty"><div class="em-ico">⏳</div>Chargement…</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- === ADD GAME === -->
-        <div id="page-add-game" class="admin-page-content">
-            <div class="page-header">
-                <div>
-                    <div class="page-title">Ajouter un jeu</div>
-                    <div class="page-sub">Remplissez le formulaire pour ajouter un jeu</div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-head"><div class="panel-head-title"><span>📝</span> Informations du jeu</div></div>
-                <div class="panel-body">
-                    <form id="addGameForm">
-                        <div class="form-grid">
-                            <div class="form-field span2">
-                                <label>Titre du jeu *</label>
-                                <input type="text" name="title" placeholder="ex: Cyberpunk 2077" required>
-                            </div>
-                            <div class="form-field">
-                                <label>URL de l'image *</label>
-                                <input type="url" name="image" placeholder="https://..." required>
-                                <span class="hint">Recommandé : 616×353 (capsule Steam)</span>
-                            </div>
-                            <div class="form-field">
-                                <label>Lien de téléchargement *</label>
-                                <input type="url" name="link" placeholder="https://..." required>
-                            </div>
-                            <div class="form-field">
-                                <label>Mode *</label>
-                                <select name="mode" required>
-                                    <option value="solo">Solo</option>
-                                    <option value="multiplayer">Multijoueur</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div style="margin-top:1.25rem">
-                            <label class="toggle-row" for="hasModalAdd">
-                                <input type="checkbox" id="hasModalAdd" name="hasModal">
-                                <span class="toggle-knob"></span>
-                                <span class="toggle-label">📖 Ajouter des instructions d'installation (modal)</span>
-                            </label>
-                        </div>
-                        <div class="optional-fields" id="addModalFields">
-                            <div class="form-field">
-                                <label>ID modal (sans espaces)</label>
-                                <input type="text" name="modalId" placeholder="mon-jeu">
-                            </div>
-                            <div class="form-field">
-                                <label>Titre modal</label>
-                                <input type="text" name="modalTitle" placeholder="Comment installer ?">
-                            </div>
-                            <div class="form-field">
-                                <label>Contenu HTML du modal</label>
-                                <textarea name="modalContent" placeholder="<ul><li>Étape 1</li></ul>..."></textarea>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">➕ Ajouter le jeu</button>
-                            <button type="reset" class="btn-ghost">Réinitialiser</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- === MANAGE GAMES === -->
-        <div id="page-manage-games" class="admin-page-content">
-            <div class="page-header">
-                <div>
-                    <div class="page-title">Gérer les jeux</div>
-                    <div class="page-sub" id="manageSubtitle">Chargement…</div>
-                </div>
-                <button class="btn-primary sm" onclick="loadGames()">🔄 Actualiser</button>
-            </div>
-            <div class="panel">
-                <div class="panel-head"><div class="panel-head-title"><span>🗂️</span> Bibliothèque</div></div>
-                <div class="panel-body">
-                    <div class="toolbar">
-                        <div class="search-wrap">
-                            <span class="s-icon">🔍</span>
-                            <input type="text" class="search-input" id="manageSearch" placeholder="Rechercher…" oninput="filterGames()">
-                        </div>
-                        <button class="filter-pill active" data-filter="all" onclick="setFilter('all',this)">Tous</button>
-                        <button class="filter-pill" data-filter="solo" onclick="setFilter('solo',this)">Solo</button>
-                        <button class="filter-pill" data-filter="multiplayer" onclick="setFilter('multiplayer',this)">Multi</button>
-                    </div>
-                    <div class="games-table" id="manageGamesList">
-                        <div class="games-empty"><div class="em-ico">⏳</div>Chargement…</div>
                     </div>
                 </div>
             </div>
@@ -790,58 +636,6 @@
     </div>
 </div>
 
-<!-- ============ EDIT GAME MODAL ============ -->
-<div class="modal-overlay" id="editGameModal">
-    <div class="edit-modal">
-        <div class="modal-head">
-            <div class="modal-head-title">✏️ Modifier le jeu</div>
-            <button class="modal-close" onclick="closeEditModal()">×</button>
-        </div>
-        <div class="modal-body">
-            <form id="editGameForm">
-                <input type="hidden" id="editIdx">
-                <div class="form-grid">
-                    <div class="form-field span2">
-                        <label>Titre *</label>
-                        <input type="text" id="eTitle" placeholder="Titre du jeu" required>
-                    </div>
-                    <div class="form-field">
-                        <label>URL de l'image *</label>
-                        <input type="url" id="eImage" placeholder="https://..." required>
-                    </div>
-                    <div class="form-field">
-                        <label>Lien de téléchargement *</label>
-                        <input type="url" id="eLink" placeholder="https://..." required>
-                    </div>
-                    <div class="form-field">
-                        <label>Mode *</label>
-                        <select id="eMode">
-                            <option value="solo">Solo</option>
-                            <option value="multiplayer">Multijoueur</option>
-                        </select>
-                    </div>
-                </div>
-                <div style="margin-top:1rem">
-                    <label class="toggle-row" for="eHasModal">
-                        <input type="checkbox" id="eHasModal">
-                        <span class="toggle-knob"></span>
-                        <span class="toggle-label">📖 Instructions d'installation</span>
-                    </label>
-                </div>
-                <div class="optional-fields" id="eModalFields">
-                    <div class="form-field"><label>ID modal</label><input type="text" id="eModalId" placeholder="mon-jeu"></div>
-                    <div class="form-field"><label>Titre modal</label><input type="text" id="eModalTitle" placeholder="Comment installer ?"></div>
-                    <div class="form-field"><label>Contenu HTML</label><textarea id="eModalContent" placeholder="<ul><li>Étape 1</li></ul>"></textarea></div>
-                </div>
-                <div class="form-actions" style="margin-top:1.25rem">
-                    <button type="submit" class="btn-primary">💾 Sauvegarder</button>
-                    <button type="button" class="btn-ghost" onclick="closeEditModal()">Annuler</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script>
 const LOGIN_KEY = 'adminLoggedIn';
 const PASS_KEY = 'adminPass';
@@ -852,10 +646,8 @@ const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 3 * 60 * 1000;
 const SESSION_MS = 4 * 60 * 60 * 1000;
 
-let allGames = [];
 let cheatStatuses = {};
 let maintenanceStatus = { enabled: false, message: '' };
-let activeFilter = 'all';
 let lockoutInterval = null;
 
 /* ===== TOAST ===== */
@@ -992,7 +784,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 function showAdmin() {
     document.getElementById('loginScreen').classList.remove('active');
     document.getElementById('adminLayout').classList.add('active');
-    loadGames(); loadCheatStatuses(); loadMaintenanceStatus();
+    loadCheatStatuses(); loadMaintenanceStatus();
 }
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -1013,17 +805,6 @@ function showPage(page) {
     if (nav) nav.classList.add('active');
 }
 
-/* ===== LOAD GAMES ===== */
-async function loadGames() {
-    try {
-        const res = await fetch('/api/games', { cache: 'no-store' });
-        allGames = res.ok ? await res.json() : [];
-        if (!Array.isArray(allGames)) allGames = [];
-    } catch { allGames = []; }
-    updateStats(); renderManageList(); renderRecentList();
-    document.getElementById('navGameCount').textContent = allGames.length;
-}
-
 /* ===== LOAD CHEATS ===== */
 async function loadCheatStatuses() {
     try {
@@ -1031,6 +812,7 @@ async function loadCheatStatuses() {
         cheatStatuses = res.ok ? await res.json() : {};
     } catch { cheatStatuses = {}; }
     renderCheatList();
+    updateStats();
     document.getElementById('navCheatCount').textContent = Object.keys(cheatStatuses).length;
 }
 
@@ -1090,14 +872,12 @@ async function toggleMaintenanceMode() {
 
 /* ===== STATS ===== */
 function updateStats() {
-    const total = allGames.length;
-    const solo = allGames.filter(g => (g.mode || 'solo') === 'solo').length;
-    const multi = allGames.filter(g => g.mode === 'multiplayer').length;
-    document.getElementById('statTotal').textContent = total;
-    document.getElementById('statSolo').textContent = solo;
-    document.getElementById('statMulti').textContent = multi;
     document.getElementById('statCheats').textContent = Object.keys(cheatStatuses).length || '–';
-    document.getElementById('manageSubtitle').textContent = `${total} jeu${total !== 1 ? 'x' : ''} dans la bibliothèque`;
+    const counts = { undetected: 0, 'semi-detected': 0, detected: 0 };
+    Object.values(cheatStatuses).forEach(c => { if (counts[c.status] !== undefined) counts[c.status]++; });
+    document.getElementById('statUD').textContent = counts['undetected'];
+    document.getElementById('statSD').textContent = counts['semi-detected'];
+    document.getElementById('statDetected').textContent = counts['detected'];
 }
 
 function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -1234,144 +1014,7 @@ async function deleteCheat(id) {
     } catch { toast('Erreur réseau', 'error'); }
 }
 
-/* ===== GAMES RENDER ===== */
-function gameRowHTML(g, i) {
-    const mode = g.mode || 'solo';
-    return `
-    <div class="game-row" data-index="${i}" data-filter="${mode}" data-search="${(g.title + ' ' + mode).toLowerCase()}">
-        ${g.image
-            ? `<img src="${escHtml(g.image)}" alt="" class="game-thumb" onerror="this.style.display='none'">`
-            : `<div class="game-thumb-ph">🎮</div>`}
-        <div class="game-info">
-            <div class="g-title">${escHtml(g.title)}</div>
-            <div class="g-meta">
-                <span class="g-badge ${mode}">${mode === 'multiplayer' ? '👥 Multi' : '👤 Solo'}</span>
-                ${g.hasModal ? '<span class="g-badge modal">📖 Modal</span>' : ''}
-            </div>
-        </div>
-        <div class="game-actions">
-            <button class="act-btn edit" title="Modifier" onclick="openEditModal(${i})">✏️</button>
-            <button class="act-btn vis" title="Masquer/Afficher" onclick="toggleVis(${i})">${g.hidden ? '👁️' : '🙈'}</button>
-            <button class="act-btn del" title="Supprimer" onclick="deleteGame(${i}, '${escHtml(g.title).replace(/'/g, "\\'")}')">🗑️</button>
-        </div>
-    </div>`;
-}
 
-function renderManageList() {
-    const el = document.getElementById('manageGamesList');
-    if (!allGames.length) { el.innerHTML = '<div class="games-empty"><div class="em-ico">🎮</div>Aucun jeu.</div>'; return; }
-    el.innerHTML = allGames.map((g, i) => gameRowHTML(g, i)).join('');
-    filterGames();
-}
-
-function renderRecentList() {
-    const el = document.getElementById('recentGamesList');
-    const recent = [...allGames].slice(-5).reverse();
-    if (!recent.length) { el.innerHTML = '<div class="games-empty"><div class="em-ico">🎮</div>Aucun jeu.</div>'; return; }
-    el.innerHTML = recent.map((g, idx) => gameRowHTML(g, allGames.length - 1 - idx)).join('');
-}
-
-function setFilter(f, btn) {
-    activeFilter = f;
-    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); filterGames();
-}
-
-function filterGames() {
-    const q = (document.getElementById('manageSearch')?.value || '').trim().toLowerCase();
-    document.querySelectorAll('#manageGamesList .game-row').forEach(row => {
-        const mQ = !q || (row.dataset.search || '').includes(q);
-        const mF = activeFilter === 'all' || row.dataset.filter === activeFilter;
-        row.style.display = (mQ && mF) ? '' : 'none';
-    });
-}
-
-/* ===== ADD GAME ===== */
-document.getElementById('hasModalAdd').addEventListener('change', function () {
-    document.getElementById('addModalFields').classList.toggle('visible', this.checked);
-});
-
-document.getElementById('addGameForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const fd = new FormData(this);
-    const game = { title: fd.get('title'), image: fd.get('image'), link: fd.get('link'), mode: fd.get('mode') };
-    if (fd.get('hasModal') === 'on') {
-        game.hasModal = true;
-        game.modalId = fd.get('modalId') || game.title.toLowerCase().replace(/\s+/g, '-');
-        game.modalTitle = fd.get('modalTitle') || 'Installation';
-        game.modalContent = fd.get('modalContent') || '';
-    }
-    const btn = this.querySelector('[type=submit]');
-    btn.textContent = '⏳ Ajout…'; btn.disabled = true;
-    try {
-        const res = await fetch('/api/add-game', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ adminPassword: getPass(), game }) });
-        const d = await res.json().catch(() => ({}));
-        if (res.ok) { toast(`✨ "${game.title}" ajouté !`, 'success'); this.reset(); document.getElementById('addModalFields').classList.remove('visible'); await loadGames(); showPage('manage-games'); }
-        else toast(d.error || 'Erreur ' + res.status, 'error');
-    } catch (err) { toast('Erreur réseau : ' + err.message, 'error'); }
-    finally { btn.textContent = '➕ Ajouter le jeu'; btn.disabled = false; }
-});
-
-/* ===== EDIT GAME MODAL ===== */
-function openEditModal(i) {
-    const g = allGames[i]; if (!g) return;
-    document.getElementById('editIdx').value = i;
-    document.getElementById('eTitle').value = g.title || '';
-    document.getElementById('eImage').value = g.image || '';
-    document.getElementById('eLink').value = g.link || '';
-    document.getElementById('eMode').value = g.mode === 'multiplayer' ? 'multiplayer' : 'solo';
-    document.getElementById('eHasModal').checked = !!g.hasModal;
-    document.getElementById('eModalId').value = g.modalId || '';
-    document.getElementById('eModalTitle').value = g.modalTitle || '';
-    document.getElementById('eModalContent').value = g.modalContent || '';
-    document.getElementById('eModalFields').classList.toggle('visible', !!g.hasModal);
-    document.getElementById('editGameModal').classList.add('active');
-}
-function closeEditModal() { document.getElementById('editGameModal').classList.remove('active'); }
-document.getElementById('editGameModal').addEventListener('click', e => { if (e.target === document.getElementById('editGameModal')) closeEditModal(); });
-document.getElementById('eHasModal').addEventListener('change', function () { document.getElementById('eModalFields').classList.toggle('visible', this.checked); });
-
-document.getElementById('editGameForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const i = parseInt(document.getElementById('editIdx').value, 10);
-    const game = { title: document.getElementById('eTitle').value.trim(), image: document.getElementById('eImage').value.trim(), link: document.getElementById('eLink').value.trim(), mode: document.getElementById('eMode').value };
-    if (document.getElementById('eHasModal').checked) {
-        game.hasModal = true;
-        game.modalId = document.getElementById('eModalId').value.trim().replace(/\s+/g, '-') || game.title.toLowerCase().replace(/\s+/g, '-');
-        game.modalTitle = document.getElementById('eModalTitle').value.trim() || 'Installation';
-        game.modalContent = document.getElementById('eModalContent').value.trim();
-    }
-    const btn = this.querySelector('[type=submit]');
-    btn.textContent = '⏳ Sauvegarde…'; btn.disabled = true;
-    try {
-        const res = await fetch('/api/update-game', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ adminPassword: getPass(), index: i, game }) });
-        const d = await res.json().catch(() => ({}));
-        if (res.ok) { toast('Jeu modifié !', 'success'); closeEditModal(); await loadGames(); }
-        else toast(d.error || 'Erreur ' + res.status, 'error');
-    } catch (err) { toast('Erreur réseau : ' + err.message, 'error'); }
-    finally { btn.textContent = '💾 Sauvegarder'; btn.disabled = false; }
-});
-
-/* ===== DELETE / VIS ===== */
-async function deleteGame(i, title) {
-    if (!confirm(`Supprimer définitivement "${title}" ?`)) return;
-    try {
-        const res = await fetch('/api/delete-game', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ adminPassword: getPass(), index: i }) });
-        const d = await res.json().catch(() => ({}));
-        if (res.ok) { toast(`"${title}" supprimé.`, 'success'); await loadGames(); }
-        else toast(d.error || 'Erreur', 'error');
-    } catch { toast('Erreur réseau', 'error'); }
-}
-
-async function toggleVis(i) {
-    const g = allGames[i]; if (!g) return;
-    const updated = { ...g, hidden: !g.hidden };
-    try {
-        const res = await fetch('/api/update-game', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ adminPassword: getPass(), index: i, game: updated }) });
-        if (res.ok) { toast(updated.hidden ? `"${g.title}" masqué.` : `"${g.title}" affiché.`, 'info'); await loadGames(); }
-        else { const d = await res.json().catch(() => ({})); toast(d.error || 'Erreur', 'error'); }
-    } catch { toast('Erreur réseau', 'error'); }
-}
 </script>
 </body>
 </html>
