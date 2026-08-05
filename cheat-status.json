@@ -15,12 +15,12 @@
         ]
     },
     "cs2-internal": {
-        "status": "outdated",
-        "title": "Y8X CS2 WEB Internal",
+        "status": "undetected",
+        "title": "Y8X CS2 Internal",
         "game": "Counter-Strike 2",
         "gameIcon": "🎯",
         "image": "https://i.imgur.com/BERNwlM.jpeg",
-        "link": "https://www.clictune.com/mHLO",
+        "link": "https://www.clictune.com/n8TF",
         "type": "internal",
         "features": [
             "Aimbot",
