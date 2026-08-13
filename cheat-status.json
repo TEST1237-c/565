@@ -135,5 +135,20 @@
             "No Police",
             "Speed Hack"
         ]
+    },
+    "world-war-legion": {
+        "status": "undetected",
+        "title": "Y8X World War Legion",
+        "game": "World War Legion",
+        "gameIcon": "🪖",
+        "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3577060/339cad3e7f2d99e3f0760d742ac5a2dbd7bda499/capsule_616x353.jpg?t=1756825045",
+        "link": "https://www.clictune.com/nbrA",
+        "type": "internal",
+        "features": [
+            "Aimbot",
+            "ESP",
+            "Unlock",
+            "Misc"
+        ]
     }
 }
