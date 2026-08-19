@@ -1,1462 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <script src="maintenance-check.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y8X - Cheats</title>
-    <meta name="description" content="Y8X Cheats - cheats for your favorite games. Undetected & updated.">
+    <title>Y8X - All Cheats</title>
+    <meta name="description" content="Browse all available cheats on Y8X. Free, safe, and undetected.">
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* ===== CHEAT PAGE SPECIFIC ===== */
-        .cheat-hero {
-            padding: calc(var(--header-height) + 48px) var(--spacing-lg) 0;
-            text-align: center;
-            position: relative;
-        }
-        .cheat-hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.15), rgba(70, 70, 70, 0.1));
-            border: 1px solid rgba(107, 114, 128, 0.3);
-            border-radius: var(--radius-full);
-            padding: 6px 16px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            color: var(--accent-light);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(107, 114, 128, 0.15);
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
-        }
-        .cheat-hero-badge-dot {
-            width: 7px;
-            height: 7px;
-            background: #10b981;
-            border-radius: 50%;
-            animation: pulse-dot 1.8s ease-in-out infinite;
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
-        }
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.4);
-                opacity: 0.6;
-            }
-        }
-        .cheat-hero h1 {
-            font-size: clamp(2.8rem, 7vw, 5rem);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            background: linear-gradient(135deg, #fff 0%, var(--accent-light) 40%, var(--accent-violet) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0;
-            letter-spacing: 0.04em;
-            filter: drop-shadow(0 0 30px rgba(107, 114, 128, 0.4));
-            animation: cheatGradient 8s ease infinite, fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
-            opacity: 0;
-        }
-        @keyframes cheatGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .cheat-hero .title-underline {
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-violet), var(--accent-light), transparent);
-            border-radius: 999px;
-            margin: 12px auto 20px;
-            animation: underlineExpand 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.6s forwards, underlinePulse 3s ease-in-out 1.8s infinite;
-        }
-        @keyframes underlineExpand {
-            to { width: 100px; }
-        }
-        @keyframes underlinePulse {
-            0%, 100% { transform: scaleX(1); opacity: 0.8; }
-            50% { transform: scaleX(1.3); opacity: 1; }
-        }
-        .cheat-hero-sub {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 480px;
-            margin: 0 auto 36px;
-            line-height: 1.7;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-        }
-        @keyframes fadeSlideDown {
-            0% { opacity: 0; transform: translateY(-16px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        /* === STATS BAR (glassmorphic) === */
-        .cheat-stats {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            background: rgba(255, 255, 255, 0.025);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 0;
-            max-width: 520px;
-            margin: 0 auto 48px;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.5s forwards;
-        }
-        .cheat-stat {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 18px 20px;
-            gap: 4px;
-            position: relative;
-        }
-        .cheat-stat+.cheat-stat::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 20%;
-            height: 60%;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, var(--border-glass), transparent);
-        }
-        .cheat-stat-num {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-        }
-        .cheat-stat-num.red {
-            background: linear-gradient(135deg, #d1d5db, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .cheat-stat-num.green {
-            background: linear-gradient(135deg, #34d399, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .cheat-stat-num.yellow {
-            background: linear-gradient(135deg, #d1d5db, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .cheat-stat-label {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        /* === MAIN CONTAINER === */
-        .cheat-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-lg) 80px;
-        }
-        /* === REQUEST BANNER === */
-        .cheat-request-banner {
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.08), rgba(90, 90, 90, 0.05));
-            border: 1px solid rgba(107, 114, 128, 0.2);
-            border-radius: var(--radius-lg);
-            padding: 32px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
-            box-shadow: 0 10px 40px -10px rgba(107, 114, 128, 0.15);
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.7s forwards;
-        }
-        .cheat-request-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(107, 114, 128, 0.1) 0%, transparent 50%);
-            z-index: 0;
-            pointer-events: none;
-        }
-        .cheat-request-banner > * {
-            position: relative;
-            z-index: 1;
-        }
-        .cheat-request-text h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 6px;
-            letter-spacing: 0.04em;
-        }
-        .cheat-request-text p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-        .cheat-request-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 11px 24px;
-            background: linear-gradient(135deg, #4b5563, #374151);
-            border-radius: var(--radius-md);
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            box-shadow: 0 4px 20px rgba(90, 90, 90, 0.3);
-        }
-        .cheat-request-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(90, 90, 90, 0.5);
-        }
-        /* ===========================
-           GAME GROUP HEADER
-        =========================== */
-        .cheat-game-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 28px 0 16px;
-            margin-top: 8px;
-            position: relative;
-            opacity: 0;
-            animation: fadeSlideDown 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-        .cheat-game-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, var(--accent-violet), var(--border-glass) 60%, transparent);
-        }
-        .cheat-game-header:first-of-type {
-            padding-top: 0;
-        }
-        .cheat-game-header-icon {
-            font-size: 1.6rem;
-            flex-shrink: 0;
-        }
-        .cheat-game-header-name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.04em;
-            flex: 1;
-        }
-        .cheat-game-header-count {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-full);
-            padding: 4px 12px;
-            letter-spacing: 0.06em;
-        }
-        /* ===========================
-           CHEATS LIST
-        =========================== */
-        .cheat-filters {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 36px;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.6s forwards;
-        }
-        .cheat-filter-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-full);
-            color: var(--text-muted);
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .cheat-filter-btn:hover {
-            border-color: rgba(107, 114, 128, 0.4);
-            color: #fff;
-            background: rgba(107, 114, 128, 0.1);
-            transform: translateY(-2px);
-        }
-        .cheat-filter-btn.active {
-            background: linear-gradient(135deg, var(--accent-violet), var(--accent-dark));
-            border-color: var(--accent-light);
-            color: #fff;
-            box-shadow: 0 0 16px rgba(107, 114, 128, 0.3);
-        }
-        .cheat-filter-btn .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: currentColor;
-        }
-        .cheat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .cheat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: cardIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            will-change: transform;
-        }
-        @keyframes cardIn {
-            0% { opacity: 0; transform: translateY(20px) scale(0.97); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .cheat-card:hover {
-            border-color: rgba(107, 114, 128, 0.5);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -8px rgba(107, 114, 128, 0.4);
-        }
-        .cheat-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.05), transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .cheat-card:hover::before {
-            opacity: 1;
-        }
-        .cheat-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0);
-            transition: box-shadow 0.4s;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .cheat-card:hover::after {
-            box-shadow: inset 0 0 25px rgba(107, 114, 128, 0.15);
-        }
-        .cheat-card-thumb {
-            position: relative;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            background: rgba(15, 15, 25, 0.8);
-        }
-        .cheat-card-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease, filter 0.4s ease;
-            pointer-events: none;
-        }
-        .cheat-card:hover .cheat-card-thumb img {
-            transform: scale(1.08);
-            filter: brightness(0.55);
-        }
-        .cheat-card-thumb-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(5, 5, 8, 0.85) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .cheat-card:hover .cheat-card-thumb-overlay {
-            opacity: 1;
-        }
-        .cheat-status-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 10px;
-            border-radius: var(--radius-full);
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            backdrop-filter: blur(8px);
-            z-index: 2;
-        }
-        .cheat-status-badge.undetected {
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid rgba(34, 197, 94, 0.45);
-            color: #86efac;
-        }
-        .cheat-status-badge.updating {
-            background: rgba(234, 179, 8, 0.2);
-            border: 1px solid rgba(234, 179, 8, 0.4);
-            color: #fde68a;
-        }
-        .cheat-status-badge.detected {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            color: #fca5a5;
-        }
-        .cheat-status-badge .status-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: currentColor;
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-        .cheat-type-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 4px 10px;
-            border-radius: var(--radius-full);
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            backdrop-filter: blur(8px);
-            z-index: 2;
-        }
-        .cheat-type-badge.external {
-            background: rgba(107, 114, 128, 0.15);
-            border: 1px solid rgba(107, 114, 128, 0.35);
-            color: #d1d5db;
-        }
-        .cheat-type-badge.internal {
-            background: rgba(249, 115, 22, 0.15);
-            border: 1px solid rgba(249, 115, 22, 0.35);
-            color: #fdba74;
-        }
-        .cheat-type-badge.script {
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            color: #93c5fd;
-        }
-        .cheat-card-body {
-            padding: 18px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            position: relative;
-            z-index: 2;
-        }
-        .cheat-card-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.04em;
-        }
-        .cheat-card-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .cheat-feature-tag {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-glass);
-            border-radius: 6px;
-            padding: 3px 8px;
-            font-weight: 500;
-        }
-        .cheat-card-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: auto;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-glass);
-        }
-        .cheat-card-updated {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .cheat-card-download {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.2), rgba(70, 70, 70, 0.2));
-            border: 1px solid rgba(107, 114, 128, 0.3);
-            border-radius: var(--radius-full);
-            padding: 5px 14px;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .cheat-card:hover .cheat-card-download {
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.8), rgba(70, 70, 70, 0.8));
-            border-color: rgba(156, 163, 175, 0.5);
-            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
-            transform: translateY(-1px);
-        }
-        .cheat-card.filter-hidden {
-            display: none;
-        }
-        /* === ROBLOX SCRIPT MODAL === */
-        .roblox-code-box {
-            background: var(--bg-card);
-            border: 1px solid rgba(107, 114, 128, 0.25);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-        }
-        .roblox-code-box pre {
-            margin: 0;
-            padding: 18px 20px;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            white-space: pre-wrap;
-            word-break: break-all;
-            line-height: 1.7;
-            user-select: all;
-            background: rgba(0, 0, 0, 0.25);
-        }
-        .roblox-copy-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 12px 24px;
-            background: var(--bg-card);
-            border: none;
-            border-top: 1px solid var(--border-glass);
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.03em;
-        }
-        .roblox-copy-btn:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .roblox-copy-btn.copied {
-            color: #86efac;
-        }
-        /* === HEADER NAV LINK === */
-        .header-nav-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            border-radius: var(--radius-full);
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.25s ease;
-            border: 1px solid transparent;
-        }
-        .header-nav-link:hover {
-            color: var(--text-primary);
-            background: var(--bg-glass);
-            border-color: var(--border-glass);
-        }
-        .header-nav-link.active-page {
-            color: var(--accent-light);
-            background: rgba(107, 114, 128, 0.08);
-            border-color: rgba(107, 114, 128, 0.25);
-        }
-        /* === OUTDATED NOTICE === */
-        .cheat-outdated-notice {
-            display: flex;
-            align-items: flex-start;
-            gap: 7px;
-            margin-top: 10px;
-            padding: 10px 12px;
-            background: rgba(234, 179, 8, 0.06);
-            border: 1px solid rgba(234, 179, 8, 0.22);
-            border-radius: 8px;
-            font-size: 0.72rem;
-            color: rgba(253, 230, 138, 0.75);
-            line-height: 1.55;
-        }
-        /* === RESPONSIVE === */
-        @media (max-width: 640px) {
-            .cheat-stats {
-                max-width: 100%;
-            }
-            .cheat-request-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-            .cheat-request-banner .cheat-request-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            .cheat-hero {
-                padding-top: calc(var(--header-height) + 32px);
-            }
-            .cheat-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
-<body class="page-jeux page-cheat">
+
+<body>
     <noscript>
-        <div
-            style="position:fixed;inset:0;z-index:2147483647;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Inter,system-ui,sans-serif;padding:2rem;">
-            <div style="font-size:4rem;margin-bottom:1.5rem">&#9888;&#65039;</div>
-            <h2
-                style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 1rem">
-                JavaScript Required</h2>
-            <p style="color:rgba(200,200,230,0.65);font-size:1rem;max-width:420px;line-height:1.7;margin:0 0 1.5rem">
-                Y8X requires JavaScript to function.<br>Please enable it in your browser settings.</p>
-            <div
-                style="padding:10px 24px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.85rem;font-weight:600">
-                &#128295; Enable JavaScript and refresh the page</div>
-            <p style="color:rgba(200,200,230,0.2);font-size:0.7rem;margin-top:2rem">&#169; 2026 Y8X</p>
+        <div class="noscript">
+            <div style="text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem;">⚠️</div>
+                <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary);">
+                    JavaScript Required</h2>
+                <p style="font-size: 1rem; margin-bottom: 1.5rem; max-width: 420px; line-height: 1.7; color: var(--text-secondary);">
+                    Y8X requires JavaScript to function. Please enable it in your browser settings.</p>
+                <div style="padding: 10px 24px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-lg); color: var(--text-primary); font-size: 0.9rem; font-weight: 600; display: inline-block;">
+                    🔧 Enable JavaScript and refresh the page</div>
+            </div>
         </div>
     </noscript>
-    <div class="mouse-follower" id="mouseFollower"></div>
-    <div class="floating-glow glow-1"></div>
-    <div class="floating-glow glow-2"></div>
-    <!-- ===== STICKY HEADER ===== -->
-    <header class="site-header" id="siteHeader">
+
+    <!-- HEADER -->
+    <header class="site-header">
         <a href="index.html" class="header-logo">Y8X</a>
         <div class="header-right">
-            <a href="index.html" class="header-nav-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                    <polyline points="9 22 9 12 15 12 15 22" />
+            <div class="header-stat">
+                <span class="header-stat-number">6</span>
+                <span>Cheats Available</span>
+            </div>
+            <a href="https://discord.gg/nYK36E5D2X" class="header-discord" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.607 1.25a18.27 18.27 0 0 0-5.487 0c-.163-.386-.395-.875-.607-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.042-.106 13.107 13.107 0 0 1-1.873-.892.077.077 0 0 1 .001-.128 10.2 10.2 0 0 0 .372-.294.075.075 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.062 0a.075.075 0 0 1 .079.009c.12.098.246.198.373.295a.077.077 0 0 1 .001.128 13.087 13.087 0 0 1-1.873.891.076.076 0 0 0-.041.107c.352.699.764 1.365 1.225 1.994a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.057c.5-4.761-.838-8.895-3.549-12.55a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-.965-2.157-2.156 0-1.193.964-2.157 2.157-2.157 1.193 0 2.157.964 2.157 2.157 0 1.19-.964 2.156-2.157 2.156zm7.975 0c-1.183 0-2.157-.965-2.157-2.156 0-1.193.964-2.157 2.157-2.157 1.193 0 2.157.964 2.157 2.157 0 1.19-.964 2.156-2.157 2.156z" />
                 </svg>
-                Home
-            </a>
-
-            <a href="cheat.html" class="header-nav-link active-page">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    <path d="M9 12l2 2 4-4" />
-                </svg>
-                Cheats
-            </a>
-            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="header-discord">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
                 Discord
             </a>
         </div>
     </header>
-    <!-- ===== HERO ===== -->
-    <div class="cheat-hero">
-        <div class="cheat-hero-badge">
-            <span class="cheat-hero-badge-dot"></span>
-            All cheats undetected
-        </div>
-        <h1 class="glitch" data-text="Cheats">Cheats</h1>
-        <div class="title-underline"></div>
-        <p class="cheat-hero-sub">Undetected cheats for your favorite games. Updated regularly and tested before
-            release.</p>
-        <!-- Stats -->
-        <div class="cheat-stats">
-            <div class="cheat-stat">
-                <span class="cheat-stat-num red" id="statTotalCheats">—</span>
-                <span class="cheat-stat-label">Cheats</span>
+
+    <!-- MAIN -->
+    <main>
+        <!-- PAGE HEADER -->
+        <section style="padding: calc(var(--header-height) + var(--spacing-3xl)) var(--spacing-2xl) var(--spacing-3xl); background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%); text-align: center;">
+            <span class="section-badge">Our Collection</span>
+            <h1 class="section-title">All Available <span class="gradient-text">Cheats</span></h1>
+            <p class="section-subtitle">Browse our complete collection of safe, undetected cheats</p>
+        </section>
+
+        <!-- CHEATS GRID -->
+        <section style="padding: var(--spacing-3xl) var(--spacing-2xl);">
+            <div class="cheats-grid" id="cheatsGrid">
+                <!-- Populated by JavaScript -->
             </div>
-            <div class="cheat-stat">
-                <span class="cheat-stat-num green" id="statUndetected">—</span>
-                <span class="cheat-stat-label">Undetected</span>
-            </div>
-            <div class="cheat-stat">
-                <span class="cheat-stat-num yellow" id="statGames">—</span>
-                <span class="cheat-stat-label">Games</span>
-            </div>
-        </div>
-    </div>
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="cheat-container">
-        <!-- REQUEST BANNER -->
-        <div class="cheat-request-banner">
-            <div class="cheat-request-text">
-                <h3>Missing a cheat?</h3>
-                <p>Join our Discord and request any game cheat. Our team reviews requests every week.</p>
-            </div>
-            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="cheat-request-btn">
-                <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="18" height="18" />
-                Request on Discord
+        </section>
+
+        <!-- CTA -->
+        <section style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: var(--spacing-3xl) var(--spacing-2xl); text-align: center; margin-top: var(--spacing-3xl);">
+            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: var(--spacing-lg); line-height: 1.2;">Need Help?</h2>
+            <p style="font-size: 1.1rem; margin-bottom: var(--spacing-2xl); opacity: 0.95;">Join our Discord community for support, installation guides, and game requests</p>
+            <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" class="hero-btn" style="background: white; color: var(--primary); font-weight: 700;">
+                Join Discord
             </a>
-        </div>
-        <!-- ===== ALL CHEATS VIEW ===== -->
-        <div id="cheatsView">
-            <!-- Search Bar -->
-            <div class="search-bar-container">
-                <div class="search-bar-wrapper">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8" />
-                        <path d="m21 21-4.35-4.35" />
-                    </svg>
-                    <input type="text" class="search-bar" id="cheatSearch" placeholder="Search for a game...">
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); color: white;">
+                <div>
+                    <h3 style="font-weight: 700; font-size: 1.3rem; margin-bottom: var(--spacing-md);">Y8X</h3>
+                    <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">The ultimate destination for free undetected cheats. Safe, fast, and always up to date.</p>
                 </div>
-            </div>
-            <!-- Filters -->
-            <div class="cheat-filters">
-                <button class="cheat-filter-btn active" data-filter="all">
-                    <span class="dot"></span> All
-                </button>
-                <button class="cheat-filter-btn" data-filter="external">
-                    <span class="dot"></span> External
-                </button>
-                <button class="cheat-filter-btn" data-filter="internal">
-                    <span class="dot"></span> Internal
-                </button>
-                <button class="cheat-filter-btn" data-filter="script">
-                    <span class="dot"></span> Script
-                </button>
-            </div>
-            <!-- Cheat groups -->
-            <div id="cheatsContainer"></div>
-        </div>
-        <!-- Footer -->
-        <footer class="site-footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 class="footer-logo">Y8X</h3>
-                    <p class="footer-tagline">The best cheats for your favorite games. Updated regularly.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Navigation</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="cheat.html">Cheats</a></li>
-                        <li><a href="https://discord.gg/nYK36E5D2X" target="_blank">Discord</a></li>
+                <div>
+                    <h4 style="font-weight: 600; margin-bottom: var(--spacing-md);">Navigation</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                        <li><a href="index.html" style="color: white; text-decoration: none; opacity: 0.8;">Home</a></li>
+                        <li><a href="https://discord.gg/nYK36E5D2X" target="_blank" style="color: white; text-decoration: none; opacity: 0.8;">Discord</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>Community</h4>
-                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px;">Join our Discord to request
-                        cheats or report issues.</p>
-                    <a href="https://discord.gg/nYK36E5D2X" class="footer-discord-btn" target="_blank" rel="noopener">
-                        <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
-                        JOIN
+                <div>
+                    <h4 style="font-weight: 600; margin-bottom: var(--spacing-md);">Support</h4>
+                    <p style="opacity: 0.8; font-size: 0.9rem; margin-bottom: var(--spacing-md);">Join our Discord for support and game requests</p>
+                    <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: var(--radius-lg); font-weight: 600; text-decoration: none; font-size: 0.9rem;">
+                        Join Discord
                     </a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 Y8X. All rights reserved.</p>
-                <div class="footer-disclaimer">Disclaimer: We do not host any files. All links are from 3rd party sites.
-                </div>
-            </div>
-        </footer>
-    </div>
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
-        </svg>
-    </button>
-    <!-- ===== MODALS ===== -->
-    <!-- FIVEM MODAL -->
-    <div id="fivem-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="fivem-modal-title" style="max-width:520px;">
-            <button class="close-btn" id="fivemCloseBtn" aria-label="Close">×</button>
-            <h2 id="fivem-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                🌐 Nova FiveM External — Installation
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">FiveM · Enter your activation key
-                below</p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div
-                    style="display:flex;gap:14px;align-items:flex-start;padding:16px;background:rgba(167,139,250,0.07);border:1px solid rgba(167,139,250,0.3);border-radius:10px;">
-                    <div
-                        style="min-width:32px;height:32px;border-radius:50%;background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">
-                        🔑</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#9ca3af;margin-bottom:6px;">Activation Key
-                        </div>
-                        <div style="font-size:0.78rem;color:rgba(156, 163, 175,0.75);line-height:1.5;margin-bottom:10px;">
-                            When the loader asks for a key, enter:</div>
-                        <div
-                            style="background:rgba(0,0,0,0.35);border:1px solid rgba(167,139,250,0.4);border-radius:8px;padding:10px 16px;font-family:monospace;font-size:1rem;font-weight:800;color:#fff;letter-spacing:0.12em;text-align:center;">
-                            NOVAPLAY2026</div>
-                    </div>
-                </div>
-            </div>
-            <a href="https://www.clictune.com/mAF9" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download Nova FiveM External
-            </a>
-        </div>
-    </div>
-    <!-- AMNESIA MODAL -->
-    <div id="amnesia-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="amnesia-modal-title"
-            style="max-width:520px;">
-            <button class="close-btn" id="amnesiaCloseBtn" aria-label="Close">×</button>
-            <h2 id="amnesia-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                🛠️ Amnesia Cheat — Installation
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">GTA 5 Online · Follow every step
-                carefully</p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        1</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Create an account
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Go to <a
-                                href="https://amnesia-cheats.com" target="_blank" rel="noopener"
-                                style="color:#fca5a5;text-decoration:none;font-weight:600;">amnesia-cheats.com</a> and
-                            register a new account.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        2</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Log in</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Sign in with the account
-                            you just created.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        3</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Go to the Dashboard
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Navigate to your
-                            Dashboard after logging in.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        4</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the Loader
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Download the loader from
-                            your Dashboard.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        5</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Run the Loader as
-                            Administrator</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Right-click the loader
-                            and select <strong style="color:#fff;">Run as administrator</strong>.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        6</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Get your Key &amp;
-                            enter it</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Grab your license key
-                            from the Dashboard and paste it into the loader.</div>
-                    </div>
-                </div>
-                <div
-                    style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.25);border-radius:10px;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(234,179,8,0.15);border:1px solid rgba(234,179,8,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fde68a;flex-shrink:0;">
-                        ⚠️</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fde68a;margin-bottom:3px;">Disable BattlEye
-                            before injecting</div>
-                        <div style="font-size:0.78rem;color:rgba(253,230,138,0.7);line-height:1.5;">Before injecting,
-                            make sure to <strong style="color:#fde68a;">disable the BattlEye anti-cheat</strong>. Skip
-                            this step and you will get banned.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        7</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Launch GTA 5</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Start the game and wait
-                            until you are fully loaded in.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#86efac;flex-shrink:0;">
-                        8</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#86efac;margin-bottom:3px;">Inject &amp;
-                            enjoy!</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click <strong
-                                style="color:#fff;">Inject</strong> in the loader. You're good to go. Have fun! 🎮</div>
-                    </div>
-                </div>
-            </div>
-            <a href="https://amnesia-cheats.com" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Go to amnesia-cheats.com
-            </a>
-        </div>
-    </div>
-    <!-- BLOODSTRIKE MODAL -->
-    <div id="bloodstrike-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="bloodstrike-modal-title"
-            style="max-width:520px;">
-            <button class="close-btn" id="bloodstrikeCloseBtn" aria-label="Close">×</button>
-            <h2 id="bloodstrike-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                🩸 Bloodstrike Cheat — Important Notice
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">Bloodstrike · Instructions for use
-            </p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div
-                    style="display:flex;gap:14px;align-items:flex-start;padding:12px 14px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);border-radius:10px;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        ⚠️</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fca5a5;margin-bottom:3px;">In Testing /
-                            Semi-Detected</div>
-                        <div style="font-size:0.78rem;color:rgba(252,165,165,0.7);line-height:1.5;">This menu is
-                            currently in testing, so the cheat will <strong style="color:#fca5a5;">surely be
-                                Semi-Detected</strong>. Use it at your own risk!</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        1</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the cheat
-                        </div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click the button below
-                            to download the cheat files.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div
-                        style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">
-                        2</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Steam Launch
-                            Options</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Put this in your Steam
-                            launch options:<br>
-                            <code
-                                style="display:block;margin-top:8px;padding:8px 12px;background:rgba(15,15,20,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-family:monospace;color:#fca5a5;user-select:all;word-break:break-all;">cmd /min /C "set __COMPAT_LAYER=RUNASINVOKER &amp;&amp; start "" %command%"</code>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="https://www.clictune.com/mAvE" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download Bloodstrike Cheat
-            </a>
-        </div>
-    </div>
-    <!-- SCHEDULE 1 MODAL -->
-    <div id="schedule1-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="schedule1-modal-title"
-            style="max-width:520px;">
-            <button class="close-btn" id="schedule1CloseBtn" aria-label="Close">×</button>
-            <h2 id="schedule1-modal-title"
-                style="font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:0.04em;">
-                💊 Schedule 1 Cheat — Installation
-            </h2>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:24px;">Schedule 1 · Follow every step carefully</p>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">1</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Download the cheat</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Click the button below to download the cheat files.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">2</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Extract the archive</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Extract all files to a folder of your choice.</div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:14px;align-items:flex-start;">
-                    <div style="min-width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fca5a5;flex-shrink:0;">3</div>
-                    <div>
-                        <div style="font-size:0.85rem;font-weight:700;color:#fff;margin-bottom:3px;">Launch Schedule 1</div>
-                        <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.5;">Start the game first, then run the cheat loader as Administrator.</div>
-                    </div>
-                </div>
-            </div>
-            <a href="#" target="_blank" rel="noopener"
-                style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;width:100%;justify-content:center;padding:12px 24px;background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15));border:1px solid rgba(239,68,68,0.4);border-radius:var(--radius-md);color:#fca5a5;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.25s ease;"
-                onmouseover="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.25))'"
-                onmouseout="this.style.background='linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.15))'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Download Schedule 1 Cheat
-            </a>
-        </div>
-    </div>
-    <!-- ROBLOX SCRIPT MODAL -->
-    <div id="roblox-script-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="roblox-script-modal-title" style="max-width:560px;">
-            <button class="close-btn" id="roblox-scriptCloseBtn" aria-label="Close">×</button>
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-                <span style="font-size:1.6rem;">🎮</span>
-                <div>
-                    <h2 id="roblox-script-modal-title" class="modal-title" style="font-size:1rem;">UnlockALL Rivals — Script</h2>
-                    <p style="margin:2px 0 0;font-size:0.75rem;color:var(--text-muted);">Roblox · Copy the script below</p>
-                </div>
-            </div>
-            <div class="roblox-code-box">
-                <pre id="robloxScriptCode">loadstring(game:HttpGet("https://pastefy.app/3F7BBrbQ/raw"))()</pre>
-                <button class="roblox-copy-btn" id="robloxCopyBtn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                    </svg>
-                    Copy Script
-                </button>
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--spacing-xl); color: white; opacity: 0.7; font-size: 0.85rem;">
+                <p>© 2026 Y8X. All rights reserved. | Disclaimer: We do not host any files. All links are from 3rd party sites.</p>
             </div>
         </div>
-    </div>
-    <!-- OUTDATED MODAL -->
-    <div id="outdated-modal-bg" class="modal-bg" style="display:none;">
-        <div class="modal" role="dialog" aria-modal="true" style="max-width:460px;text-align:center;">
-            <button class="close-btn" id="outdatedCloseBtn" aria-label="Close">×</button>
-            <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
-            <h2
-                style="font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;color:#fde68a;margin-bottom:8px;letter-spacing:0.04em;">
-                Cheat Outdated</h2>
-            <p
-                style="font-size:0.82rem;color:rgba(253,230,138,0.7);line-height:1.7;margin-bottom:24px;max-width:340px;margin-left:auto;margin-right:auto;">
-                This cheat is currently <strong style="color:#fde68a;">not available for download</strong>. The
-                developers may be working on an update, the project may have been <strong
-                    style="color:#fde68a;">temporarily put on hold</strong>, or it may have been <strong
-                    style="color:#fde68a;">abandoned</strong>. Check back later or request an update on our Discord.
-            </p>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-                <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener"
-                    style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 24px;background:linear-gradient(135deg,#4b5563,#374151);border-radius:var(--radius-md);color:#fff;font-weight:700;font-size:0.85rem;text-decoration:none;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(99,102,241,0.3);">
-                    <img src="https://i.imgur.com/FM9VvXl.png" alt="Discord" width="16" height="16" />
-                    Request an Update on Discord
-                </a>
-                <button id="outdatedDismissBtn"
-                    style="padding:10px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-md);color:var(--text-muted);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;">
-                    Dismiss
-                </button>
-            </div>
-            <p style="margin-top:18px;font-size:0.68rem;color:rgba(255,255,255,0.15);">We apologize for the
-                inconvenience.</p>
-        </div>
-    </div>
-    <!-- WARNING MODAL -->
-    <div id="warning-modal-bg" class="modal-bg" style="display:none; z-index: 100000;">
-        <div class="modal" role="dialog" aria-modal="true" style="max-width:480px;text-align:center; position: relative;">
-            <div style="position: absolute; top: 15px; right: 15px; display: flex; gap: 8px;">
-                <button id="lang-en" style="background:none;border:none;cursor:pointer;font-size:1.2rem;opacity:1;transition:opacity 0.2s;" aria-label="English">🇬🇧</button>
-                <button id="lang-fr" style="background:none;border:none;cursor:pointer;font-size:1.2rem;opacity:0.4;transition:opacity 0.2s;" aria-label="Français">🇫🇷</button>
-            </div>
-            
-            <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
-            
-            <h2 id="warning-title" style="font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:800;color:#ef4444;margin-bottom:12px;letter-spacing:0.04em;">
-                Disclaimer & Warning
-            </h2>
-            
-            <div id="warning-text-en" style="font-size:0.85rem;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:24px;">
-                By using any software provided on this site, you acknowledge that you do so <strong>at your own risk</strong>. 
-                We are <strong>not responsible</strong> if your game account gets banned, suspended, or restricted. 
-                Cheating goes against the terms of service of most games. Please use these tools responsibly.
-            </div>
-            
-            <div id="warning-text-fr" style="font-size:0.85rem;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:24px;display:none;">
-                En utilisant les logiciels fournis sur ce site, vous reconnaissez le faire <strong>à vos propres risques et périls</strong>. 
-                Nous ne sommes <strong>pas responsables</strong> si votre compte de jeu est banni, suspendu ou restreint. 
-                Veuillez assumer les conséquences de l'utilisation de ces outils.
-            </div>
-            
-            <button id="warningAcceptBtn" style="width:100%;padding:12px 24px;background:linear-gradient(135deg,#ef4444,#b91c1c);border-radius:var(--radius-md);color:#fff;font-weight:700;font-size:0.9rem;border:none;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(239,68,68,0.3);">
-                I Understand & Accept
-            </button>
-        </div>
-    </div>
-    <!-- ===== SCRIPTS ===== -->
-    <script src="protect.js"></script>
-    <script src="script.js"></script>
+    </footer>
+
+    <script src="game.js"></script>
     <script>
-        (async function () {
-            // ── Config ──────────────────────────────────────────────────────
-            const STATUS_CONFIG = {
-                'undetected': { label: 'Undetected', cls: 'undetected' },
-                'semi-detected': { label: 'Semi-Detected', cls: 'detected' },
-                'detected': { label: 'Detected', cls: 'detected' },
-                'outdated': { label: 'Outdated', cls: 'updating' }
-            };
-            function statusConf(s) { return STATUS_CONFIG[s] || { label: 'Unknown', cls: 'updating' }; }
-            // ── Elements ─────────────────────────────────────────────────────
-            const cheatsView = document.getElementById('cheatsView');
-            const cheatsContainer = document.getElementById('cheatsContainer');
-            const statTotalEl = document.getElementById('statTotalCheats');
-            const statUndetEl = document.getElementById('statUndetected');
-            const statGamesEl = document.getElementById('statGames');
-            // ── Animated Stats ────────────────────────────────────────────────
-            function animateValue(obj, start, end, duration) {
-                if (!obj) return;
-                let startTimestamp = null;
-                const step = (timestamp) => {
-                    if (!startTimestamp) startTimestamp = timestamp;
-                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                    const ease = 1 - Math.pow(1 - progress, 4);
-                    obj.innerHTML = Math.floor(ease * (end - start) + start);
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        obj.innerHTML = end;
-                    }
-                };
-                window.requestAnimationFrame(step);
-            }
-            // ── Load data ────────────────────────────────────────────────────
-            let cheats = {};
-            const paths = ['/api/cheat-status', 'cheat-status.json', '/cheat-status.json'];
-            for (const p of paths) {
-                try {
-                    const r = await fetch(p, { cache: 'no-store' });
-                    if (r.ok) { cheats = await r.json(); break; }
-                } catch (e) { }
-            }
-            if (!cheats || !Object.keys(cheats).length) {
-                cheatsContainer.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No cheats found.</p>';
-                return;
-            }
-            // ── Group by game ─────────────────────────────────────────────────
-            const byGame = {};
-            for (const [id, cheat] of Object.entries(cheats)) {
-                const key = cheat.game || 'Other';
-                if (!byGame[key]) byGame[key] = { icon: cheat.gameIcon || '🎮', image: cheat.image, cheats: [] };
-                byGame[key].cheats.push({ id, ...cheat });
-            }
-            // ── Stats ─────────────────────────────────────────────────────────
-            const total = Object.keys(cheats).length;
-            const undetectedCount = Object.values(cheats).filter(c => c.status === 'undetected').length;
-            const gamesCount = Object.keys(byGame).length;
-            
-            animateValue(statTotalEl, 0, total, 2000);
-            animateValue(statUndetEl, 0, undetectedCount, 2000);
-            animateValue(statGamesEl, 0, gamesCount, 2000);
-            // ── Build grouped cheat cards ─────────────────────────────────────
-            cheatsContainer.innerHTML = '';
-            let totalIndex = 0;
-            const gameEntries = Object.entries(byGame);
-            gameEntries.forEach(([gameName, group], gi) => {
-                // Game group header
-                const header = document.createElement('div');
-                header.className = 'cheat-game-header';
-                header.style.animationDelay = (0.05 + totalIndex * 0.07) + 's';
-                header.innerHTML = `
-                    <div class="cheat-game-header-icon">${group.icon}</div>
-                    <div class="cheat-game-header-name">${gameName}</div>
-                    <div class="cheat-game-header-count">${group.cheats.length} cheat${group.cheats.length > 1 ? 's' : ''}</div>
-                `;
-                cheatsContainer.appendChild(header);
-                totalIndex++;
-                // Cheat cards for this game
-                const grid = document.createElement('div');
-                grid.className = 'cheat-grid';
-                grid.setAttribute('data-game', gameName);
-                group.cheats.forEach((cheat, i) => {
-                    const sc = statusConf(cheat.status);
-                    const isOutdated = cheat.status === 'outdated';
-                    const typeMap = { 'external': 'External', 'internal': 'Internal', 'script': 'Script' };
-                    const typeBadgeClass = typeMap[cheat.type] ? cheat.type : 'internal';
-                    const typeLabel = typeMap[cheat.type] || 'Internal';
-                    const featuresHtml = (cheat.features || []).map(f =>
-                        `<span class="cheat-feature-tag">${f}</span>`
-                    ).join('');
-                    let href = cheat.link || '#';
-                    let targetAttr = 'target="_blank" rel="noopener"';
-                    if (cheat.hasModal || isOutdated) { href = '#'; targetAttr = ''; }
-                    const card = document.createElement('a');
+        // Load and display all cheats
+        async function loadCheats() {
+            const grid = document.getElementById('cheatsGrid');
+            if (!grid) return;
+
+            try {
+                const response = await fetch('/api/games.js');
+                const games = await response.json();
+
+                games.forEach(game => {
+                    const card = document.createElement('div');
                     card.className = 'cheat-card';
-                    card.href = href;
-                    if (targetAttr) { card.target = '_blank'; card.rel = 'noopener'; }
-                    card.style.animationDelay = (0.05 + totalIndex * 0.08) + 's';
-                    const isScript = cheat.type === 'script';
-                    const metaBtn = isScript
-                        ? `<span class="cheat-card-download"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> View Script</span>`
-                        : `<span class="cheat-card-download"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</span>`;
                     card.innerHTML = `
-                    <div class="cheat-card-thumb">
-                        <img src="${cheat.image}" alt="${cheat.title}" width="616" height="353" loading="lazy">
-                        <div class="cheat-card-thumb-overlay"></div>
-                        <span class="cheat-status-badge ${sc.cls}">
-                            <span class="status-dot"></span>
-                            ${sc.label}
-                        </span>
-                        <span class="cheat-type-badge ${typeBadgeClass}">${typeLabel}</span>
-                    </div>
-                    <div class="cheat-card-body">
-                        <div class="cheat-card-title">${cheat.title}</div>
-                        <div class="cheat-card-features">${featuresHtml}</div>
-                        <div class="cheat-card-meta">
-                            <span class="cheat-card-updated">
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                                </svg>
-                                ${isOutdated ? 'Outdated' : 'Up to date'}
-                            </span>
-                            ${metaBtn}
+                        <div class="cheat-card-header">
+                            <div class="cheat-card-icon">${game.emoji || '🎮'}</div>
+                            <h3 class="cheat-card-title">${game.name}</h3>
                         </div>
-                    </div>
-                `;
-                    if (isOutdated) {
-                        card.addEventListener('click', e => {
-                            e.preventDefault();
-                            openModal('outdated-modal-bg');
-                        });
-                    } else if (cheat.hasModal && cheat.modalId) {
-                        card.addEventListener('click', e => {
-                            e.preventDefault();
-                            openModal(cheat.modalId + '-modal-bg');
-                        });
-                    }
+                        <div class="cheat-card-body">
+                            <p class="cheat-card-desc">${game.desc || 'Free cheat for this game'}</p>
+                            <div class="cheat-card-status ${game.status === 'Undetected' ? 'active' : 'inactive'}">
+                                <span class="cheat-card-status-dot"></span>
+                                ${game.status || 'Unknown'}
+                            </div>
+                        </div>
+                        <div class="cheat-card-footer">
+                            <button onclick="downloadGame('${game.id}', '${game.name}')" class="cheat-btn">
+                                Download Now
+                            </button>
+                        </div>
+                    `;
                     grid.appendChild(card);
-                    totalIndex++;
                 });
-                cheatsContainer.appendChild(grid);
-            });
-            // ── Search + Filter ──────────────────────────────────────────────
-            function applyCheatFilter() {
-                const filter = document.querySelector('.cheat-filter-btn.active')?.getAttribute('data-filter') || 'all';
-                const query = (document.getElementById('cheatSearch')?.value || '').trim().toLowerCase();
-                document.querySelectorAll('#cheatsContainer .cheat-card').forEach(card => {
-                    const gameGroup = card.closest('.cheat-grid');
-                    const gameName = gameGroup?.getAttribute('data-game')?.toLowerCase() || '';
-                    const matchesSearch = !query || gameName.includes(query);
-                    const matchesFilter = filter === 'all' || card.querySelector('.cheat-type-badge')?.classList.contains(filter);
-                    card.classList.toggle('filter-hidden', !(matchesSearch && matchesFilter));
-                });
-                document.querySelectorAll('#cheatsContainer .cheat-grid').forEach(grid => {
-                    const visible = grid.querySelectorAll('.cheat-card:not(.filter-hidden)').length;
-                    const prev = grid.previousElementSibling;
-                    const hide = visible === 0;
-                    grid.style.display = hide ? 'none' : '';
-                    if (prev && prev.classList.contains('cheat-game-header')) {
-                        prev.style.display = hide ? 'none' : '';
-                    }
-                });
+            } catch (error) {
+                console.error('Failed to load cheats:', error);
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">Failed to load cheats. Please refresh the page.</p>';
             }
-            document.querySelectorAll('.cheat-filter-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    document.querySelectorAll('.cheat-filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    applyCheatFilter();
-                });
-            });
-            const searchInput = document.getElementById('cheatSearch');
-            if (searchInput) {
-                searchInput.addEventListener('input', applyCheatFilter);
+        }
+
+        async function downloadGame(gameId, gameName) {
+            try {
+                const response = await fetch(`/api/get-download-link?gameId=${gameId}`);
+                if (!response.ok) throw new Error('Download failed');
+                const data = await response.json();
+                if (data.downloadLink) {
+                    window.location.href = data.downloadLink;
+                } else {
+                    alert('Unable to generate download link. Please try again or contact support on Discord.');
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('Download failed. Join our Discord for support.');
             }
-            // ── Modal helpers ─────────────────────────────────────────────────
-            function openModal(id) {
-                const bg = document.getElementById(id);
-                if (!bg) return;
-                bg.style.display = 'flex';
-                bg.offsetHeight;
-                bg.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            }
-            function closeModal(bg) {
-                if (!bg) return;
-                bg.classList.remove('show');
-                setTimeout(() => { bg.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-            }
-            ['fivem', 'amnesia', 'bloodstrike', 'schedule1', 'roblox-script', 'outdated'].forEach(id => {
-                const bg = document.getElementById(id + '-modal-bg');
-                if (!bg) return;
-                const closeBtn = bg.querySelector('.close-btn');
-                if (closeBtn) closeBtn.addEventListener('click', () => closeModal(bg));
-                bg.addEventListener('click', e => { if (e.target === bg) closeModal(bg); });
-                document.addEventListener('keydown', e => {
-                    if (bg.classList.contains('show') && (e.key === 'Escape' || e.keyCode === 27)) closeModal(bg);
-                });
-            });
-            const dismissBtn = document.getElementById('outdatedDismissBtn');
-            if (dismissBtn) dismissBtn.addEventListener('click', () => closeModal(document.getElementById('outdated-modal-bg')));
-            // ── Roblox script copy ────────────────────────────────────────────
-            const robloxCopyBtn = document.getElementById('robloxCopyBtn');
-            if (robloxCopyBtn) {
-                robloxCopyBtn.addEventListener('click', async function () {
-                    const code = document.getElementById('robloxScriptCode')?.textContent || '';
-                    try {
-                        await navigator.clipboard.writeText(code);
-                        this.classList.add('copied');
-                        this.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
-                        setTimeout(() => {
-                            this.classList.remove('copied');
-                            this.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Script`;
-                        }, 2000);
-                    } catch {
-                        this.textContent = 'Failed to copy';
-                    }
-                });
-            }
-            // ── Warning Modal Logic ────────────────────────────────────────────────
-            const warningModalBg = document.getElementById('warning-modal-bg');
-            const warningAcceptBtn = document.getElementById('warningAcceptBtn');
-            const langEnBtn = document.getElementById('lang-en');
-            const langFrBtn = document.getElementById('lang-fr');
-            const textEn = document.getElementById('warning-text-en');
-            const textFr = document.getElementById('warning-text-fr');
-            const titleEl = document.getElementById('warning-title');
-            if (warningModalBg && !localStorage.getItem('cheatWarningAccepted')) {
-                // Show modal on load
-                setTimeout(() => {
-                    warningModalBg.style.display = 'flex';
-                    warningModalBg.offsetHeight; // trigger reflow
-                    warningModalBg.classList.add('show');
-                    document.body.style.overflow = 'hidden';
-                }, 500);
-            }
-            if (warningAcceptBtn) {
-                warningAcceptBtn.addEventListener('click', () => {
-                    localStorage.setItem('cheatWarningAccepted', 'true');
-                    warningModalBg.classList.remove('show');
-                    setTimeout(() => { 
-                        warningModalBg.style.display = 'none'; 
-                        document.body.style.overflow = ''; 
-                    }, 500);
-                });
-            }
-            if (langEnBtn && langFrBtn) {
-                langEnBtn.addEventListener('click', () => {
-                    langEnBtn.style.opacity = '1';
-                    langFrBtn.style.opacity = '0.4';
-                    textEn.style.display = 'block';
-                    textFr.style.display = 'none';
-                    warningAcceptBtn.textContent = 'I Understand & Accept';
-                    titleEl.textContent = 'Disclaimer & Warning';
-                });
-                langFrBtn.addEventListener('click', () => {
-                    langFrBtn.style.opacity = '1';
-                    langEnBtn.style.opacity = '0.4';
-                    textFr.style.display = 'block';
-                    textEn.style.display = 'none';
-                    warningAcceptBtn.textContent = 'Je Comprends et J\'accepte';
-                    titleEl.textContent = 'Avertissement';
-                });
-            }
-        })();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadCheats);
+        } else {
+            loadCheats();
+        }
     </script>
-    <script>
-        // Sticky header
-        (function () {
-            const header = document.getElementById('siteHeader');
-            if (!header) return;
-            window.addEventListener('scroll', () => {
-                header.classList.toggle('scrolled', window.scrollY > 20);
-            }, { passive: true });
-        })();
-        // Back to top
-        (function () {
-            const btn = document.getElementById('backToTop');
-            if (!btn) return;
-            window.addEventListener('scroll', () => {
-                btn.classList.toggle('show', window.scrollY > 500);
-            }, { passive: true });
-            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        })();
-    </script>
+    <script src="protect.js"></script>
 </body>
+
 </html>
