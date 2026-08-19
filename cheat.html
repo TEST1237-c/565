@@ -98,8 +98,52 @@
         </div>
     </footer>
 
+    <!-- SCRIPT MODAL -->
+    <div class="script-modal-overlay" id="scriptModalOverlay" onclick="closeScriptModal()">
+        <div class="script-modal" onclick="event.stopPropagation()">
+            <div class="script-modal-header">
+                <span class="script-modal-title" id="scriptModalTitle">Script</span>
+                <button class="script-modal-close" onclick="closeScriptModal()">✕</button>
+            </div>
+            <p class="script-modal-hint">Paste this script into your executor.</p>
+            <div class="script-modal-code-wrap">
+                <code class="script-modal-code" id="scriptModalCode"></code>
+            </div>
+            <button class="cheat-btn script-modal-copy" id="scriptCopyBtn" onclick="copyScript()">
+                Copy Script
+            </button>
+        </div>
+    </div>
+
     <script src="game.js"></script>
     <script>
+        // Script modal
+        function openScriptModal(title, code) {
+            document.getElementById('scriptModalTitle').textContent = title;
+            document.getElementById('scriptModalCode').textContent = code;
+            document.getElementById('scriptCopyBtn').textContent = 'Copy Script';
+            document.getElementById('scriptModalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeScriptModal() {
+            document.getElementById('scriptModalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function copyScript() {
+            const code = document.getElementById('scriptModalCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('scriptCopyBtn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy Script', 2000);
+            });
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeScriptModal();
+        });
+
         // Load and display all cheats grouped by game
         async function loadCheats() {
             const grid = document.getElementById('cheatsGrid');
@@ -119,7 +163,6 @@
 
                 // Render each game group
                 Object.entries(grouped).forEach(([gameName, cheats]) => {
-                    // Section title
                     const section = document.createElement('div');
                     section.className = 'cheat-game-section';
                     section.innerHTML = `
@@ -132,11 +175,32 @@
 
                     cheats.forEach(cheat => {
                         const isUndetected = cheat.status === 'undetected';
+                        const isOutdated = cheat.status === 'outdated';
+                        const isScript = cheat.type === 'script';
                         const statusLabel = cheat.status
                             ? cheat.status.charAt(0).toUpperCase() + cheat.status.slice(1)
                             : 'Unknown';
 
-                        const isOutdated = cheat.status === 'outdated';
+                        let actionHtml;
+                        if (isOutdated) {
+                            actionHtml = `
+                                <div class="cheat-outdated-notice">
+                                    <span>⚠️</span>
+                                    <p>This cheat is currently unavailable. If you'd like an update, let us know on <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener">Discord</a>.</p>
+                                </div>`;
+                        } else if (isScript && cheat.code) {
+                            const safeTitle = cheat.title.replace(/'/g, "\\'");
+                            const safeCode = cheat.code.replace(/'/g, "\\'");
+                            actionHtml = `
+                                <button class="cheat-btn cheat-btn-sm cheat-btn-script" onclick="openScriptModal('${safeTitle}', '${safeCode}')">
+                                    Get Script
+                                </button>`;
+                        } else {
+                            actionHtml = `
+                                <a href="${cheat.link || '#'}" ${cheat.link && cheat.link !== '#' ? 'target="_blank" rel="noopener"' : ''} class="cheat-btn cheat-btn-sm">
+                                    Download
+                                </a>`;
+                        }
 
                         const card = document.createElement('div');
                         card.className = 'cheat-card-simple' + (isOutdated ? ' cheat-card-outdated' : '');
@@ -148,13 +212,7 @@
                                     <span class="cheat-simple-badge ${isUndetected ? 'active' : 'inactive'}">${statusLabel}</span>
                                 </div>
                                 ${cheat.features ? `<p class="cheat-simple-features">${cheat.features.join(' · ')}</p>` : ''}
-                                ${isOutdated
-                                    ? `<div class="cheat-outdated-notice">
-                                           <span>⚠️</span>
-                                           <p>This cheat is currently unavailable. If you'd like an update, let us know on <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener">Discord</a>.</p>
-                                       </div>`
-                                    : `<a href="${cheat.link || '#'}" ${cheat.link && cheat.link !== '#' ? 'target="_blank" rel="noopener"' : ''} class="cheat-btn cheat-btn-sm">Download</a>`
-                                }
+                                ${actionHtml}
                             </div>
                         `;
                         gameGrid.appendChild(card);
