@@ -106,28 +106,34 @@
             if (!grid) return;
 
             try {
-                const response = await fetch('/api/games.js');
-                const games = await response.json();
+                const response = await fetch('/cheat-status.json');
+                const data = await response.json();
 
-                games.forEach(game => {
+                Object.entries(data).forEach(([id, cheat]) => {
+                    const isUndetected = cheat.status === 'undetected';
+                    const statusLabel = cheat.status
+                        ? cheat.status.charAt(0).toUpperCase() + cheat.status.slice(1)
+                        : 'Unknown';
+
                     const card = document.createElement('div');
                     card.className = 'cheat-card';
                     card.innerHTML = `
                         <div class="cheat-card-header">
-                            <div class="cheat-card-icon">${game.emoji || '🎮'}</div>
-                            <h3 class="cheat-card-title">${game.name}</h3>
+                            <div class="cheat-card-icon">${cheat.gameIcon || '🎮'}</div>
+                            <h3 class="cheat-card-title">${cheat.title}</h3>
                         </div>
                         <div class="cheat-card-body">
-                            <p class="cheat-card-desc">${game.desc || 'Free cheat for this game'}</p>
-                            <div class="cheat-card-status ${game.status === 'Undetected' ? 'active' : 'inactive'}">
+                            <p class="cheat-card-desc">${cheat.game || 'Free cheat'}</p>
+                            ${cheat.features ? `<p style="font-size:0.8rem; color: var(--text-secondary); margin-bottom: 8px;">${cheat.features.join(' · ')}</p>` : ''}
+                            <div class="cheat-card-status ${isUndetected ? 'active' : 'inactive'}">
                                 <span class="cheat-card-status-dot"></span>
-                                ${game.status || 'Unknown'}
+                                ${statusLabel}
                             </div>
                         </div>
                         <div class="cheat-card-footer">
-                            <button onclick="downloadGame('${game.id}', '${game.name}')" class="cheat-btn">
+                            <a href="${cheat.link || '#'}" ${cheat.link && cheat.link !== '#' ? 'target="_blank" rel="noopener"' : ''} class="cheat-btn" style="display:inline-block; text-align:center; text-decoration:none;">
                                 Download Now
-                            </button>
+                            </a>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -135,22 +141,6 @@
             } catch (error) {
                 console.error('Failed to load cheats:', error);
                 grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">Failed to load cheats. Please refresh the page.</p>';
-            }
-        }
-
-        async function downloadGame(gameId, gameName) {
-            try {
-                const response = await fetch(`/api/get-download-link?gameId=${gameId}`);
-                if (!response.ok) throw new Error('Download failed');
-                const data = await response.json();
-                if (data.downloadLink) {
-                    window.location.href = data.downloadLink;
-                } else {
-                    alert('Unable to generate download link. Please try again or contact support on Discord.');
-                }
-            } catch (error) {
-                console.error('Download error:', error);
-                alert('Download failed. Join our Discord for support.');
             }
         }
 
