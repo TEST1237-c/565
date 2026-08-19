@@ -118,6 +118,7 @@
                     const card = document.createElement('div');
                     card.className = 'cheat-card';
                     card.innerHTML = `
+                        ${cheat.image ? `<div class="cheat-card-image"><img src="${cheat.image}" alt="${cheat.title}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
                         <div class="cheat-card-header">
                             <div class="cheat-card-icon">${cheat.gameIcon || '🎮'}</div>
                             <h3 class="cheat-card-title">${cheat.title}</h3>
