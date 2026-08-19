@@ -565,6 +565,47 @@ main {
     transform: scale(1.04);
 }
 
+.cheat-card-outdated {
+    opacity: 0.7;
+    filter: grayscale(35%);
+}
+
+.cheat-card-outdated:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border);
+}
+
+.cheat-outdated-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    background: rgba(239, 68, 68, 0.07);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--radius-md);
+    padding: 8px 10px;
+    margin-top: 2px;
+}
+
+.cheat-outdated-notice span {
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.cheat-outdated-notice p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.cheat-outdated-notice a {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
 .cheat-simple-body {
     padding: 12px 14px 14px;
     display: flex;
