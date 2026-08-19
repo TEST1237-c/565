@@ -189,10 +189,8 @@
                                     <p>This cheat is currently unavailable. If you'd like an update, let us know on <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener">Discord</a>.</p>
                                 </div>`;
                         } else if (isScript && cheat.code) {
-                            const safeTitle = cheat.title.replace(/'/g, "\\'");
-                            const safeCode = cheat.code.replace(/'/g, "\\'");
                             actionHtml = `
-                                <button class="cheat-btn cheat-btn-sm cheat-btn-script" onclick="openScriptModal('${safeTitle}', '${safeCode}')">
+                                <button class="cheat-btn cheat-btn-sm cheat-btn-script" data-script-title="${cheat.title.replace(/"/g, '&quot;')}" data-script-code="${cheat.code.replace(/"/g, '&quot;')}">
                                     Get Script
                                 </button>`;
                         } else {
@@ -219,6 +217,13 @@
                     });
 
                     grid.appendChild(section);
+                });
+
+                // Bind script buttons after all cards are in the DOM
+                grid.querySelectorAll('.cheat-btn-script').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        openScriptModal(btn.dataset.scriptTitle, btn.dataset.scriptCode);
+                    });
                 });
             } catch (error) {
                 console.error('Failed to load cheats:', error);
