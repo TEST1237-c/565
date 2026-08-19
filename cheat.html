@@ -100,7 +100,7 @@
 
     <script src="game.js"></script>
     <script>
-        // Load and display all cheats
+        // Load and display all cheats grouped by game
         async function loadCheats() {
             const grid = document.getElementById('cheatsGrid');
             if (!grid) return;
@@ -109,39 +109,57 @@
                 const response = await fetch('/cheat-status.json');
                 const data = await response.json();
 
+                // Group by game
+                const grouped = {};
                 Object.entries(data).forEach(([id, cheat]) => {
-                    const isUndetected = cheat.status === 'undetected';
-                    const statusLabel = cheat.status
-                        ? cheat.status.charAt(0).toUpperCase() + cheat.status.slice(1)
-                        : 'Unknown';
+                    const gameName = cheat.game || 'Other';
+                    if (!grouped[gameName]) grouped[gameName] = [];
+                    grouped[gameName].push({ id, ...cheat });
+                });
 
-                    const card = document.createElement('div');
-                    card.className = 'cheat-card';
-                    card.innerHTML = `
-                        ${cheat.image ? `<div class="cheat-card-image"><img src="${cheat.image}" alt="${cheat.title}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
-                        <div class="cheat-card-header">
-                            <div class="cheat-card-icon">${cheat.gameIcon || '🎮'}</div>
-                            <h3 class="cheat-card-title">${cheat.title}</h3>
+                // Render each game group
+                Object.entries(grouped).forEach(([gameName, cheats]) => {
+                    // Section title
+                    const section = document.createElement('div');
+                    section.className = 'cheat-game-section';
+                    section.innerHTML = `
+                        <div class="cheat-game-title">
+                            <span>${cheats[0].gameIcon || '🎮'}</span>
+                            <h2>${gameName}</h2>
                         </div>
-                        <div class="cheat-card-body">
-                            <p class="cheat-card-desc">${cheat.game || 'Free cheat'}</p>
-                            ${cheat.features ? `<p style="font-size:0.8rem; color: var(--text-secondary); margin-bottom: 8px;">${cheat.features.join(' · ')}</p>` : ''}
-                            <div class="cheat-card-status ${isUndetected ? 'active' : 'inactive'}">
-                                <span class="cheat-card-status-dot"></span>
-                                ${statusLabel}
-                            </div>
-                        </div>
-                        <div class="cheat-card-footer">
-                            <a href="${cheat.link || '#'}" ${cheat.link && cheat.link !== '#' ? 'target="_blank" rel="noopener"' : ''} class="cheat-btn" style="display:inline-block; text-align:center; text-decoration:none;">
-                                Download Now
-                            </a>
-                        </div>
+                        <div class="cheat-game-grid"></div>
                     `;
-                    grid.appendChild(card);
+                    const gameGrid = section.querySelector('.cheat-game-grid');
+
+                    cheats.forEach(cheat => {
+                        const isUndetected = cheat.status === 'undetected';
+                        const statusLabel = cheat.status
+                            ? cheat.status.charAt(0).toUpperCase() + cheat.status.slice(1)
+                            : 'Unknown';
+
+                        const card = document.createElement('div');
+                        card.className = 'cheat-card-simple';
+                        card.innerHTML = `
+                            ${cheat.image ? `<img class="cheat-simple-img" src="${cheat.image}" alt="${cheat.title}" loading="lazy" onerror="this.style.display='none'">` : ''}
+                            <div class="cheat-simple-body">
+                                <div class="cheat-simple-top">
+                                    <span class="cheat-simple-title">${cheat.title}</span>
+                                    <span class="cheat-simple-badge ${isUndetected ? 'active' : 'inactive'}">${statusLabel}</span>
+                                </div>
+                                ${cheat.features ? `<p class="cheat-simple-features">${cheat.features.join(' · ')}</p>` : ''}
+                                <a href="${cheat.link || '#'}" ${cheat.link && cheat.link !== '#' ? 'target="_blank" rel="noopener"' : ''} class="cheat-btn cheat-btn-sm">
+                                    Download
+                                </a>
+                            </div>
+                        `;
+                        gameGrid.appendChild(card);
+                    });
+
+                    grid.appendChild(section);
                 });
             } catch (error) {
                 console.error('Failed to load cheats:', error);
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary);">Failed to load cheats. Please refresh the page.</p>';
+                grid.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Failed to load cheats. Please refresh the page.</p>';
             }
         }
 
