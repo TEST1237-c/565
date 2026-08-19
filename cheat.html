@@ -137,19 +137,25 @@
                             ? cheat.status.charAt(0).toUpperCase() + cheat.status.slice(1)
                             : 'Unknown';
 
+                        const isOutdated = cheat.status === 'outdated';
+
                         const card = document.createElement('div');
-                        card.className = 'cheat-card-simple';
+                        card.className = 'cheat-card-simple' + (isOutdated ? ' cheat-card-outdated' : '');
                         card.innerHTML = `
-                            ${cheat.image ? `<img class="cheat-simple-img" src="${cheat.image}" alt="${cheat.title}" loading="lazy" onerror="this.style.display='none'">` : ''}
+                            ${cheat.image ? `<div class="cheat-simple-img-wrap"><img class="cheat-simple-img" src="${cheat.image}" alt="${cheat.title}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
                             <div class="cheat-simple-body">
                                 <div class="cheat-simple-top">
                                     <span class="cheat-simple-title">${cheat.title}</span>
                                     <span class="cheat-simple-badge ${isUndetected ? 'active' : 'inactive'}">${statusLabel}</span>
                                 </div>
                                 ${cheat.features ? `<p class="cheat-simple-features">${cheat.features.join(' · ')}</p>` : ''}
-                                <a href="${cheat.link || '#'}" ${cheat.link && cheat.link !== '#' ? 'target="_blank" rel="noopener"' : ''} class="cheat-btn cheat-btn-sm">
-                                    Download
-                                </a>
+                                ${isOutdated
+                                    ? `<div class="cheat-outdated-notice">
+                                           <span>⚠️</span>
+                                           <p>This cheat is currently unavailable. If you'd like an update, let us know on <a href="https://discord.gg/nYK36E5D2X" target="_blank" rel="noopener">Discord</a>.</p>
+                                       </div>`
+                                    : `<a href="${cheat.link || '#'}" ${cheat.link && cheat.link !== '#' ? 'target="_blank" rel="noopener"' : ''} class="cheat-btn cheat-btn-sm">Download</a>`
+                                }
                             </div>
                         `;
                         gameGrid.appendChild(card);
