@@ -1076,69 +1076,95 @@ footer a:hover {
     --warning:       #fb923c;
     --danger:        #f43f5e;
 
-    --bg:            #0c0a0e;
-    --bg-alt:        #1a0f1f;
-    --bg-dark:       #2d1a35;
+    --bg:            #080408;
+    --bg-alt:        #120a18;
+    --bg-dark:       #1e0f28;
 
     --text-primary:  #fef2e8;
     --text-secondary:#e8d5c4;
     --text-muted:    #b09080;
 
-    --border:        #3d2040;
-    --border-light:  #5c2f5e;
+    --border:        #3d1545;
+    --border-light:  #5c2060;
 }
 
 [data-theme="halloween"] body {
-    background: radial-gradient(ellipse at top, #1a0f1f 0%, #0c0a0e 60%);
+    background: radial-gradient(ellipse at 50% -10%, #1e0a2e 0%, #080408 55%);
 }
 
-/* Purple ground mist */
+/* Ground mist */
 [data-theme="halloween"] body::after {
     content: '';
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 160px;
-    background: linear-gradient(to top, rgba(100,10,80,0.12) 0%, transparent 100%);
+    bottom: 0; left: 0; right: 0;
+    height: 180px;
+    background: linear-gradient(to top, rgba(120,10,90,0.14) 0%, transparent 100%);
     pointer-events: none;
     z-index: 9996;
 }
 
-[data-theme="halloween"] .hero-section::before {
-    background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%);
-}
-[data-theme="halloween"] .hero-section::after {
-    background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%);
-}
 [data-theme="halloween"] .site-header {
-    background: rgba(12,10,14,0.95);
-    border-bottom-color: #3d2040;
+    background: rgba(8,4,8,0.96);
+    border-bottom: 1px solid #3d1545;
+    box-shadow: 0 2px 20px rgba(169,85,247,0.15);
+}
+
+[data-theme="halloween"] .feature-card {
+    border-color: #2a0d35;
+    background: #0e0716;
 }
 [data-theme="halloween"] .feature-card:hover {
-    box-shadow: 0 20px 40px rgba(249,115,22,0.2);
+    border-color: #f97316;
+    box-shadow: 0 20px 40px rgba(249,115,22,0.25),
+                0 0 60px rgba(168,85,247,0.1);
+    background: #160b22;
 }
-[data-theme="halloween"] ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #f97316, #a855f7);
+
+[data-theme="halloween"] .hero-stats {
+    background: #120a18;
+    border-color: #3d1545;
+    box-shadow: inset 0 0 40px rgba(168,85,247,0.06);
+}
+
+[data-theme="halloween"] .cheat-card,
+[data-theme="halloween"] .cheat-card-simple {
+    background: #0e0716;
+    border-color: #2a0d35;
 }
 [data-theme="halloween"] .cheat-card:hover,
 [data-theme="halloween"] .cheat-card-simple:hover {
-    box-shadow: 0 12px 28px rgba(249,115,22,0.2);
-    border-color: var(--primary);
+    border-color: #f97316;
+    box-shadow: 0 12px 35px rgba(249,115,22,0.25),
+                0 0 40px rgba(168,85,247,0.12);
 }
-/* Floating pumpkins decoration */
+
 [data-theme="halloween"] .hero-section::before {
-    content: '';
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
 }
+[data-theme="halloween"] .hero-section::after {
+    background: radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 70%);
+}
+
+[data-theme="halloween"] .features-section {
+    background: #0c0714;
+    border-top: 1px solid #2a0d35;
+    border-bottom: 1px solid #2a0d35;
+}
+
+[data-theme="halloween"] ::-webkit-scrollbar-track { background: #080408; }
+[data-theme="halloween"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+}
+
 [data-theme="halloween"] .section-badge {
     background: linear-gradient(135deg, #f97316, #a855f7);
 }
 [data-theme="halloween"] .hero-btn-primary {
     background: linear-gradient(135deg, #f97316, #a855f7);
-    box-shadow: 0 4px 15px rgba(249,115,22,0.35);
+    box-shadow: 0 4px 20px rgba(249,115,22,0.4);
 }
 [data-theme="halloween"] .hero-btn-primary:hover {
-    box-shadow: 0 6px 25px rgba(249,115,22,0.5);
+    box-shadow: 0 6px 30px rgba(249,115,22,0.55);
 }
 [data-theme="halloween"] .header-discord {
     background: linear-gradient(135deg, #f97316, #a855f7);
@@ -1148,7 +1174,7 @@ footer a:hover {
     background: linear-gradient(135deg, #f97316, #a855f7);
 }
 [data-theme="halloween"] .cheat-btn:hover {
-    box-shadow: 0 6px 20px rgba(249,115,22,0.35);
+    box-shadow: 0 6px 24px rgba(249,115,22,0.4);
 }
 [data-theme="halloween"] .gradient-text {
     background: linear-gradient(135deg, #f97316, #a855f7);
@@ -1157,10 +1183,11 @@ footer a:hover {
     background-clip: text;
 }
 [data-theme="halloween"] .hero-title {
-    background: linear-gradient(135deg, #f97316, #a855f7);
+    background: linear-gradient(135deg, #f97316 30%, #a855f7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(249,115,22,0.35));
 }
 [data-theme="halloween"] .hero-stat-number {
     background: linear-gradient(135deg, #f97316, #a855f7);
@@ -1175,13 +1202,18 @@ footer a:hover {
     background-clip: text;
 }
 [data-theme="halloween"] .feature-icon {
-    background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(168,85,247,0.1));
+    background: linear-gradient(135deg, rgba(249,115,22,0.12), rgba(168,85,247,0.12));
     color: #f97316;
+    box-shadow: 0 0 20px rgba(249,115,22,0.1);
+}
+[data-theme="halloween"] .header-stat {
+    background: #120a18;
+    border-color: #3d1545;
 }
 [data-theme="halloween"] .header-stat-number { color: #f97316; }
 [data-theme="halloween"] footer {
-    background: #1a0f1f;
-    border-top-color: #3d2040;
+    background: #0c0714;
+    border-top-color: #3d1545;
 }
 [data-theme="halloween"] footer a { color: #f97316; }
 
