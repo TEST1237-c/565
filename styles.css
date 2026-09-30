@@ -1092,17 +1092,6 @@ footer a:hover {
     background: radial-gradient(ellipse at 50% -10%, #1e0a2e 0%, #080408 55%);
 }
 
-/* Ground mist */
-[data-theme="halloween"] body::after {
-    content: '';
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: 180px;
-    background: linear-gradient(to top, rgba(120,10,90,0.14) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 9996;
-}
-
 [data-theme="halloween"] .site-header {
     background: rgba(8,4,8,0.96);
     border-bottom: 1px solid #3d1545;
