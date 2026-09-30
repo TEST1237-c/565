@@ -25,14 +25,202 @@
 })();
 
 // ============================================
-// HALLOWEEN EFFECT — spiderwebs + fog only
+// HALLOWEEN EFFECT — spiderwebs + bats
 // ============================================
 (function initHalloween() {
     let canvas, ctx, animId = null;
+    let bats = [];
 
-    const rand = (a, b) => a + Math.random() * (b - a);
+    const rand  = (a, b) => a + Math.random() * (b - a);
+    const TAU   = Math.PI * 2;
 
-    /* ── Spider web ── */
+    /* ══════════════════════════════════════
+       BAT
+    ══════════════════════════════════════ */
+    function makeBat(W, H, fromEdge) {
+        const goRight = Math.random() < 0.5;
+        // Slow, calm speed
+        const spd = rand(0.35, 0.85);
+        return {
+            x:       fromEdge ? (goRight ? -50 : W + 50) : rand(0, W),
+            y:       rand(40, H * 0.58),
+            dir:     goRight ? 0 : Math.PI,   // angle of travel
+            spd,
+            // Gentle sinusoidal drift
+            driftAmp:   rand(0.3, 0.7),
+            driftFreq:  rand(0.012, 0.022),
+            driftPhase: rand(0, TAU),
+            // Wing flap
+            flapPhase:  rand(0, TAU),
+            flapFreq:   rand(0.055, 0.085),   // slow, majestic flap
+            // Turn behaviour — smooth random steering
+            targetDir:  goRight ? 0 : Math.PI,
+            turnTimer:  rand(120, 280),
+            turnCount:  0,
+            size:       rand(14, 24),
+            opacity:    rand(0.72, 0.95),
+        };
+    }
+
+    function updateBat(b, W, H, t) {
+        // Steer toward targetDir smoothly
+        b.turnCount++;
+        if (b.turnCount >= b.turnTimer) {
+            // Pick a new gentle direction near current
+            const spread = Math.PI * 0.45;
+            b.targetDir = b.dir + rand(-spread, spread);
+            b.turnTimer = rand(120, 300);
+            b.turnCount = 0;
+        }
+        // Lerp current dir toward target (smooth turn)
+        let diff = b.targetDir - b.dir;
+        // Wrap to [-PI, PI]
+        while (diff >  Math.PI) diff -= TAU;
+        while (diff < -Math.PI) diff += TAU;
+        b.dir += diff * 0.018;
+
+        // Move
+        b.x += Math.cos(b.dir) * b.spd;
+        b.y += Math.sin(b.dir) * b.spd
+             + Math.sin(t * b.driftFreq + b.driftPhase) * b.driftAmp;
+
+        // Soft vertical boundary bounce
+        if (b.y < 30)      { b.y = 30;      b.targetDir = Math.abs(b.dir); }
+        if (b.y > H * 0.6) { b.y = H * 0.6; b.targetDir = -Math.abs(b.dir); }
+
+        // Wrap horizontally (respawn from other side)
+        if (b.x < -60 || b.x > W + 60) {
+            Object.assign(b, makeBat(W, H, true));
+        }
+    }
+
+    function drawBat(b, t) {
+        const s    = b.size;
+        // Wing flap: smooth sine, range -1..1
+        const flap = Math.sin(b.flapPhase + t * b.flapFreq * 60);
+        const facingLeft = Math.cos(b.dir) < 0;
+
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        if (facingLeft) ctx.scale(-1, 1);
+        ctx.globalAlpha = b.opacity;
+
+        // ── Subtle orange glow behind body ──
+        ctx.shadowColor = 'rgba(249,115,22,0.45)';
+        ctx.shadowBlur  = 14;
+
+        // ── LEFT wing ──
+        // Upper membrane
+        ctx.beginPath();
+        ctx.moveTo(-s * 0.18, -s * 0.05);
+        ctx.bezierCurveTo(
+            -s * 0.55,  flap * s * -0.65,
+            -s * 1.05,  flap * s * -0.85,
+            -s * 0.88,  flap * s * -0.38
+        );
+        // Lower membrane (closes back to body)
+        ctx.bezierCurveTo(
+            -s * 0.62,  flap * s * -0.1,
+            -s * 0.30,  flap * s * 0.05,
+            -s * 0.18,  s * 0.08
+        );
+        ctx.closePath();
+        ctx.fillStyle = '#18041e';
+        ctx.fill();
+
+        // Wing inner vein lines
+        ctx.strokeStyle = 'rgba(80,20,100,0.55)';
+        ctx.lineWidth   = 0.7;
+        ctx.shadowBlur  = 0;
+        [0.35, 0.62, 0.82].forEach(t2 => {
+            const wx = -s * t2 * 0.95;
+            const wy = flap * s * -0.7 * t2;
+            ctx.beginPath();
+            ctx.moveTo(-s * 0.12, 0);
+            ctx.lineTo(wx, wy);
+            ctx.stroke();
+        });
+
+        // ── RIGHT wing ──
+        ctx.shadowBlur = 14;
+        ctx.beginPath();
+        ctx.moveTo(s * 0.18, -s * 0.05);
+        ctx.bezierCurveTo(
+            s * 0.55,  flap * s * -0.65,
+            s * 1.05,  flap * s * -0.85,
+            s * 0.88,  flap * s * -0.38
+        );
+        ctx.bezierCurveTo(
+            s * 0.62,  flap * s * -0.1,
+            s * 0.30,  flap * s * 0.05,
+            s * 0.18,  s * 0.08
+        );
+        ctx.closePath();
+        ctx.fillStyle = '#18041e';
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(80,20,100,0.55)';
+        ctx.lineWidth   = 0.7;
+        ctx.shadowBlur  = 0;
+        [0.35, 0.62, 0.82].forEach(t2 => {
+            ctx.beginPath();
+            ctx.moveTo(s * 0.12, 0);
+            ctx.lineTo(s * t2 * 0.95, flap * s * -0.7 * t2);
+            ctx.stroke();
+        });
+
+        // ── Body ──
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(249,115,22,0.3)';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, s * 0.18, s * 0.30, 0, 0, TAU);
+        ctx.fillStyle = '#120216';
+        ctx.fill();
+
+        // ── Ears ──
+        ctx.shadowBlur = 0;
+        [[-1], [1]].forEach(([side]) => {
+            ctx.beginPath();
+            ctx.moveTo(side * s * 0.06, -s * 0.25);
+            ctx.lineTo(side * s * 0.13, -s * 0.48);
+            ctx.lineTo(side * s * 0.19, -s * 0.25);
+            ctx.closePath();
+            ctx.fillStyle = '#200430';
+            ctx.fill();
+            // Inner ear
+            ctx.beginPath();
+            ctx.moveTo(side * s * 0.08, -s * 0.27);
+            ctx.lineTo(side * s * 0.13, -s * 0.42);
+            ctx.lineTo(side * s * 0.17, -s * 0.27);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(200,50,180,0.18)';
+            ctx.fill();
+        });
+
+        // ── Eyes — glowing orange dots ──
+        [[-0.07, -0.02], [0.07, -0.02]].forEach(([ex, ey]) => {
+            // Outer glow
+            const grd = ctx.createRadialGradient(ex*s, ey*s, 0, ex*s, ey*s, s * 0.09);
+            grd.addColorStop(0,   'rgba(255,160,20,0.9)');
+            grd.addColorStop(0.4, 'rgba(249,115,22,0.6)');
+            grd.addColorStop(1,   'rgba(249,115,22,0)');
+            ctx.beginPath();
+            ctx.arc(ex * s, ey * s, s * 0.09, 0, TAU);
+            ctx.fillStyle = grd;
+            ctx.fill();
+            // Pupil
+            ctx.beginPath();
+            ctx.arc(ex * s, ey * s, s * 0.035, 0, TAU);
+            ctx.fillStyle = '#fff5e0';
+            ctx.fill();
+        });
+
+        ctx.restore();
+    }
+
+    /* ══════════════════════════════════════
+       SPIDER WEB
+    ══════════════════════════════════════ */
     function drawSpiderWeb(cx, cy, radius, flip) {
         ctx.save();
         ctx.translate(cx, cy);
@@ -46,7 +234,6 @@
         ctx.shadowColor = '#a855f7';
         ctx.shadowBlur  = 8;
 
-        // Spokes
         for (let i = 0; i < spokes; i++) {
             const angle = (Math.PI / 2) * (i / (spokes - 1));
             ctx.beginPath();
@@ -55,49 +242,42 @@
             ctx.stroke();
         }
 
-        // Rings
         for (let r = 1; r <= rings; r++) {
             const rr = (r / rings) * radius;
             ctx.beginPath();
             for (let i = 0; i < spokes; i++) {
                 const a1  = (Math.PI / 2) * (i / (spokes - 1));
                 const a2  = (Math.PI / 2) * ((i + 1) / (spokes - 1));
-                const p1x = Math.cos(a1) * rr, p1y = Math.sin(a1) * rr;
-                const p2x = Math.cos(a2) * rr, p2y = Math.sin(a2) * rr;
                 const cpx = Math.cos((a1 + a2) / 2) * rr * 1.08;
                 const cpy = Math.sin((a1 + a2) / 2) * rr * 1.08;
-                if (i === 0) ctx.moveTo(p1x, p1y);
-                ctx.quadraticCurveTo(cpx, cpy, p2x, p2y);
+                if (i === 0) ctx.moveTo(Math.cos(a1)*rr, Math.sin(a1)*rr);
+                ctx.quadraticCurveTo(cpx, cpy, Math.cos(a2)*rr, Math.sin(a2)*rr);
             }
             ctx.stroke();
         }
 
-        // Spider
+        // Spider body
         const sa = (Math.PI / 2) * 0.52;
         const sr = radius * 0.36;
         const sx = Math.cos(sa) * sr, sy = Math.sin(sa) * sr;
         ctx.shadowBlur  = 0;
         ctx.globalAlpha = 0.65;
         ctx.fillStyle   = '#2d0a3a';
-        ctx.beginPath(); ctx.arc(sx, sy,     5,   0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(sx, sy + 7, 3.5, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(sx, sy,     5,   0, TAU); ctx.fill();
+        ctx.beginPath(); ctx.arc(sx, sy + 7, 3.5, 0, TAU); ctx.fill();
 
-        // Spider legs (4 each side)
         ctx.strokeStyle = '#4a1060';
         ctx.lineWidth   = 0.9;
         ctx.globalAlpha = 0.5;
         [[-1], [1]].forEach(([side]) => {
             for (let l = 0; l < 4; l++) {
                 const baseAngle = (l / 3) * Math.PI * 0.6 - Math.PI * 0.3;
-                const lx1 = sx + side * 5;
-                const ly1 = sy + l * 2 - 3;
+                const lx1 = sx + side * 5, ly1 = sy + l * 2 - 3;
                 const lx2 = lx1 + side * Math.cos(baseAngle) * 12;
                 const ly2 = ly1 + Math.sin(baseAngle) * 8;
-                const lx3 = lx2 + side * 6;
-                const ly3 = ly2 + 5;
                 ctx.beginPath();
                 ctx.moveTo(lx1, ly1);
-                ctx.quadraticCurveTo(lx2, ly2, lx3, ly3);
+                ctx.quadraticCurveTo(lx2, ly2, lx2 + side * 6, ly2 + 5);
                 ctx.stroke();
             }
         });
@@ -105,15 +285,27 @@
         ctx.restore();
     }
 
-    /* ── Main loop ── */
+    /* ══════════════════════════════════════
+       MAIN LOOP
+    ══════════════════════════════════════ */
+    let frameCount = 0;
+
     function draw() {
         const W = canvas.width, H = canvas.height;
         ctx.clearRect(0, 0, W, H);
+        frameCount++;
+        const t = frameCount; // integer frame counter
 
-        // Spider webs top corners
+        // Spider webs — static, drawn every frame (cheap)
         const webSize = Math.min(W, H) * 0.24;
         drawSpiderWeb(0, 0, webSize, false);
         drawSpiderWeb(W, 0, webSize, true);
+
+        // Bats
+        for (const b of bats) {
+            updateBat(b, W, H, t);
+            drawBat(b, t);
+        }
 
         animId = requestAnimationFrame(draw);
     }
@@ -129,12 +321,17 @@
         const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
         resize();
         window.addEventListener('resize', resize);
+
+        const W = canvas.width, H = canvas.height;
+        bats = Array.from({ length: 10 }, () => makeBat(W, H, false));
+        frameCount = 0;
         draw();
     }
 
     function stopHalloween() {
         if (animId) { cancelAnimationFrame(animId); animId = null; }
         if (canvas) { canvas.remove(); canvas = null; ctx = null; }
+        bats = []; frameCount = 0;
     }
 
     function syncHalloween() {
