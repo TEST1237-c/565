@@ -3,6 +3,7 @@
     "trailingSlash": false,
     "routes": [
         { "src": "/api/(.*)", "dest": "/api/$1" },
+        { "src": "/theme.json", "dest": "/theme.json" },
         { "handle": "filesystem" },
         { "src": "/(.*)", "dest": "/404.html" }
     ]
