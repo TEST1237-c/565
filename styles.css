@@ -1011,3 +1011,247 @@ footer a:hover {
     cursor: pointer;
     border: none;
 }
+
+/* ============================================
+   THEMES — data-theme attribute on <html>
+   ============================================ */
+
+/* ── THEME: DEFAULT (same as base, explicit override) ── */
+[data-theme="default"] {
+    --primary:       #3b82f6;
+    --primary-dark:  #2563eb;
+    --primary-light: #60a5fa;
+    --secondary:     #0ea5e9;
+    --tertiary:      #06b6d4;
+    --accent:        #fbbf24;
+    --success:       #10b981;
+    --warning:       #f59e0b;
+    --danger:        #ef4444;
+
+    --bg:            #0f172a;
+    --bg-alt:        #1e293b;
+    --bg-dark:       #334155;
+
+    --text-primary:  #f1f5f9;
+    --text-secondary:#cbd5e1;
+    --text-muted:    #94a3b8;
+
+    --border:        #334155;
+    --border-light:  #475569;
+}
+
+/* ── THEME: HALLOWEEN ── */
+[data-theme="halloween"] {
+    --primary:       #f97316;
+    --primary-dark:  #ea580c;
+    --primary-light: #fb923c;
+    --secondary:     #a855f7;
+    --tertiary:      #c026d3;
+    --accent:        #facc15;
+    --success:       #4ade80;
+    --warning:       #fb923c;
+    --danger:        #f43f5e;
+
+    --bg:            #0c0a0e;
+    --bg-alt:        #1a0f1f;
+    --bg-dark:       #2d1a35;
+
+    --text-primary:  #fef2e8;
+    --text-secondary:#e8d5c4;
+    --text-muted:    #b09080;
+
+    --border:        #3d2040;
+    --border-light:  #5c2f5e;
+}
+
+[data-theme="halloween"] body {
+    background: radial-gradient(ellipse at top, #1a0f1f 0%, #0c0a0e 60%);
+}
+
+[data-theme="halloween"] .hero-section::before {
+    background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%);
+}
+[data-theme="halloween"] .hero-section::after {
+    background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%);
+}
+[data-theme="halloween"] .site-header {
+    background: rgba(12,10,14,0.95);
+    border-bottom-color: #3d2040;
+}
+[data-theme="halloween"] .feature-card:hover {
+    box-shadow: 0 20px 40px rgba(249,115,22,0.2);
+}
+[data-theme="halloween"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+}
+[data-theme="halloween"] .cheat-card:hover,
+[data-theme="halloween"] .cheat-card-simple:hover {
+    box-shadow: 0 12px 28px rgba(249,115,22,0.2);
+    border-color: var(--primary);
+}
+/* Floating pumpkins decoration */
+[data-theme="halloween"] .hero-section::before {
+    content: '';
+}
+[data-theme="halloween"] .section-badge {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+}
+[data-theme="halloween"] .hero-btn-primary {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+    box-shadow: 0 4px 15px rgba(249,115,22,0.35);
+}
+[data-theme="halloween"] .hero-btn-primary:hover {
+    box-shadow: 0 6px 25px rgba(249,115,22,0.5);
+}
+[data-theme="halloween"] .header-discord {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+    box-shadow: 0 4px 15px rgba(249,115,22,0.3);
+}
+[data-theme="halloween"] .cheat-btn {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+}
+[data-theme="halloween"] .cheat-btn:hover {
+    box-shadow: 0 6px 20px rgba(249,115,22,0.35);
+}
+[data-theme="halloween"] .gradient-text {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="halloween"] .hero-title {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="halloween"] .hero-stat-number {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="halloween"] .header-logo {
+    background: linear-gradient(135deg, #f97316, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="halloween"] .feature-icon {
+    background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(168,85,247,0.1));
+    color: #f97316;
+}
+[data-theme="halloween"] .header-stat-number { color: #f97316; }
+[data-theme="halloween"] footer {
+    background: #1a0f1f;
+    border-top-color: #3d2040;
+}
+[data-theme="halloween"] footer a { color: #f97316; }
+
+/* ── THEME: NOËL ── */
+[data-theme="noel"] {
+    --primary:       #22c55e;
+    --primary-dark:  #16a34a;
+    --primary-light: #4ade80;
+    --secondary:     #ef4444;
+    --tertiary:      #dc2626;
+    --accent:        #fbbf24;
+    --success:       #22c55e;
+    --warning:       #f59e0b;
+    --danger:        #ef4444;
+
+    --bg:            #071510;
+    --bg-alt:        #0d2218;
+    --bg-dark:       #143322;
+
+    --text-primary:  #f0fdf4;
+    --text-secondary:#bbf7d0;
+    --text-muted:    #86efac;
+
+    --border:        #1a4d2e;
+    --border-light:  #166534;
+}
+
+[data-theme="noel"] body {
+    background: radial-gradient(ellipse at top, #0d2218 0%, #071510 60%);
+}
+
+[data-theme="noel"] .hero-section::before {
+    background: radial-gradient(circle, rgba(34,197,94,0.15) 0%, transparent 70%);
+}
+[data-theme="noel"] .hero-section::after {
+    background: radial-gradient(circle, rgba(239,68,68,0.1) 0%, transparent 70%);
+}
+[data-theme="noel"] .site-header {
+    background: rgba(7,21,16,0.95);
+    border-bottom-color: #1a4d2e;
+}
+[data-theme="noel"] .feature-card:hover {
+    box-shadow: 0 20px 40px rgba(34,197,94,0.18);
+}
+[data-theme="noel"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #22c55e, #ef4444);
+}
+[data-theme="noel"] .cheat-card:hover,
+[data-theme="noel"] .cheat-card-simple:hover {
+    box-shadow: 0 12px 28px rgba(34,197,94,0.18);
+    border-color: var(--primary);
+}
+[data-theme="noel"] .section-badge {
+    background: linear-gradient(135deg, #22c55e, #ef4444);
+}
+[data-theme="noel"] .hero-btn-primary {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 4px 15px rgba(34,197,94,0.35);
+}
+[data-theme="noel"] .hero-btn-primary:hover {
+    box-shadow: 0 6px 25px rgba(34,197,94,0.5);
+}
+[data-theme="noel"] .header-discord {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 4px 15px rgba(34,197,94,0.3);
+}
+[data-theme="noel"] .cheat-btn {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+[data-theme="noel"] .cheat-btn:hover {
+    box-shadow: 0 6px 20px rgba(34,197,94,0.35);
+}
+[data-theme="noel"] .gradient-text {
+    background: linear-gradient(135deg, #22c55e, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="noel"] .hero-title {
+    background: linear-gradient(135deg, #22c55e, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="noel"] .hero-stat-number {
+    background: linear-gradient(135deg, #22c55e, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="noel"] .header-logo {
+    background: linear-gradient(135deg, #22c55e, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+[data-theme="noel"] .feature-icon {
+    background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(239,68,68,0.08));
+    color: #22c55e;
+}
+[data-theme="noel"] .header-stat-number { color: #22c55e; }
+[data-theme="noel"] footer {
+    background: #0d2218;
+    border-top-color: #1a4d2e;
+}
+[data-theme="noel"] footer a { color: #22c55e; }
+/* Snow sparkle on hero */
+[data-theme="noel"] .features-section {
+    background: var(--bg-alt);
+}
