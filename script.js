@@ -29,42 +29,8 @@
 // ============================================
 (function initHalloween() {
     let canvas, ctx, animId = null;
-    let fogLayers = [];
-    let frameCount = 0;
 
     const rand = (a, b) => a + Math.random() * (b - a);
-
-    /* ── Fog ── */
-    function createFogLayer(w, h, i) {
-        return {
-            x:       rand(-w * 0.5, w * 0.5),
-            y:       h * (0.58 + i * 0.10),
-            w:       rand(w * 0.6, w * 1.3),
-            h:       rand(70, 140),
-            speedX:  rand(0.06, 0.22) * (Math.random() < 0.5 ? 1 : -1),
-            opacity: rand(0.05, 0.12),
-            phase:   rand(0, Math.PI * 2),
-        };
-    }
-
-    function drawFog(f, t, W) {
-        f.x += f.speedX;
-        if (f.x >  W + f.w) f.x = -f.w;
-        if (f.x < -f.w)     f.x =  W + f.w;
-
-        const pulse = 1 + 0.10 * Math.sin(t + f.phase);
-        const g = ctx.createRadialGradient(
-            f.x + f.w / 2, f.y, 0,
-            f.x + f.w / 2, f.y, (f.w / 2) * pulse
-        );
-        g.addColorStop(0,   `rgba(90,10,110,${f.opacity * 1.5})`);
-        g.addColorStop(0.5, `rgba(50,5,70,${f.opacity * 0.7})`);
-        g.addColorStop(1,   'rgba(0,0,0,0)');
-        ctx.beginPath();
-        ctx.ellipse(f.x + f.w / 2, f.y, (f.w / 2) * pulse, f.h * 0.5 * pulse, 0, 0, Math.PI * 2);
-        ctx.fillStyle = g;
-        ctx.fill();
-    }
 
     /* ── Spider web ── */
     function drawSpiderWeb(cx, cy, radius, flip) {
@@ -143,16 +109,11 @@
     function draw() {
         const W = canvas.width, H = canvas.height;
         ctx.clearRect(0, 0, W, H);
-        frameCount++;
-        const t = frameCount * 0.01;
 
         // Spider webs top corners
         const webSize = Math.min(W, H) * 0.24;
         drawSpiderWeb(0, 0, webSize, false);
         drawSpiderWeb(W, 0, webSize, true);
-
-        // Fog
-        for (const f of fogLayers) drawFog(f, t, W);
 
         animId = requestAnimationFrame(draw);
     }
@@ -168,16 +129,12 @@
         const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
         resize();
         window.addEventListener('resize', resize);
-
-        const W = canvas.width, H = canvas.height;
-        fogLayers = Array.from({ length: 6 }, (_, i) => createFogLayer(W, H, i));
         draw();
     }
 
     function stopHalloween() {
         if (animId) { cancelAnimationFrame(animId); animId = null; }
         if (canvas) { canvas.remove(); canvas = null; ctx = null; }
-        fogLayers = []; frameCount = 0;
     }
 
     function syncHalloween() {
