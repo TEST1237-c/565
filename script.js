@@ -1,4 +1,29 @@
 // ============================================
+// THEME LOADER — applies data-theme on <html>
+// ============================================
+(function applyTheme() {
+    // Apply immediately from cache to avoid flash
+    const cached = localStorage.getItem('siteTheme');
+    if (cached && cached !== 'default') {
+        document.documentElement.setAttribute('data-theme', cached);
+    }
+
+    // Then fetch the live value from the API
+    fetch('/api/theme-status', { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : { theme: 'default' })
+        .then(data => {
+            const theme = data.theme || 'default';
+            localStorage.setItem('siteTheme', theme);
+            if (theme === 'default') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+        })
+        .catch(() => { /* keep cached value */ });
+})();
+
+// ============================================
 // MOUSE FOLLOWER EFFECT (common to all pages)
 // ============================================
 function initMouseFollower() {
