@@ -1255,3 +1255,16 @@ footer a:hover {
 [data-theme="noel"] .features-section {
     background: var(--bg-alt);
 }
+
+/* Ground mist at bottom */
+[data-theme="noel"] body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, rgba(34,197,94,0.06) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 9997;
+}
