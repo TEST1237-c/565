@@ -1012,6 +1012,30 @@ footer a:hover {
     border: none;
 }
 
+/* ── cheat.html page header ── */
+.cheat-page-header {
+    padding: calc(var(--header-height) + var(--spacing-3xl)) var(--spacing-2xl) var(--spacing-3xl);
+    background: linear-gradient(135deg, rgba(59,130,246,0.07) 0%, rgba(14,165,233,0.05) 100%);
+    text-align: center;
+}
+
+[data-theme="halloween"] .cheat-page-header {
+    background: linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(168,85,247,0.06) 100%);
+}
+
+[data-theme="noel"] .cheat-page-header {
+    background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(239,68,68,0.05) 100%);
+}
+
+/* ── cheat.html CTA section ── */
+[data-theme="halloween"] .cheat-cta-section {
+    background: linear-gradient(135deg, #f97316, #a855f7) !important;
+}
+
+[data-theme="noel"] .cheat-cta-section {
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+}
+
 /* ============================================
    THEMES — data-theme attribute on <html>
    ============================================ */
