@@ -1,15 +1,16 @@
 // ============================================
-// THEME LOADER — applies data-theme on <html>
+// THEME LOADER — reads theme.json and applies
+// data-theme on <html> for every page
 // ============================================
 (function applyTheme() {
-    // Apply immediately from cache to avoid flash
+    // 1. Apply cached value instantly to avoid flash
     const cached = localStorage.getItem('siteTheme');
     if (cached && cached !== 'default') {
         document.documentElement.setAttribute('data-theme', cached);
     }
 
-    // Then fetch the live value from the API
-    fetch('/api/theme-status', { cache: 'no-store' })
+    // 2. Fetch theme.json (static file — fast, no API needed)
+    fetch('/theme.json', { cache: 'no-store' })
         .then(r => r.ok ? r.json() : { theme: 'default' })
         .then(data => {
             const theme = data.theme || 'default';
@@ -20,7 +21,7 @@
                 document.documentElement.setAttribute('data-theme', theme);
             }
         })
-        .catch(() => { /* keep cached value */ });
+        .catch(() => { /* keep cached value on network error */ });
 })();
 
 // ============================================
