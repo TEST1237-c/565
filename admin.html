@@ -1196,29 +1196,42 @@ function selectThemeCard(id) {
 
 async function saveTheme() {
     const btn = document.getElementById('themeSaveBtn');
+    const statusEl = document.getElementById('themeSaveStatus');
     if (!btn || btn.disabled) return;
     btn.disabled = true;
     btn.textContent = '⏳ Application…';
+    if (statusEl) statusEl.textContent = '';
     try {
+        const pass = getPass();
         const res = await fetch('/api/set-theme', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ adminPassword: getPass(), theme: selectedTheme })
+            body: JSON.stringify({ adminPassword: pass, theme: selectedTheme })
         });
-        const d = await res.json().catch(() => ({}));
+        let d = {};
+        try { d = await res.json(); } catch(e) { d = { error: `Réponse invalide (HTTP ${res.status})` }; }
+
         if (res.ok) {
             currentTheme = selectedTheme;
             renderThemeCards();
             toast(`Thème "${THEME_LABELS[selectedTheme]}" appliqué !`, 'success');
+            if (statusEl) statusEl.textContent = '✅ Sauvegardé';
         } else {
-            toast(d.error || 'Erreur lors de l\'application', 'error');
+            const msg = d.error || `Erreur HTTP ${res.status}`;
+            toast(msg, 'error');
+            if (statusEl) statusEl.textContent = '❌ ' + msg;
             btn.disabled = false;
+            btn.textContent = '💾 Appliquer le thème';
         }
-    } catch {
-        toast('Erreur réseau', 'error');
+    } catch(err) {
+        const msg = 'Erreur réseau : ' + err.message;
+        toast(msg, 'error');
+        if (statusEl) statusEl.textContent = '❌ ' + msg;
         btn.disabled = false;
+        btn.textContent = '💾 Appliquer le thème';
     }
-    btn.textContent = '💾 Appliquer le thème';
+    // Only re-enable btn if we didn't set it above (success path)
+    if (btn.textContent === '⏳ Application…') btn.textContent = '💾 Appliquer le thème';
 }
 
 
