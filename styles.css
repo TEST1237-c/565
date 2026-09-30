@@ -1092,6 +1092,19 @@ footer a:hover {
     background: radial-gradient(ellipse at top, #1a0f1f 0%, #0c0a0e 60%);
 }
 
+/* Purple ground mist */
+[data-theme="halloween"] body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 160px;
+    background: linear-gradient(to top, rgba(100,10,80,0.12) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 9996;
+}
+
 [data-theme="halloween"] .hero-section::before {
     background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%);
 }
