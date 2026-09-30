@@ -25,240 +25,62 @@
 })();
 
 // ============================================
-// HALLOWEEN EFFECT — bats, pumpkins, embers,
-// spiderwebs, fog. No lightning.
+// HALLOWEEN EFFECT — spiderwebs + fog only
 // ============================================
 (function initHalloween() {
     let canvas, ctx, animId = null;
-    let bats = [], embers = [], fogLayers = [];
+    let fogLayers = [];
     let frameCount = 0;
 
-    /* ── helpers ── */
-    const rand  = (a, b) => a + Math.random() * (b - a);
-    const randI = (a, b) => Math.floor(rand(a, b));
+    const rand = (a, b) => a + Math.random() * (b - a);
 
-    /* ══════════════════════════════════════
-       BATS
-    ══════════════════════════════════════ */
-    function createBat(w, h, fromEdge = false) {
-        const goRight = Math.random() < 0.5;
+    /* ── Fog ── */
+    function createFogLayer(w, h, i) {
         return {
-            x:        fromEdge ? (goRight ? -60 : w + 60) : rand(0, w),
-            y:        rand(30, h * 0.52),
-            size:     rand(12, 26),
-            speedX:   (goRight ? 1 : -1) * rand(0.7, 1.8),
-            speedY:   rand(-0.3, 0.3),
-            flap:     rand(0, Math.PI * 2),
-            flapSpd:  rand(0.10, 0.16),
-            wobble:   rand(0, Math.PI * 2),
-            wobAmp:   rand(0.25, 0.7),
-            opacity:  rand(0.6, 0.95),
+            x:       rand(-w * 0.5, w * 0.5),
+            y:       h * (0.58 + i * 0.10),
+            w:       rand(w * 0.6, w * 1.3),
+            h:       rand(70, 140),
+            speedX:  rand(0.06, 0.22) * (Math.random() < 0.5 ? 1 : -1),
+            opacity: rand(0.05, 0.12),
+            phase:   rand(0, Math.PI * 2),
         };
     }
 
-    function drawBat(b) {
-        const s = b.size;
-        const wing = Math.sin(b.flap);          // -1 … 1
+    function drawFog(f, t, W) {
+        f.x += f.speedX;
+        if (f.x >  W + f.w) f.x = -f.w;
+        if (f.x < -f.w)     f.x =  W + f.w;
 
-        ctx.save();
-        ctx.translate(b.x, b.y);
-        ctx.globalAlpha = b.opacity;
-
-        // Wing shadow / depth
-        ctx.shadowColor = 'rgba(249,115,22,0.55)';
-        ctx.shadowBlur  = 12;
-
-        // ── left wing ──
+        const pulse = 1 + 0.10 * Math.sin(t + f.phase);
+        const g = ctx.createRadialGradient(
+            f.x + f.w / 2, f.y, 0,
+            f.x + f.w / 2, f.y, (f.w / 2) * pulse
+        );
+        g.addColorStop(0,   `rgba(90,10,110,${f.opacity * 1.5})`);
+        g.addColorStop(0.5, `rgba(50,5,70,${f.opacity * 0.7})`);
+        g.addColorStop(1,   'rgba(0,0,0,0)');
         ctx.beginPath();
-        ctx.moveTo(-s * 0.22, 0);
-        ctx.bezierCurveTo(-s * 0.65,  wing * s * 0.55, -s * 1.15,  wing * s * 0.85, -s * 0.95,  wing * s * 0.4);
-        ctx.bezierCurveTo(-s * 0.65,  wing * s * 0.15, -s * 0.32,  wing * s * 0.05, -s * 0.22, 0);
-        // wing membrane notch
-        ctx.moveTo(-s * 0.6, wing * s * 0.45);
-        ctx.bezierCurveTo(-s * 0.72, wing * s * 0.62, -s * 0.82, wing * s * 0.7, -s * 0.72, wing * s * 0.5);
-        ctx.fillStyle = '#1a0520';
-        ctx.fill();
-
-        // ── right wing ──
-        ctx.beginPath();
-        ctx.moveTo(s * 0.22, 0);
-        ctx.bezierCurveTo(s * 0.65,  wing * s * 0.55, s * 1.15,  wing * s * 0.85, s * 0.95,  wing * s * 0.4);
-        ctx.bezierCurveTo(s * 0.65,  wing * s * 0.15, s * 0.32,  wing * s * 0.05, s * 0.22, 0);
-        ctx.moveTo(s * 0.6, wing * s * 0.45);
-        ctx.bezierCurveTo(s * 0.72, wing * s * 0.62, s * 0.82, wing * s * 0.7, s * 0.72, wing * s * 0.5);
-        ctx.fillStyle = '#1a0520';
-        ctx.fill();
-
-        // ── body ──
-        ctx.beginPath();
-        ctx.ellipse(0, 0, s * 0.22, s * 0.32, 0, 0, Math.PI * 2);
-        ctx.fillStyle = '#160318';
-        ctx.fill();
-
-        // ── ears ──
-        [[-1], [1]].forEach(([side]) => {
-            ctx.beginPath();
-            ctx.moveTo(side * s * 0.08, -s * 0.28);
-            ctx.lineTo(side * s * 0.16, -s * 0.52);
-            ctx.lineTo(side * s * 0.22, -s * 0.28);
-            ctx.closePath();
-            ctx.fillStyle = '#2a0530';
-            ctx.fill();
-        });
-
-        // ── glowing eyes ──
-        [[-0.08, 0.02], [0.08, 0.02]].forEach(([ex, ey]) => {
-            const g = ctx.createRadialGradient(ex*s, ey*s, 0, ex*s, ey*s, s*0.07);
-            g.addColorStop(0,   '#ff9500');
-            g.addColorStop(0.5, '#f97316');
-            g.addColorStop(1,   'rgba(249,115,22,0)');
-            ctx.beginPath();
-            ctx.arc(ex * s, ey * s, s * 0.07, 0, Math.PI * 2);
-            ctx.fillStyle = g;
-            ctx.shadowColor = '#f97316';
-            ctx.shadowBlur  = 10;
-            ctx.fill();
-        });
-
-        ctx.restore();
-    }
-
-    /* ══════════════════════════════════════
-       EMBERS / SPARKS
-    ══════════════════════════════════════ */
-    function createEmber(w, h) {
-        return {
-            x:      rand(0, w),
-            y:      h + rand(0, 30),
-            size:   rand(1.5, 4.5),
-            speedY: -rand(0.6, 1.8),
-            speedX: rand(-0.4, 0.4),
-            life:   1.0,
-            decay:  rand(0.003, 0.009),
-            hue:    randI(15, 45),       // orange–yellow
-        };
-    }
-
-    function drawEmber(e) {
-        ctx.save();
-        ctx.globalAlpha = e.life * 0.85;
-        ctx.shadowColor = `hsl(${e.hue},100%,60%)`;
-        ctx.shadowBlur  = 8;
-        const g = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.size);
-        g.addColorStop(0,   `hsl(${e.hue+20},100%,92%)`);
-        g.addColorStop(0.4, `hsl(${e.hue},100%,65%)`);
-        g.addColorStop(1,   `hsla(${e.hue-10},100%,40%,0)`);
-        ctx.beginPath();
-        ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
+        ctx.ellipse(f.x + f.w / 2, f.y, (f.w / 2) * pulse, f.h * 0.5 * pulse, 0, 0, Math.PI * 2);
         ctx.fillStyle = g;
         ctx.fill();
-        ctx.restore();
     }
 
-    /* ══════════════════════════════════════
-       PUMPKINS  (drawn on canvas, float near bottom)
-    ══════════════════════════════════════ */
-    function createPumpkin(w, h) {
-        return {
-            x:     rand(0, w),
-            y:     h - rand(60, 180),
-            size:  rand(22, 48),
-            phase: rand(0, Math.PI * 2),
-            speed: rand(0.008, 0.018),
-        };
-    }
-
-    function drawPumpkin(p) {
-        const s = p.size;
-        const bob = Math.sin(p.phase) * 4;
-
-        ctx.save();
-        ctx.translate(p.x, p.y + bob);
-        ctx.globalAlpha = 0.82;
-
-        // Glow
-        ctx.shadowColor = '#f97316';
-        ctx.shadowBlur  = 20;
-
-        // Body lobes (5 ellipses)
-        const lobeW = s * 0.38, lobeH = s * 0.52;
-        const offsets = [-s*0.56, -s*0.28, 0, s*0.28, s*0.56];
-        offsets.forEach((ox, i) => {
-            const w2 = i === 0 || i === 4 ? lobeW * 0.7 : lobeW;
-            ctx.beginPath();
-            ctx.ellipse(ox, 0, w2, lobeH * (i === 0||i===4 ? 0.85 : 1), 0, 0, Math.PI * 2);
-            const g = ctx.createRadialGradient(ox - s*0.08, -s*0.1, s*0.05, ox, 0, w2 * 1.4);
-            g.addColorStop(0,   '#ffa500');
-            g.addColorStop(0.5, '#e85d04');
-            g.addColorStop(1,   '#7c2d12');
-            ctx.fillStyle = g;
-            ctx.fill();
-        });
-
-        // Stem
-        ctx.beginPath();
-        ctx.moveTo(-s*0.06, -lobeH);
-        ctx.bezierCurveTo(-s*0.06, -lobeH - s*0.28, s*0.18, -lobeH - s*0.32, s*0.14, -lobeH - s*0.18);
-        ctx.lineWidth   = s * 0.1;
-        ctx.strokeStyle = '#3d1a00';
-        ctx.lineCap     = 'round';
-        ctx.shadowBlur  = 0;
-        ctx.stroke();
-
-        // Face — glowing triangle eyes + mouth
-        ctx.shadowColor = '#fbbf24';
-        ctx.shadowBlur  = 14;
-        ctx.fillStyle   = '#fbbf24';
-
-        // Left eye
-        ctx.beginPath();
-        ctx.moveTo(-s*0.3, -s*0.12);
-        ctx.lineTo(-s*0.18, -s*0.28);
-        ctx.lineTo(-s*0.06, -s*0.12);
-        ctx.closePath(); ctx.fill();
-
-        // Right eye
-        ctx.beginPath();
-        ctx.moveTo(s*0.06, -s*0.12);
-        ctx.lineTo(s*0.18, -s*0.28);
-        ctx.lineTo(s*0.3,  -s*0.12);
-        ctx.closePath(); ctx.fill();
-
-        // Jagged mouth
-        ctx.beginPath();
-        ctx.moveTo(-s*0.34, s*0.1);
-        ctx.lineTo(-s*0.22, s*0.22);
-        ctx.lineTo(-s*0.12, s*0.1);
-        ctx.lineTo(-s*0.02, s*0.24);
-        ctx.lineTo( s*0.08, s*0.1);
-        ctx.lineTo( s*0.18, s*0.24);
-        ctx.lineTo( s*0.28, s*0.1);
-        ctx.lineTo( s*0.34, s*0.22);
-        ctx.lineWidth   = s * 0.08;
-        ctx.strokeStyle = '#fbbf24';
-        ctx.lineJoin    = 'round';
-        ctx.stroke();
-
-        ctx.restore();
-    }
-
-    /* ══════════════════════════════════════
-       SPIDER WEBS  (canvas corners)
-    ══════════════════════════════════════ */
+    /* ── Spider web ── */
     function drawSpiderWeb(cx, cy, radius, flip) {
         ctx.save();
         ctx.translate(cx, cy);
         if (flip) ctx.scale(-1, 1);
-        ctx.globalAlpha = 0.22;
+
+        const spokes = 7, rings = 6;
+
+        ctx.globalAlpha = 0.28;
         ctx.strokeStyle = '#d4b8e0';
-        ctx.lineWidth   = 0.7;
+        ctx.lineWidth   = 0.8;
         ctx.shadowColor = '#a855f7';
-        ctx.shadowBlur  = 6;
+        ctx.shadowBlur  = 8;
 
-        const spokes = 7;
-        const rings  = 6;
-
-        // Radial spokes
+        // Spokes
         for (let i = 0; i < spokes; i++) {
             const angle = (Math.PI / 2) * (i / (spokes - 1));
             ctx.beginPath();
@@ -267,176 +89,70 @@
             ctx.stroke();
         }
 
-        // Concentric arc rings
+        // Rings
         for (let r = 1; r <= rings; r++) {
             const rr = (r / rings) * radius;
             ctx.beginPath();
             for (let i = 0; i < spokes; i++) {
-                const a1 = (Math.PI / 2) * (i / (spokes - 1));
-                const a2 = (Math.PI / 2) * ((i + 1) / (spokes - 1));
+                const a1  = (Math.PI / 2) * (i / (spokes - 1));
+                const a2  = (Math.PI / 2) * ((i + 1) / (spokes - 1));
                 const p1x = Math.cos(a1) * rr, p1y = Math.sin(a1) * rr;
                 const p2x = Math.cos(a2) * rr, p2y = Math.sin(a2) * rr;
-                const cpx = Math.cos((a1+a2)/2) * rr * 1.08;
-                const cpy = Math.sin((a1+a2)/2) * rr * 1.08;
+                const cpx = Math.cos((a1 + a2) / 2) * rr * 1.08;
+                const cpy = Math.sin((a1 + a2) / 2) * rr * 1.08;
                 if (i === 0) ctx.moveTo(p1x, p1y);
                 ctx.quadraticCurveTo(cpx, cpy, p2x, p2y);
             }
             ctx.stroke();
         }
 
-        // Spider body
-        ctx.globalAlpha = 0.55;
-        ctx.fillStyle   = '#2d0a3a';
-        const spiderR   = radius * 0.38;
-        const spiderA   = (Math.PI / 2) * 0.55;
-        const sx = Math.cos(spiderA) * spiderR;
-        const sy = Math.sin(spiderA) * spiderR;
-        ctx.beginPath(); ctx.arc(sx, sy, 5, 0, Math.PI*2); ctx.fill();
-        ctx.beginPath(); ctx.arc(sx, sy + 7, 3.5, 0, Math.PI*2); ctx.fill();
-
-        ctx.restore();
-    }
-
-    /* ══════════════════════════════════════
-       FOG LAYERS
-    ══════════════════════════════════════ */
-    function createFogLayer(w, h, i) {
-        return {
-            x:      rand(-w * 0.5, w * 0.5),
-            y:      h * (0.6 + i * 0.12),
-            w:      rand(w * 0.6, w * 1.2),
-            h:      rand(60, 130),
-            speedX: rand(0.08, 0.25) * (Math.random()<0.5?1:-1),
-            opacity: rand(0.04, 0.10),
-            phase:  rand(0, Math.PI*2),
-        };
-    }
-
-    function drawFog(f, t, canvasW) {
-        f.x += f.speedX;
-        if (f.x > canvasW + f.w) f.x = -f.w;
-        if (f.x < -f.w)          f.x = canvasW + f.w;
-
-        const pulse = 1 + 0.12 * Math.sin(t + f.phase);
-        const g = ctx.createRadialGradient(
-            f.x + f.w/2, f.y, 0,
-            f.x + f.w/2, f.y, (f.w/2) * pulse
-        );
-        g.addColorStop(0,   `rgba(90,10,100,${f.opacity * 1.4})`);
-        g.addColorStop(0.5, `rgba(50,5,60, ${f.opacity * 0.6})`);
-        g.addColorStop(1,   'rgba(0,0,0,0)');
-        ctx.beginPath();
-        ctx.ellipse(f.x + f.w/2, f.y, (f.w/2)*pulse, f.h*pulse*0.5, 0, 0, Math.PI*2);
-        ctx.fillStyle = g;
-        ctx.fill();
-    }
-
-    /* ══════════════════════════════════════
-       MOON
-    ══════════════════════════════════════ */
-    function drawMoon(w) {
-        const mx = w * 0.83, my = 80, mr = 42;
-
-        // Outer atmospheric halo
-        [3.5, 2.5, 1.8].forEach((mult, i) => {
-            const g = ctx.createRadialGradient(mx, my, mr, mx, my, mr*mult);
-            g.addColorStop(0,   `rgba(255,180,40,${0.07 - i*0.02})`);
-            g.addColorStop(1,   'rgba(0,0,0,0)');
-            ctx.beginPath();
-            ctx.arc(mx, my, mr*mult, 0, Math.PI*2);
-            ctx.fillStyle = g;
-            ctx.fill();
-        });
-
-        // Moon disk
-        ctx.beginPath();
-        ctx.arc(mx, my, mr, 0, Math.PI*2);
-        const moon = ctx.createRadialGradient(mx-10, my-10, 4, mx, my, mr);
-        moon.addColorStop(0,   '#fffbe6');
-        moon.addColorStop(0.4, '#ffd060');
-        moon.addColorStop(0.8, '#d4800a');
-        moon.addColorStop(1,   '#7a3a00');
-        ctx.fillStyle   = moon;
-        ctx.shadowColor = '#ffb020';
-        ctx.shadowBlur  = 40;
-        ctx.fill();
+        // Spider
+        const sa = (Math.PI / 2) * 0.52;
+        const sr = radius * 0.36;
+        const sx = Math.cos(sa) * sr, sy = Math.sin(sa) * sr;
         ctx.shadowBlur  = 0;
+        ctx.globalAlpha = 0.65;
+        ctx.fillStyle   = '#2d0a3a';
+        ctx.beginPath(); ctx.arc(sx, sy,     5,   0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(sx, sy + 7, 3.5, 0, Math.PI * 2); ctx.fill();
 
-        // Craters
-        [[mx-12,my+9,8],[mx+14,my-13,5.5],[mx+5,my+16,4.5],[mx-4,my-16,3]].forEach(([cx,cy,cr])=>{
-            ctx.beginPath();
-            ctx.arc(cx,cy,cr,0,Math.PI*2);
-            ctx.fillStyle = 'rgba(150,70,0,0.18)';
-            ctx.fill();
+        // Spider legs (4 each side)
+        ctx.strokeStyle = '#4a1060';
+        ctx.lineWidth   = 0.9;
+        ctx.globalAlpha = 0.5;
+        [[-1], [1]].forEach(([side]) => {
+            for (let l = 0; l < 4; l++) {
+                const baseAngle = (l / 3) * Math.PI * 0.6 - Math.PI * 0.3;
+                const lx1 = sx + side * 5;
+                const ly1 = sy + l * 2 - 3;
+                const lx2 = lx1 + side * Math.cos(baseAngle) * 12;
+                const ly2 = ly1 + Math.sin(baseAngle) * 8;
+                const lx3 = lx2 + side * 6;
+                const ly3 = ly2 + 5;
+                ctx.beginPath();
+                ctx.moveTo(lx1, ly1);
+                ctx.quadraticCurveTo(lx2, ly2, lx3, ly3);
+                ctx.stroke();
+            }
         });
 
-        // Silhouette flying bat across moon (decorative, static)
-        ctx.save();
-        ctx.translate(mx - 5, my - 8);
-        ctx.fillStyle = '#0c0a0e';
-        ctx.globalAlpha = 0.7;
-        // tiny bat silhouette
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 4, 5, 0, 0, Math.PI*2); ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(-4,0); ctx.bezierCurveTo(-12,-8,-18,-3,-12,3);
-        ctx.bezierCurveTo(-9,5,-5,2,-4,0); ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(4,0); ctx.bezierCurveTo(12,-8,18,-3,12,3);
-        ctx.bezierCurveTo(9,5,5,2,4,0); ctx.fill();
         ctx.restore();
     }
 
-    /* ══════════════════════════════════════
-       MAIN LOOP
-    ══════════════════════════════════════ */
-    let pumpkins = [];
-
+    /* ── Main loop ── */
     function draw() {
-        const w = canvas.width, h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
+        const W = canvas.width, H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
         frameCount++;
         const t = frameCount * 0.01;
 
-        // Moon
-        drawMoon(w);
-
-        // Spider webs — top-left and top-right corners
-        drawSpiderWeb(0, 0, Math.min(w, h) * 0.22, false);
-        drawSpiderWeb(w, 0, Math.min(w, h) * 0.22, true);
+        // Spider webs top corners
+        const webSize = Math.min(W, H) * 0.24;
+        drawSpiderWeb(0, 0, webSize, false);
+        drawSpiderWeb(W, 0, webSize, true);
 
         // Fog
-        for (const f of fogLayers) drawFog(f, t, w);
-
-        // Pumpkins
-        for (const p of pumpkins) {
-            p.phase += p.speed;
-            drawPumpkin(p);
-        }
-
-        // Embers — spawn ~2/frame
-        if (Math.random() < 0.6) embers.push(createEmber(w, h));
-        if (Math.random() < 0.4) embers.push(createEmber(w, h));
-        for (let i = embers.length - 1; i >= 0; i--) {
-            const e = embers[i];
-            e.x    += e.speedX + Math.sin(t * 3 + i) * 0.3;
-            e.y    += e.speedY;
-            e.life -= e.decay;
-            if (e.life <= 0 || e.y < -10) { embers.splice(i, 1); continue; }
-            drawEmber(e);
-        }
-
-        // Bats
-        for (const b of bats) {
-            b.flap   += b.flapSpd;
-            b.wobble += 0.016;
-            b.x      += b.speedX;
-            b.y      += b.speedY + Math.sin(b.wobble) * b.wobAmp;
-            if (b.y < 15)      { b.y = 15;      b.speedY = Math.abs(b.speedY); }
-            if (b.y > h * 0.6) { b.y = h * 0.6; b.speedY = -Math.abs(b.speedY); }
-            if (b.x < -80 || b.x > w + 80) Object.assign(b, createBat(w, h, true));
-            drawBat(b);
-        }
+        for (const f of fogLayers) drawFog(f, t, W);
 
         animId = requestAnimationFrame(draw);
     }
@@ -453,18 +169,15 @@
         resize();
         window.addEventListener('resize', resize);
 
-        const w = canvas.width, h = canvas.height;
-        bats      = Array.from({ length: 16 }, () => createBat(w, h));
-        fogLayers = Array.from({ length: 5 },  (_, i) => createFogLayer(w, h, i));
-        pumpkins  = Array.from({ length: 7 },  () => createPumpkin(w, h));
-        embers    = [];
+        const W = canvas.width, H = canvas.height;
+        fogLayers = Array.from({ length: 6 }, (_, i) => createFogLayer(W, H, i));
         draw();
     }
 
     function stopHalloween() {
         if (animId) { cancelAnimationFrame(animId); animId = null; }
         if (canvas) { canvas.remove(); canvas = null; ctx = null; }
-        bats = []; fogLayers = []; pumpkins = []; embers = []; frameCount = 0;
+        fogLayers = []; frameCount = 0;
     }
 
     function syncHalloween() {
