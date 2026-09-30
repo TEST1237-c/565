@@ -413,6 +413,65 @@
         .modal-close:hover { background: rgba(239,68,68,.25); color: #fca5a5; }
         .modal-body { padding: 1.5rem 1.75rem; display: flex; flex-direction: column; gap: .85rem; }
 
+        /* ========== THEME CARDS ========== */
+        .theme-card {
+            position: relative;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all .25s;
+            background: rgba(255,255,255,.02);
+        }
+        .theme-card:hover { border-color: rgba(107,114,128,.4); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.4); }
+        .theme-card.selected { border-color: var(--violet2); box-shadow: 0 0 0 1px var(--violet2), 0 12px 30px rgba(107,114,128,.2); }
+        .theme-card-preview {
+            height: 100px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .theme-card-preview .tp-bar { height: 10px; border-radius: 4px; opacity: .9; }
+        .theme-card-preview .tp-hero { flex: 1; border-radius: 6px; opacity: .55; }
+        .theme-card-preview .tp-dots { display: flex; gap: 5px; }
+        .theme-card-preview .tp-dots span { width: 20px; height: 8px; border-radius: 3px; opacity: .7; }
+
+        /* default preview */
+        .theme-prev-default { background: #0f172a; }
+        .theme-prev-default .tp-bar { background: linear-gradient(90deg,#3b82f6,#0ea5e9); }
+        .theme-prev-default .tp-hero { background: #1e293b; }
+        .theme-prev-default .tp-dots span { background: #3b82f6; }
+
+        /* halloween preview */
+        .theme-prev-halloween { background: #0c0a0e; }
+        .theme-prev-halloween .tp-bar { background: linear-gradient(90deg,#f97316,#a855f7); }
+        .theme-prev-halloween .tp-hero { background: #1a0f1f; }
+        .theme-prev-halloween .tp-dots span { background: #f97316; }
+
+        /* noel preview */
+        .theme-prev-noel { background: #071510; }
+        .theme-prev-noel .tp-bar { background: linear-gradient(90deg,#22c55e,#ef4444); }
+        .theme-prev-noel .tp-hero { background: #0d2218; }
+        .theme-prev-noel .tp-dots span { background: #22c55e; }
+
+        .theme-card-info { padding: .85rem 1rem .2rem; }
+        .theme-card-name { font-weight: 700; font-size: .88rem; color: #fff; margin-bottom: .2rem; }
+        .theme-card-desc { font-size: .72rem; color: var(--text3); }
+        .theme-card-badge {
+            display: none;
+            position: absolute; top: 8px; right: 8px;
+            background: var(--violet2); color: #000;
+            font-size: .62rem; font-weight: 800; padding: 2px 8px;
+            border-radius: 99px; text-transform: uppercase; letter-spacing: .05em;
+        }
+        .theme-card.selected .theme-card-badge { display: block; }
+        .theme-card.current-active::after {
+            content: '● En ligne';
+            position: absolute; bottom: 8px; right: 10px;
+            font-size: .65rem; color: #4ade80; font-weight: 700;
+        }
+
         /* ========== RESPONSIVE ========== */
         @media (max-width: 800px) {
             .sidebar { width: 60px; padding: 1rem .5rem; }
@@ -492,6 +551,9 @@
                 <span class="ni-icon">🛡️</span><span>Gérer les cheats</span>
                 <span class="ni-badge" id="navCheatCount">0</span>
             </button>
+            <button class="nav-item" data-page="theme" onclick="showPage('theme')">
+                <span class="ni-icon">🎨</span><span>Thème du site</span>
+            </button>
         </nav>
 
         <div class="sb-footer">
@@ -544,6 +606,74 @@
                             <div id="maintenanceMessage" class="maintenance-msg">Chargement du statut...</div>
                         </div>
                         <button id="maintenanceToggleBtn" class="btn-primary sm maintenance-action-btn" type="button" onclick="toggleMaintenanceMode()">Chargement…</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === THEME === -->
+        <div id="page-theme" class="admin-page-content">
+            <div class="page-header">
+                <div>
+                    <div class="page-title">Thème du site</div>
+                    <div class="page-sub">Choisissez l'apparence affichée aux visiteurs</div>
+                </div>
+            </div>
+
+            <div class="panel" style="margin-bottom:1.5rem">
+                <div class="panel-head">
+                    <div class="panel-head-title"><span>🎨</span> Preset actif</div>
+                </div>
+                <div class="panel-body">
+                    <div id="themeCurrentState" style="font-size:.85rem;color:var(--text3);margin-bottom:1.5rem;">Chargement…</div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;" id="themeCards">
+
+                        <!-- DEFAULT -->
+                        <div class="theme-card" data-theme-id="default" onclick="selectThemeCard('default')">
+                            <div class="theme-card-preview theme-prev-default">
+                                <div class="tp-bar"></div>
+                                <div class="tp-hero"></div>
+                                <div class="tp-dots"><span></span><span></span><span></span></div>
+                            </div>
+                            <div class="theme-card-info">
+                                <div class="theme-card-name">🔵 Basique</div>
+                                <div class="theme-card-desc">Thème par défaut — bleu élégant</div>
+                            </div>
+                            <div class="theme-card-badge">Actif</div>
+                        </div>
+
+                        <!-- HALLOWEEN -->
+                        <div class="theme-card" data-theme-id="halloween" onclick="selectThemeCard('halloween')">
+                            <div class="theme-card-preview theme-prev-halloween">
+                                <div class="tp-bar"></div>
+                                <div class="tp-hero"></div>
+                                <div class="tp-dots"><span></span><span></span><span></span></div>
+                            </div>
+                            <div class="theme-card-info">
+                                <div class="theme-card-name">🎃 Halloween</div>
+                                <div class="theme-card-desc">Orange & violet — ambiance effrayante</div>
+                            </div>
+                            <div class="theme-card-badge">Actif</div>
+                        </div>
+
+                        <!-- NOËL -->
+                        <div class="theme-card" data-theme-id="noel" onclick="selectThemeCard('noel')">
+                            <div class="theme-card-preview theme-prev-noel">
+                                <div class="tp-bar"></div>
+                                <div class="tp-hero"></div>
+                                <div class="tp-dots"><span></span><span></span><span></span></div>
+                            </div>
+                            <div class="theme-card-info">
+                                <div class="theme-card-name">🎄 Noël</div>
+                                <div class="theme-card-desc">Vert & rouge — esprit des fêtes</div>
+                            </div>
+                            <div class="theme-card-badge">Actif</div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions" style="margin-top:1.5rem">
+                        <button id="themeSaveBtn" class="btn-primary" onclick="saveTheme()" disabled>💾 Appliquer le thème</button>
+                        <span id="themeSaveStatus" style="font-size:.82rem;color:var(--text3);"></span>
                     </div>
                 </div>
             </div>
@@ -784,7 +914,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 function showAdmin() {
     document.getElementById('loginScreen').classList.remove('active');
     document.getElementById('adminLayout').classList.add('active');
-    loadCheatStatuses(); loadMaintenanceStatus();
+    loadCheatStatuses(); loadMaintenanceStatus(); loadThemeStatus();
 }
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -1013,6 +1143,84 @@ async function deleteCheat(id) {
         else toast(d.error || 'Erreur', 'error');
     } catch { toast('Erreur réseau', 'error'); }
 }
+
+/* ===== THEME ===== */
+let currentTheme = 'default';
+let selectedTheme = 'default';
+
+const THEME_LABELS = {
+    'default':    '🔵 Basique',
+    'halloween':  '🎃 Halloween',
+    'noel':       '🎄 Noël'
+};
+
+async function loadThemeStatus() {
+    try {
+        const res = await fetch('/api/theme-status', { cache: 'no-store' });
+        const data = res.ok ? await res.json() : { theme: 'default' };
+        currentTheme = data.theme || 'default';
+        selectedTheme = currentTheme;
+    } catch {
+        currentTheme = 'default';
+        selectedTheme = 'default';
+    }
+    renderThemeCards();
+}
+
+function renderThemeCards() {
+    // Update state label
+    const stateEl = document.getElementById('themeCurrentState');
+    if (stateEl) {
+        stateEl.innerHTML = `Thème actuellement actif sur le site : <strong style="color:#fff">${THEME_LABELS[currentTheme] || currentTheme}</strong>`;
+    }
+
+    // Update cards
+    document.querySelectorAll('.theme-card').forEach(card => {
+        const id = card.dataset.themeId;
+        card.classList.remove('selected', 'current-active');
+        if (id === selectedTheme) card.classList.add('selected');
+        if (id === currentTheme)  card.classList.add('current-active');
+    });
+
+    // Save button state
+    const btn = document.getElementById('themeSaveBtn');
+    const status = document.getElementById('themeSaveStatus');
+    if (btn) btn.disabled = selectedTheme === currentTheme;
+    if (status) status.textContent = selectedTheme === currentTheme ? 'Aucun changement' : `→ Appliquer "${THEME_LABELS[selectedTheme]}"`;
+}
+
+function selectThemeCard(id) {
+    selectedTheme = id;
+    renderThemeCards();
+}
+
+async function saveTheme() {
+    const btn = document.getElementById('themeSaveBtn');
+    if (!btn || btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = '⏳ Application…';
+    try {
+        const res = await fetch('/api/set-theme', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ adminPassword: getPass(), theme: selectedTheme })
+        });
+        const d = await res.json().catch(() => ({}));
+        if (res.ok) {
+            currentTheme = selectedTheme;
+            renderThemeCards();
+            toast(`Thème "${THEME_LABELS[selectedTheme]}" appliqué !`, 'success');
+        } else {
+            toast(d.error || 'Erreur lors de l\'application', 'error');
+            btn.disabled = false;
+        }
+    } catch {
+        toast('Erreur réseau', 'error');
+        btn.disabled = false;
+    }
+    btn.textContent = '💾 Appliquer le thème';
+}
+
 
 
 </script>
