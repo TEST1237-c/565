@@ -96,7 +96,7 @@
         ctx.fill();
 
         // ── ears ──
-        [[−1, 1]].concat([[1, 1]]).forEach(([side]) => {
+        [[-1], [1]].forEach(([side]) => {
             ctx.beginPath();
             ctx.moveTo(side * s * 0.08, -s * 0.28);
             ctx.lineTo(side * s * 0.16, -s * 0.52);
